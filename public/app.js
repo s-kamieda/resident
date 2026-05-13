@@ -1,0 +1,2022 @@
+"use strict";
+
+const FILE_PROTOCOL = window.location.protocol === "file:";
+const IOS_DEVICE = /iPad|iPhone|iPod/.test(window.navigator.userAgent)
+  || (window.navigator.platform === "MacIntel" && window.navigator.maxTouchPoints > 1);
+const STANDALONE_MODE = window.matchMedia("(display-mode: standalone)").matches
+  || window.navigator.standalone === true;
+const DB_NAME = "radQuizAppV4";
+const DB_VERSION = 1;
+const BACKUP_SCHEMA = "rad-quiz-backup-v1";
+const LEGACY_MEMO_MIGRATION_KEY = "legacy-memo-migration-v1";
+const LEGACY_MEMOS = Array.isArray(window.__LEGACY_MEMOS__) ? window.__LEGACY_MEMOS__ : [];
+const MAX_SESSIONS = 50;
+const TEMPLATE_INSERTIONS = {
+  full: "鑑別:\nひっかけ:\n覚え方:\n次回確認点:\n",
+  diff: "鑑別:\n",
+  trap: "ひっかけ:\n",
+  memory: "覚え方:\n",
+  next: "次回確認点:\n"
+};
+const CAT_ORDER = [
+  "医学物理学",
+  "放射線生物学",
+  "放射線防護・安全管理",
+  "画像診断学総論（モダリティ・造影剤）",
+  "中枢神経（脳・脊髄）",
+  "頭頸部",
+  "呼吸器・縦隔",
+  "心臓・大血管",
+  "乳房",
+  "消化器（肝・胆・膵・脾）",
+  "消化器（消化管・腹壁）",
+  "泌尿器・生殖器",
+  "脊椎・脊髄・骨関節・軟部",
+  "小児",
+  "核医学",
+  "放射線治療",
+  "IVR",
+  "医の倫理・医療の質",
+  "未分類"
+];
+
+let QUESTIONS = [];
+let QUESTION_MAP = new Map();
+let YEARS = [];
+let CATEGORIES = [];
+let progressState = blankProgress();
+let sessionState = null;
+let modalTarget = null;
+let srsTarget = null;
+let memoSaveTimer = null;
+let currentMemo = blankMemo("");
+let currentMemoUrls = [];
+let wrongMemoUrls = [];
+let confirmResolver = null;
+
+function $(id) {
+  return document.getElementById(id);
+}
+
+function show(id) {
+  const el = $(id);
+  if (el) el.classList.remove("hidden");
+}
+
+function hide(id) {
+  const el = $(id);
+  if (el) el.classList.add("hidden");
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function pad(num) {
+  return String(num).padStart(2, "0");
+}
+
+function localDateKey(date = new Date()) {
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+}
+
+function parseDateKey(dateKey) {
+  const parts = String(dateKey).split("-").map(Number);
+  return new Date(parts[0] || 1970, (parts[1] || 1) - 1, parts[2] || 1);
+}
+
+function addDaysToKey(dateKey, days) {
+  const next = parseDateKey(dateKey);
+  next.setDate(next.getDate() + days);
+  return localDateKey(next);
+}
+
+function formatDuration(sec) {
+  const mins = Math.floor(sec / 60);
+  const rem = sec % 60;
+  return `${mins}:${rem < 10 ? "0" : ""}${rem}`;
+}
+
+function formatTimestamp(ms) {
+  if (!ms) return "-";
+  const date = new Date(ms);
+  return `${date.getMonth() + 1}/${date.getDate()} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
+
+function questionId(question) {
+  return `${question.year}-${question.num}`;
+}
+
+function blankProgress() {
+  return { perQ: {}, sessions: [], saved: null };
+}
+
+function blankMemo(id) {
+  return { id, text: "", images: [] };
+}
+
+function normalizeProgress(raw) {
+  const safe = raw && typeof raw === "object" ? raw : {};
+  return {
+    perQ: safe.perQ && typeof safe.perQ === "object" ? safe.perQ : {},
+    sessions: Array.isArray(safe.sessions) ? safe.sessions : [],
+    saved: safe.saved && typeof safe.saved === "object" ? safe.saved : null
+  };
+}
+
+function normalizeQuestion(raw) {
+  return {
+    id: `${raw.year}-${raw.num}`,
+    year: Number(raw.year),
+    num: Number(raw.num),
+    text: String(raw.text || ""),
+    choices: raw.choices && typeof raw.choices === "object" ? raw.choices : {},
+    answer: typeof raw.answer === "string" ? raw.answer : "",
+    multi: Boolean(raw.multi),
+    explanation: String(raw.explanation || ""),
+    category: raw.category ? String(raw.category) : "未分類"
+  };
+}
+
+function getCorrectChoices(question) {
+  if (!question.answer) return [];
+  return question.answer.split(",").map((item) => item.trim()).filter(Boolean);
+}
+
+function hydrateQuestionIds(ids) {
+  return (Array.isArray(ids) ? ids : [])
+    .map((id) => QUESTION_MAP.get(id))
+    .filter(Boolean);
+}
+
+function showPage(id) {
+  ["pg-home", "pg-quiz", "pg-result", "pg-stats", "pg-search"].forEach((pageId) => {
+    const el = $(pageId);
+    if (el) el.classList.add("hidden");
+  });
+  const page = $(id);
+  if (page) page.classList.remove("hidden");
+  window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+}
+
+function cleanupObjectUrls(list) {
+  list.forEach((url) => {
+    if (typeof url === "string" && url.startsWith("blob:")) {
+      URL.revokeObjectURL(url);
+    }
+  });
+}
+
+function cleanupCurrentMemoUrls() {
+  cleanupObjectUrls(currentMemoUrls);
+  currentMemoUrls = [];
+}
+
+function cleanupWrongMemoUrls() {
+  cleanupObjectUrls(wrongMemoUrls);
+  wrongMemoUrls = [];
+}
+
+function showToast(message, tone = "info", timeoutMs = 2600) {
+  const zone = $("toast-zone");
+  if (!zone) return;
+  const toast = document.createElement("div");
+  toast.className = `toast ${tone}`;
+  toast.textContent = message;
+  zone.appendChild(toast);
+  window.setTimeout(() => {
+    toast.remove();
+  }, timeoutMs);
+}
+
+function openOverlay(id) {
+  show(id);
+}
+
+function closeOverlay(id) {
+  hide(id);
+}
+
+function askConfirm(options) {
+  const title = $("confirm-title");
+  const message = $("confirm-message");
+  const ok = $("confirm-ok");
+  if (!title || !message || !ok) return Promise.resolve(false);
+  title.textContent = options.title || "確認";
+  message.textContent = options.message || "";
+  ok.textContent = options.confirmText || "続行";
+  openOverlay("confirm-modal-bg");
+  return new Promise((resolve) => {
+    confirmResolver = resolve;
+  });
+}
+
+function resolveConfirm(result) {
+  closeOverlay("confirm-modal-bg");
+  if (confirmResolver) {
+    confirmResolver(result);
+    confirmResolver = null;
+  }
+}
+
+const Database = {
+  db: null,
+
+  init() {
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open(DB_NAME, DB_VERSION);
+      request.onupgradeneeded = (event) => {
+        const db = event.target.result;
+        if (!db.objectStoreNames.contains("keyval")) {
+          db.createObjectStore("keyval", { keyPath: "key" });
+        }
+        if (!db.objectStoreNames.contains("memos")) {
+          db.createObjectStore("memos", { keyPath: "id" });
+        }
+        if (!db.objectStoreNames.contains("memoAssets")) {
+          db.createObjectStore("memoAssets", { keyPath: "id" });
+        }
+        if (!db.objectStoreNames.contains("srs")) {
+          db.createObjectStore("srs", { keyPath: "id" });
+        }
+      };
+      request.onsuccess = (event) => {
+        this.db = event.target.result;
+        resolve();
+      };
+      request.onerror = () => reject(request.error || new Error("IndexedDB open failed"));
+    });
+  },
+
+  store(name, mode) {
+    return this.db.transaction(name, mode).objectStore(name);
+  },
+
+  getKey(key) {
+    return new Promise((resolve, reject) => {
+      const request = this.store("keyval", "readonly").get(key);
+      request.onsuccess = () => resolve(request.result ? request.result.value : null);
+      request.onerror = () => reject(request.error || new Error(`Failed to get key ${key}`));
+    });
+  },
+
+  setKey(key, value) {
+    return new Promise((resolve, reject) => {
+      const request = this.store("keyval", "readwrite").put({ key, value });
+      request.onsuccess = () => resolve();
+      request.onerror = () => reject(request.error || new Error(`Failed to set key ${key}`));
+    });
+  },
+
+  getRecord(storeName, id) {
+    return new Promise((resolve, reject) => {
+      const request = this.store(storeName, "readonly").get(id);
+      request.onsuccess = () => resolve(request.result || null);
+      request.onerror = () => reject(request.error || new Error(`Failed to get ${storeName}:${id}`));
+    });
+  },
+
+  putRecord(storeName, value) {
+    return new Promise((resolve, reject) => {
+      const request = this.store(storeName, "readwrite").put(value);
+      request.onsuccess = () => resolve();
+      request.onerror = () => reject(request.error || new Error(`Failed to put ${storeName}`));
+    });
+  },
+
+  deleteRecord(storeName, id) {
+    return new Promise((resolve, reject) => {
+      const request = this.store(storeName, "readwrite").delete(id);
+      request.onsuccess = () => resolve();
+      request.onerror = () => reject(request.error || new Error(`Failed to delete ${storeName}:${id}`));
+    });
+  },
+
+  getAll(storeName) {
+    return new Promise((resolve, reject) => {
+      const request = this.store(storeName, "readonly").getAll();
+      request.onsuccess = () => resolve(request.result || []);
+      request.onerror = () => reject(request.error || new Error(`Failed to getAll ${storeName}`));
+    });
+  },
+
+  clearStore(storeName) {
+    return new Promise((resolve, reject) => {
+      const request = this.store(storeName, "readwrite").clear();
+      request.onsuccess = () => resolve();
+      request.onerror = () => reject(request.error || new Error(`Failed to clear ${storeName}`));
+    });
+  }
+};
+
+async function loadProgressState() {
+  progressState = normalizeProgress(await Database.getKey("progress"));
+}
+
+async function saveProgressState() {
+  await Database.setKey("progress", progressState);
+}
+
+async function blobToDataUrl(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result));
+    reader.onerror = () => reject(reader.error || new Error("Failed to read blob"));
+    reader.readAsDataURL(blob);
+  });
+}
+
+async function dataUrlToBlob(dataUrl) {
+  const response = await fetch(dataUrl);
+  return response.blob();
+}
+
+function downloadBlob(filename, blob) {
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+async function exportBackup() {
+  const memos = await Database.getAll("memos");
+  const assets = await Database.getAll("memoAssets");
+  const srs = await Database.getAll("srs");
+  const serialisedAssets = [];
+  for (const asset of assets) {
+    serialisedAssets.push({
+      id: asset.id,
+      name: asset.name || "memo-image",
+      type: asset.type || (asset.blob && asset.blob.type) || "application/octet-stream",
+      createdAt: asset.createdAt || 0,
+      dataUrl: await blobToDataUrl(asset.blob)
+    });
+  }
+  const payload = {
+    schema: BACKUP_SCHEMA,
+    exportedAt: Date.now(),
+    progress: progressState,
+    memos,
+    assets: serialisedAssets,
+    srs
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+  downloadBlob(`rad-quiz-backup-${localDateKey().replace(/-/g, "")}.json`, blob);
+  closeOverlay("backup-modal-bg");
+  showToast("バックアップを書き出しました。", "success");
+}
+
+async function importBackupFromFile(file) {
+  const raw = await file.text();
+  const payload = JSON.parse(raw);
+  if (!payload || payload.schema !== BACKUP_SCHEMA) {
+    throw new Error("バックアップ形式が一致しません。");
+  }
+
+  await Database.clearStore("memos");
+  await Database.clearStore("memoAssets");
+  await Database.clearStore("srs");
+
+  const nextProgress = normalizeProgress(payload.progress);
+  progressState = nextProgress;
+  await saveProgressState();
+
+  for (const memo of Array.isArray(payload.memos) ? payload.memos : []) {
+    await Database.putRecord("memos", {
+      id: memo.id,
+      text: memo.text || "",
+      imageIds: Array.isArray(memo.imageIds) ? memo.imageIds : [],
+      updatedAt: memo.updatedAt || 0
+    });
+  }
+
+  for (const asset of Array.isArray(payload.assets) ? payload.assets : []) {
+    const blob = await dataUrlToBlob(asset.dataUrl);
+    await Database.putRecord("memoAssets", {
+      id: asset.id,
+      name: asset.name || "memo-image",
+      type: asset.type || blob.type,
+      createdAt: asset.createdAt || 0,
+      blob
+    });
+  }
+
+  for (const record of Array.isArray(payload.srs) ? payload.srs : []) {
+    await Database.putRecord("srs", record);
+  }
+
+  cleanupCurrentMemoUrls();
+  cleanupWrongMemoUrls();
+  sessionState = null;
+  closeOverlay("backup-modal-bg");
+  await renderHome();
+  showPage("pg-home");
+  showToast("バックアップを復元しました。", "success", 3200);
+}
+
+function normaliseLegacyMemoEntry(entry) {
+  if (!entry || typeof entry !== "object") return null;
+  const id = typeof entry.id === "string" ? entry.id : "";
+  if (!id) return null;
+  const text = typeof entry.text === "string" ? entry.text : "";
+  const images = Array.isArray(entry.images)
+    ? entry.images
+      .filter((image) => image && typeof image.dataUrl === "string" && image.dataUrl.startsWith("data:"))
+      .map((image, index) => ({
+        name: typeof image.name === "string" && image.name.trim() ? image.name : `${id}-legacy-${index + 1}.png`,
+        dataUrl: image.dataUrl
+      }))
+    : [];
+  if (!text.trim() && images.length === 0) return null;
+  return {
+    id,
+    text,
+    images,
+    updatedAt: Number(entry.updatedAt) || 0
+  };
+}
+
+async function importLegacyMemosIfNeeded() {
+  const migrationKey = `${LEGACY_MEMO_MIGRATION_KEY}:${DB_NAME}`;
+  const existingStatus = await Database.getKey(migrationKey);
+  if (existingStatus) return null;
+
+  const entries = LEGACY_MEMOS
+    .map((entry) => normaliseLegacyMemoEntry(entry))
+    .filter(Boolean);
+  if (!entries.length) {
+    await Database.setKey(migrationKey, { doneAt: Date.now(), imported: 0 });
+    return null;
+  }
+
+  let touched = 0;
+  for (const entry of entries) {
+    const memoRecord = await Database.getRecord("memos", entry.id);
+    const existingText = memoRecord && typeof memoRecord.text === "string" ? memoRecord.text : "";
+    const existingImageIds = memoRecord && Array.isArray(memoRecord.imageIds) ? memoRecord.imageIds.slice() : [];
+    let nextText = existingText;
+    let changed = false;
+
+    if (entry.text.trim()) {
+      if (!existingText.trim()) {
+        nextText = entry.text;
+        changed = true;
+      } else if (!existingText.includes(entry.text.trim())) {
+        nextText = `${existingText.trimEnd()}\n\n[旧版メモから引き継ぎ]\n${entry.text}`;
+        changed = true;
+      }
+    }
+
+    for (let index = 0; index < entry.images.length; index += 1) {
+      const image = entry.images[index];
+      const assetId = `${entry.id}:legacy:${index + 1}`;
+      if (existingImageIds.includes(assetId)) continue;
+      const blob = await dataUrlToBlob(image.dataUrl);
+      await Database.putRecord("memoAssets", {
+        id: assetId,
+        name: image.name,
+        type: blob.type || "image/png",
+        createdAt: entry.updatedAt || Date.now(),
+        blob
+      });
+      existingImageIds.push(assetId);
+      changed = true;
+    }
+
+    if (!memoRecord && (!nextText.trim() && existingImageIds.length === 0)) {
+      continue;
+    }
+    if (changed) {
+      await Database.putRecord("memos", {
+        id: entry.id,
+        text: nextText,
+        imageIds: existingImageIds,
+        updatedAt: Math.max(memoRecord && memoRecord.updatedAt ? memoRecord.updatedAt : 0, entry.updatedAt || Date.now())
+      });
+      touched += 1;
+    }
+  }
+
+  await Database.setKey(migrationKey, { doneAt: Date.now(), imported: touched });
+  return touched > 0 ? { imported: touched } : null;
+}
+
+function isCorrect(question, userSelection) {
+  const correctChoices = getCorrectChoices(question);
+  if (!correctChoices.length) return null;
+  const expected = correctChoices.slice().sort().join(",");
+  const actual = (userSelection || []).slice().sort().join(",");
+  return expected === actual;
+}
+
+function modeLabel(mode) {
+  const map = {
+    seq: "順番",
+    rand: "ランダム",
+    rand10: "10問",
+    retry: "再挑戦",
+    wrong: "苦手",
+    unseen: "未解答"
+  };
+  return map[mode] || mode;
+}
+
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const tmp = array[i];
+    array[i] = array[j];
+    array[j] = tmp;
+  }
+  return array;
+}
+
+function getCategoryOrder(categories) {
+  const extras = categories.filter((cat) => !CAT_ORDER.includes(cat)).sort((a, b) => a.localeCompare(b, "ja"));
+  return CAT_ORDER.filter((cat) => categories.includes(cat)).concat(extras);
+}
+
+function recordForQuestion(question) {
+  return progressState.perQ[question.id] || null;
+}
+
+function buildWeakCategoryStats() {
+  const stats = new Map();
+  for (const question of QUESTIONS) {
+    const category = question.category || "未分類";
+    if (!stats.has(category)) {
+      stats.set(category, { category, attempted: 0, correct: 0, wrong: 0, total: 0 });
+    }
+    stats.get(category).total += 1;
+  }
+  Object.keys(progressState.perQ).forEach((qid) => {
+    const question = QUESTION_MAP.get(qid);
+    if (!question) return;
+    const entry = stats.get(question.category);
+    const result = progressState.perQ[qid];
+    entry.attempted += 1;
+    if (result && result.correct) {
+      entry.correct += 1;
+    } else {
+      entry.wrong += 1;
+    }
+  });
+  return Array.from(stats.values())
+    .filter((item) => item.attempted > 0)
+    .map((item) => ({
+      ...item,
+      pct: item.attempted > 0 ? Math.round((item.correct / item.attempted) * 100) : 0
+    }))
+    .sort((a, b) => a.pct - b.pct || b.attempted - a.attempted || a.category.localeCompare(b.category, "ja"));
+}
+
+function buildSearchIndex(question) {
+  return [
+    question.text,
+    question.explanation,
+    question.category,
+    ...Object.values(question.choices || {})
+  ]
+    .join("\n")
+    .toLowerCase();
+}
+
+const SRS = {
+  POOL_MAX: 100,
+
+  async all() {
+    return Database.getAll("srs");
+  },
+
+  async get(id) {
+    return Database.getRecord("srs", id);
+  },
+
+  async put(record) {
+    await Database.putRecord("srs", record);
+  },
+
+  async addToPool(question) {
+    const id = question.id;
+    const existing = await this.get(id);
+    const today = localDateKey();
+    if (existing) {
+      const updated = {
+        ...existing,
+        totalWrong: (existing.totalWrong || 0) + 1
+      };
+      if (!existing.inPool) {
+        updated.inPool = true;
+        updated.interval = 0;
+        updated.nextDue = today;
+      }
+      await this.put(updated);
+      return;
+    }
+
+    const all = await this.all();
+    const pool = all.filter((item) => item.inPool);
+    if (pool.length >= this.POOL_MAX) {
+      pool.sort((a, b) => (b.easeFactor || 0) - (a.easeFactor || 0) || (b.interval || 0) - (a.interval || 0));
+      const kick = pool[0];
+      kick.inPool = false;
+      await this.put(kick);
+    }
+
+    await this.put({
+      id,
+      year: question.year,
+      num: question.num,
+      category: question.category || "未分類",
+      easeFactor: 2.5,
+      interval: 0,
+      nextDue: today,
+      recentHistory: [0],
+      totalWrong: 1,
+      inPool: true,
+      addedDate: today
+    });
+  },
+
+  async update(question, rating) {
+    const current = await this.get(question.id);
+    if (!current) return;
+
+    const history = Array.isArray(current.recentHistory) ? current.recentHistory.slice(-2) : [];
+    history.push(rating);
+    const easeFactor = Number(current.easeFactor || 2.5);
+    const interval = Number(current.interval || 0);
+    let nextEase = easeFactor;
+    let nextInterval = interval;
+
+    if (rating === 0) {
+      nextEase = Math.max(1.3, easeFactor - 0.2);
+      nextInterval = 1;
+    } else if (rating === 1) {
+      nextInterval = interval <= 0 ? 1 : interval === 1 ? 3 : Math.round(interval * 1.2);
+    } else {
+      nextEase = Math.min(3.0, easeFactor + 0.1);
+      nextInterval = interval <= 0 ? 1 : interval === 1 ? 3 : Math.round(interval * nextEase);
+    }
+
+    await this.put({
+      ...current,
+      easeFactor: nextEase,
+      interval: nextInterval,
+      nextDue: addDaysToKey(localDateKey(), nextInterval),
+      recentHistory: history,
+      totalWrong: rating === 0 ? (current.totalWrong || 0) + 1 : current.totalWrong || 0,
+      inPool: !(nextEase >= 2.8 && nextInterval >= 30)
+    });
+  },
+
+  async getDue() {
+    const today = localDateKey();
+    return (await this.all())
+      .filter((item) => item.inPool && item.nextDue <= today)
+      .sort((a, b) => a.nextDue.localeCompare(b.nextDue) || (a.easeFactor || 0) - (b.easeFactor || 0));
+  },
+
+  async getEaseSorted(limit) {
+    const pool = (await this.all())
+      .filter((item) => item.inPool)
+      .sort((a, b) => (a.easeFactor || 0) - (b.easeFactor || 0) || (a.interval || 0) - (b.interval || 0));
+    return typeof limit === "number" ? pool.slice(0, limit) : pool;
+  },
+
+  async getRecentWrong(limit) {
+    const pool = (await this.all())
+      .filter((item) => item.inPool && Array.isArray(item.recentHistory) && item.recentHistory.includes(0))
+      .sort((a, b) => {
+        const aWrong = (a.recentHistory || []).filter((value) => value === 0).length;
+        const bWrong = (b.recentHistory || []).filter((value) => value === 0).length;
+        return bWrong - aWrong || (a.easeFactor || 0) - (b.easeFactor || 0);
+      });
+    return typeof limit === "number" ? pool.slice(0, limit) : pool;
+  },
+
+  async getStats() {
+    const today = localDateKey();
+    const all = await this.all();
+    const pool = all.filter((item) => item.inPool);
+    return {
+      poolSize: pool.length,
+      dueCount: pool.filter((item) => item.nextDue <= today).length,
+      overdueCount: pool.filter((item) => item.nextDue < today).length,
+      recentWrongCount: pool.filter((item) => (item.recentHistory || []).includes(0)).length
+    };
+  }
+};
+
+async function loadQuestions() {
+  if (!FILE_PROTOCOL) {
+    try {
+      const response = await fetch("questions.json", { cache: "no-store" });
+      if (response.ok) {
+        return (await response.json()).map(normalizeQuestion);
+      }
+    } catch (error) {
+      console.warn("questions.json fetch failed, using generated fallback", error);
+    }
+  }
+
+  if (Array.isArray(window.__QUESTIONS__)) {
+    return window.__QUESTIONS__.map(normalizeQuestion);
+  }
+
+  throw new Error("問題データを読み込めませんでした。");
+}
+
+function setRuntimeBanner() {
+  const banner = $("runtime-banner");
+  if (!banner) return;
+  if (IOS_DEVICE && !STANDALONE_MODE) {
+    banner.innerHTML = "<strong>iPad / iPhoneで使う場合:</strong> Safariの共有メニューから <strong>ホーム画面に追加</strong> を選ぶと、アプリとして起動できます。";
+    banner.classList.remove("hidden");
+  } else {
+    banner.classList.add("hidden");
+  }
+}
+
+async function renderHome() {
+  const totalQuestions = QUESTIONS.length;
+  const yearGrid = $("year-grid");
+  const catGrid = $("cat-grid");
+  const weakCats = $("weak-cats");
+  const subtitle = $("home-subtitle");
+  if (!yearGrid || !catGrid || !weakCats || !subtitle) return;
+
+  subtitle.textContent = `${YEARS[0]}〜${YEARS[YEARS.length - 1]}年 計${totalQuestions}問`;
+  $("all-btn-desc").textContent = `${totalQuestions}問から選択`;
+
+  yearGrid.innerHTML = "";
+  YEARS.forEach((year) => {
+    const questions = QUESTIONS.filter((question) => question.year === year);
+    const attempted = questions.filter((question) => Boolean(recordForQuestion(question))).length;
+    const correct = questions.filter((question) => {
+      const record = recordForQuestion(question);
+      return record && record.correct;
+    }).length;
+    const pct = attempted > 0 ? Math.round((correct / attempted) * 100) : 0;
+    const fill = questions.length > 0 ? Math.round((attempted / questions.length) * 100) : 0;
+    const button = document.createElement("button");
+    button.className = "year-btn";
+    button.innerHTML =
+      `<div class="y-num">${year}</div>` +
+      `<div class="y-info">${attempted}/${questions.length}問${attempted > 0 ? ` ${pct}%` : ""}</div>` +
+      `<div class="y-bar"><div class="y-fill" style="width:${fill}%"></div></div>`;
+    button.addEventListener("click", () => openModeModal(year));
+    yearGrid.appendChild(button);
+  });
+
+  catGrid.innerHTML = "";
+  CATEGORIES.forEach((category) => {
+    const questions = QUESTIONS.filter((question) => question.category === category);
+    const attempted = questions.filter((question) => Boolean(recordForQuestion(question))).length;
+    const correct = questions.filter((question) => {
+      const record = recordForQuestion(question);
+      return record && record.correct;
+    }).length;
+    const pct = attempted > 0 ? Math.round((correct / attempted) * 100) : 0;
+    const fill = questions.length > 0 ? Math.round((attempted / questions.length) * 100) : 0;
+    const button = document.createElement("button");
+    button.className = "cat-btn";
+    button.innerHTML =
+      `<div class="c-name">${escapeHtml(category)}</div>` +
+      `<div class="c-info">${attempted}/${questions.length}問${attempted > 0 ? ` · ${pct}%` : ""}</div>` +
+      `<div class="c-bar"><div class="c-fill" style="width:${fill}%"></div></div>`;
+    button.addEventListener("click", () => openModeModal(`cat:${category}`));
+    catGrid.appendChild(button);
+  });
+
+  const srsStats = await SRS.getStats();
+  renderHomeOverview(srsStats);
+  renderWeakCategories();
+
+  if (progressState.saved) {
+    const saved = progressState.saved;
+    const label = saved.year ? `${saved.year}年` : saved.category ? saved.category : "全問";
+    $("resume-desc").textContent = `${label} ${saved.index + 1}/${saved.questionIds.length}問目`;
+    show("btn-resume");
+  } else {
+    hide("btn-resume");
+  }
+}
+
+function renderHomeOverview(stats) {
+  const attempted = Object.keys(progressState.perQ).length;
+  const correct = Object.values(progressState.perQ).filter((record) => record.correct).length;
+  const accuracy = attempted > 0 ? Math.round((correct / attempted) * 100) : 0;
+  $("home-overview").innerHTML =
+    `<div class="ov-card"><div class="ov-label">今日の復習</div><div class="ov-val">${stats.dueCount}</div><div class="ov-sub">期限中</div></div>` +
+    `<div class="ov-card"><div class="ov-label">期限超過</div><div class="ov-val">${stats.overdueCount}</div><div class="ov-sub">先に片付けたい問題</div></div>` +
+    `<div class="ov-card"><div class="ov-label">直近不正解</div><div class="ov-val">${stats.recentWrongCount}</div><div class="ov-sub">直近3回の復習候補</div></div>` +
+    `<div class="ov-card"><div class="ov-label">総正解率</div><div class="ov-val">${accuracy}%</div><div class="ov-sub">${correct}/${attempted || 0}問</div></div>`;
+
+  $("srs-today-desc").textContent = stats.dueCount > 0
+    ? `${stats.dueCount}問 期限中（プール${stats.poolSize}問）`
+    : `今日は期限なし（プール${stats.poolSize}問）`;
+  $("srs-ease-desc").textContent = `ease factor 低い順（プール${stats.poolSize}問）`;
+  $("srs-recent-desc").textContent = `直近3回で不正解（${stats.recentWrongCount}問）`;
+  if (stats.dueCount > 0) {
+    $("srs-today-badge").textContent = String(stats.dueCount);
+    show("srs-today-badge");
+  } else {
+    hide("srs-today-badge");
+  }
+}
+
+function renderWeakCategories() {
+  const target = $("weak-cats");
+  const weakStats = buildWeakCategoryStats().slice(0, 4);
+  target.innerHTML = "";
+
+  if (!weakStats.length) {
+    target.innerHTML = '<div class="empty"><div class="empty-icon">📈</div><div>学習が進むと、ここに弱点カテゴリが表示されます。</div></div>';
+    return;
+  }
+
+  weakStats.forEach((item) => {
+    const row = document.createElement("div");
+    row.className = "yr-row";
+    row.innerHTML =
+      `<div class="yr-top"><span class="yr-name">${escapeHtml(item.category)}</span><span class="yr-pct">${item.pct}%</span></div>` +
+      `<div class="yr-bar"><div class="yr-fill" style="width:${Math.max(item.pct, 8)}%;background:${item.pct >= 80 ? "#16a34a" : item.pct >= 60 ? "#d97706" : "#dc2626"}"></div></div>` +
+      `<div class="yr-sub">${item.attempted}問挑戦 · ${item.correct}問正解 · ${item.wrong}問見直し候補</div>`;
+    target.appendChild(row);
+  });
+}
+
+function openModeModal(target) {
+  modalTarget = target;
+  const title = $("modal-title");
+  if (target === "all") {
+    title.textContent = "全問 — モード選択";
+  } else if (target === "wrong") {
+    title.textContent = "苦手問題 — モード選択";
+  } else if (target === "unseen") {
+    title.textContent = "未解答問題 — モード選択";
+  } else if (typeof target === "string" && target.startsWith("cat:")) {
+    title.textContent = `${target.slice(4)} — モード選択`;
+  } else {
+    title.textContent = `${target}年 — モード選択`;
+  }
+  openOverlay("modal-bg");
+}
+
+function closeModeModal() {
+  closeOverlay("modal-bg");
+}
+
+function buildPool(target) {
+  if (target === "all") return QUESTIONS.slice();
+  if (target === "wrong") {
+    return QUESTIONS.filter((question) => {
+      const record = recordForQuestion(question);
+      return record && record.correct === false;
+    });
+  }
+  if (target === "unseen") {
+    return QUESTIONS.filter((question) => !recordForQuestion(question));
+  }
+  if (typeof target === "string" && target.startsWith("cat:")) {
+    const category = target.slice(4);
+    return QUESTIONS.filter((question) => question.category === category);
+  }
+  return QUESTIONS.filter((question) => question.year === target);
+}
+
+async function startQuiz(mode) {
+  closeModeModal();
+  let pool = buildPool(modalTarget);
+  if (!pool.length) {
+    showToast("対象の問題がありません。", "warn");
+    return;
+  }
+  if (mode === "rand" || mode === "rand10") {
+    pool = shuffle(pool.slice());
+  }
+  if (mode === "rand10") {
+    pool = pool.slice(0, 10);
+  }
+  sessionState = {
+    questions: pool,
+    index: 0,
+    mode,
+    year: typeof modalTarget === "number" ? modalTarget : null,
+    category: typeof modalTarget === "string" && modalTarget.startsWith("cat:") ? modalTarget.slice(4) : null,
+    srsMode: null,
+    submitted: {},
+    userAns: {},
+    correct: 0,
+    startMs: Date.now()
+  };
+  await renderQuestion();
+  showPage("pg-quiz");
+}
+
+async function resumeSession() {
+  if (!progressState.saved) return;
+  const saved = progressState.saved;
+  const questions = hydrateQuestionIds(saved.questionIds);
+  if (!questions.length) {
+    progressState.saved = null;
+    await saveProgressState();
+    showToast("再開データを復元できなかったため、保存を解除しました。", "warn");
+    await renderHome();
+    return;
+  }
+  sessionState = {
+    questions,
+    index: Math.min(saved.index || 0, questions.length - 1),
+    mode: saved.mode || "seq",
+    year: saved.year || null,
+    category: saved.category || null,
+    srsMode: saved.srsMode || null,
+    submitted: saved.submitted || {},
+    userAns: saved.userAns || {},
+    correct: saved.correct || 0,
+    startMs: Date.now() - (saved.elapsed || 0)
+  };
+  await renderQuestion();
+  showPage("pg-quiz");
+}
+
+async function saveSessionState() {
+  if (!sessionState || sessionState.srsMode || sessionState.mode === "view") return;
+  progressState.saved = {
+    questionIds: sessionState.questions.map((question) => question.id),
+    index: sessionState.index,
+    mode: sessionState.mode,
+    year: sessionState.year,
+    category: sessionState.category,
+    srsMode: sessionState.srsMode || null,
+    submitted: sessionState.submitted,
+    userAns: sessionState.userAns,
+    correct: sessionState.correct,
+    elapsed: Date.now() - sessionState.startMs
+  };
+  await saveProgressState();
+}
+
+async function clearSavedSession() {
+  progressState.saved = null;
+  await saveProgressState();
+}
+
+async function ensureMemoSaved(showStatus = false) {
+  clearTimeout(memoSaveTimer);
+  memoSaveTimer = null;
+  if (!sessionState || !currentMemo.id) return;
+  await saveMemoNow(showStatus);
+}
+
+async function renderQuestion() {
+  if (!sessionState) return;
+  const index = sessionState.index;
+  const question = sessionState.questions[index];
+  const total = sessionState.questions.length;
+  const done = Boolean(sessionState.submitted[index]);
+  const userSelection = sessionState.userAns[index] || [];
+  const correctChoices = getCorrectChoices(question);
+  const isMulti = question.multi || correctChoices.length > 1;
+  const need = isMulti ? Math.max(correctChoices.length, 1) : 1;
+
+  const labels = {
+    review: "今日の復習",
+    ease: "弱点集中",
+    recent: "試験前日・当日"
+  };
+  $("quiz-title").textContent = sessionState.srsMode
+    ? `${labels[sessionState.srsMode]} (${total}問)`
+    : `${sessionState.year ? `${sessionState.year}年` : sessionState.category || "全問"} 問題集`;
+  $("q-counter").textContent = `${index + 1} / ${total}`;
+  $("prog-fill").style.width = `${((index + 1) / total) * 100}%`;
+  $("q-score-live").textContent = `✓ ${sessionState.correct}`;
+
+  let badges = `<span class="badge badge-year">${question.year}年 Q${question.num}</span>`;
+  if (question.category) badges += `<span class="badge badge-cat">${escapeHtml(question.category)}</span>`;
+  if (isMulti) badges += `<span class="badge badge-multi">${need}つ選べ</span>`;
+  $("q-badges").innerHTML = badges;
+  $("q-text").textContent = question.text;
+
+  const choices = $("choices");
+  choices.innerHTML = "";
+  Object.keys(question.choices).forEach((label) => {
+    const button = document.createElement("button");
+    button.className = "choice";
+    button.dataset.label = label;
+    const labelSpan = document.createElement("span");
+    labelSpan.className = "choice-lbl";
+    labelSpan.textContent = label;
+    const textSpan = document.createElement("span");
+    textSpan.textContent = question.choices[label];
+    button.appendChild(labelSpan);
+    button.appendChild(textSpan);
+
+    if (done) {
+      button.disabled = true;
+      if (correctChoices.includes(label)) {
+        button.classList.add("is-correct");
+      } else if (userSelection.includes(label)) {
+        button.classList.add("is-wrong");
+      }
+    } else {
+      if (userSelection.includes(label)) {
+        button.classList.add("selected");
+      }
+      button.addEventListener("click", () => toggleChoice(label, need, isMulti));
+    }
+    choices.appendChild(button);
+  });
+
+  const feedback = $("feedback");
+  const expArea = $("exp-area");
+  if (done) {
+    const result = isCorrect(question, userSelection);
+    if (result === null) {
+      feedback.className = "feedback fb-warn";
+      feedback.textContent = "解答未登録 — この問題の正答はまだ登録されていません。";
+    } else if (result) {
+      feedback.className = "feedback fb-ok";
+      feedback.innerHTML = '<span>✓ 正解</span><button class="btn-mark-wrong" id="btn-mark-wrong">未正解リストへ</button>';
+      $("btn-mark-wrong").addEventListener("click", () => {
+        void markAsWrong();
+      });
+    } else {
+      feedback.className = "feedback fb-ng";
+      feedback.textContent = `✗ 不正解 — 正解: ${correctChoices.join(", ")}`;
+    }
+    feedback.classList.remove("hidden");
+    if (question.explanation.trim()) {
+      $("exp-text").textContent = question.explanation;
+      expArea.classList.remove("hidden");
+    } else {
+      expArea.classList.add("hidden");
+    }
+  } else {
+    feedback.classList.add("hidden");
+    expArea.classList.add("hidden");
+  }
+
+  const srsArea = $("srs-rating-area");
+  if (done && sessionState.srsMode) {
+    srsArea.classList.remove("hidden");
+    $("srs-pool-note").textContent = sessionState.srsMode === "review"
+      ? "評価後に次の問題へ進みます（SM-2間隔を更新）"
+      : "評価はスケジュールに影響しません（確認用）";
+  } else {
+    srsArea.classList.add("hidden");
+  }
+
+  if (done) {
+    show("memo-area");
+    await renderMemo(question.id);
+  } else {
+    cleanupCurrentMemoUrls();
+    currentMemo = blankMemo("");
+    hide("memo-area");
+  }
+
+  const prev = $("btn-prev");
+  const submit = $("btn-submit");
+  const next = $("btn-next");
+  if (index > 0) show("btn-prev");
+  else hide("btn-prev");
+
+  if (done) {
+    hide("btn-submit");
+    if (sessionState.srsMode) {
+      hide("btn-next");
+    } else {
+      show("btn-next");
+      next.textContent = index < total - 1 ? "次へ →" : sessionState.mode === "view" ? "← 検索に戻る" : "結果を見る";
+    }
+  } else {
+    show("btn-submit");
+    submit.disabled = userSelection.length === 0;
+    hide("btn-next");
+  }
+}
+
+function toggleChoice(label, need, isMulti) {
+  if (!sessionState) return;
+  const index = sessionState.index;
+  if (!sessionState.userAns[index]) sessionState.userAns[index] = [];
+  const selected = sessionState.userAns[index];
+  if (!isMulti) {
+    sessionState.userAns[index] = [label];
+  } else {
+    const position = selected.indexOf(label);
+    if (position > -1) {
+      selected.splice(position, 1);
+    } else if (selected.length < need) {
+      selected.push(label);
+    }
+  }
+  void renderQuestion();
+}
+
+async function submitAnswer() {
+  if (!sessionState) return;
+  const index = sessionState.index;
+  const question = sessionState.questions[index];
+  const userSelection = sessionState.userAns[index] || [];
+  if (!userSelection.length) return;
+
+  sessionState.submitted[index] = true;
+  const result = isCorrect(question, userSelection);
+  if (result === true) {
+    sessionState.correct += 1;
+  }
+
+  progressState.perQ[question.id] = {
+    correct: result,
+    userAnswer: userSelection.join(","),
+    updatedAt: Date.now()
+  };
+  await saveProgressState();
+
+  if (result === false) {
+    await SRS.addToPool(question);
+  }
+  await renderQuestion();
+}
+
+async function nextQuestion() {
+  if (!sessionState) return;
+  await ensureMemoSaved(false);
+  if (sessionState.index < sessionState.questions.length - 1) {
+    sessionState.index += 1;
+    await renderQuestion();
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  } else if (sessionState.mode === "view") {
+    sessionState = null;
+    showPage("pg-search");
+  } else {
+    await finishSession();
+  }
+}
+
+async function previousQuestion() {
+  if (!sessionState || sessionState.index === 0) return;
+  await ensureMemoSaved(false);
+  sessionState.index -= 1;
+  await renderQuestion();
+  window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+}
+
+async function finishSession() {
+  if (!sessionState) return;
+  cleanupWrongMemoUrls();
+  const elapsed = Math.round((Date.now() - sessionState.startMs) / 1000);
+  const total = Object.keys(sessionState.submitted).length;
+  const correct = sessionState.correct;
+  const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
+
+  await clearSavedSession();
+  progressState.sessions.unshift({
+    dateMs: Date.now(),
+    year: sessionState.year,
+    category: sessionState.category,
+    mode: sessionState.mode,
+    total,
+    correct,
+    pct,
+    elapsed
+  });
+  progressState.sessions = progressState.sessions.slice(0, MAX_SESSIONS);
+  await saveProgressState();
+
+  $("res-pct").textContent = `${pct}%`;
+  $("res-correct").textContent = String(correct);
+  $("res-total").textContent = String(total);
+  $("res-time").textContent = formatDuration(elapsed);
+  const circumference = 345.4;
+  const ring = $("sc-fill");
+  setTimeout(() => {
+    ring.style.strokeDashoffset = String(circumference * (1 - pct / 100));
+    ring.style.stroke = pct >= 80 ? "#16a34a" : pct >= 60 ? "#d97706" : "#dc2626";
+  }, 60);
+
+  const wrongQuestions = [];
+  sessionState.questions.forEach((question, idx) => {
+    if (sessionState.submitted[idx] && isCorrect(question, sessionState.userAns[idx] || []) === false) {
+      wrongQuestions.push({ question, userAnswer: sessionState.userAns[idx] || [] });
+    }
+  });
+
+  $("wrong-count").textContent = String(wrongQuestions.length);
+  const wrongList = $("wrong-list");
+  wrongList.innerHTML = "";
+  if (!wrongQuestions.length) {
+    wrongList.innerHTML = '<div class="empty"><div class="empty-icon">🎉</div><div>不正解問題はありません。</div></div>';
+    $("btn-retry").style.display = "none";
+  } else {
+    $("btn-retry").style.display = "";
+    for (const item of wrongQuestions) {
+      const wrapper = document.createElement("div");
+      wrapper.className = "wrong-item";
+      wrapper.innerHTML =
+        `<div class="wi-head">${item.question.year}年 Q${item.question.num}</div>` +
+        `<div class="wi-text">${escapeHtml(item.question.text)}</div>` +
+        `<div class="wi-ans"><span class="tag tag-ng">あなた: ${escapeHtml(item.userAnswer.join(", ") || "未")}</span><span class="tag tag-ok">正解: ${escapeHtml(getCorrectChoices(item.question).join(", "))}</span></div>`;
+      if (item.question.explanation.trim()) {
+        const exp = document.createElement("div");
+        exp.className = "wi-exp";
+        exp.textContent = item.question.explanation.length > 220
+          ? `${item.question.explanation.slice(0, 220)}…`
+          : item.question.explanation;
+        wrapper.appendChild(exp);
+      }
+      const memoContainer = document.createElement("div");
+      memoContainer.className = "wi-memo hidden";
+      memoContainer.dataset.qid = item.question.id;
+      memoContainer.innerHTML = '<div class="wi-memo-label">学習メモ</div>';
+      wrapper.appendChild(memoContainer);
+      wrongList.appendChild(wrapper);
+      await appendWrongMemo(memoContainer, item.question.id);
+    }
+  }
+
+  showPage("pg-result");
+}
+
+async function retryWrong() {
+  if (!sessionState) return;
+  const wrong = [];
+  sessionState.questions.forEach((question, idx) => {
+    if (sessionState.submitted[idx] && isCorrect(question, sessionState.userAns[idx] || []) === false) {
+      wrong.push(question);
+    }
+  });
+  if (!wrong.length) {
+    showToast("再挑戦する不正解問題はありません。", "info");
+    return;
+  }
+  sessionState = {
+    questions: shuffle(wrong.slice()),
+    index: 0,
+    mode: "retry",
+    year: null,
+    category: null,
+    srsMode: null,
+    submitted: {},
+    userAns: {},
+    correct: 0,
+    startMs: Date.now()
+  };
+  await renderQuestion();
+  showPage("pg-quiz");
+}
+
+async function renderStats() {
+  const total = QUESTIONS.length;
+  const attempted = Object.keys(progressState.perQ).length;
+  const correct = Object.values(progressState.perQ).filter((record) => record.correct).length;
+  const pct = attempted > 0 ? Math.round((correct / attempted) * 100) : 0;
+
+  $("ov-grid").innerHTML =
+    `<div class="ov-card"><div class="ov-label">総正解率</div><div class="ov-val">${pct}%</div><div class="ov-sub">${correct}/${attempted}問</div></div>` +
+    `<div class="ov-card"><div class="ov-label">解答済み</div><div class="ov-val">${attempted}</div><div class="ov-sub">全${total}問中</div></div>` +
+    `<div class="ov-card"><div class="ov-label">未解答</div><div class="ov-val">${total - attempted}</div><div class="ov-sub">問</div></div>` +
+    `<div class="ov-card"><div class="ov-label">セッション数</div><div class="ov-val">${progressState.sessions.length}</div><div class="ov-sub">回</div></div>`;
+
+  const yearBreakdown = $("yr-breakdown");
+  yearBreakdown.innerHTML = "";
+  YEARS.forEach((year) => {
+    const questions = QUESTIONS.filter((question) => question.year === year);
+    const answered = questions.filter((question) => Boolean(recordForQuestion(question))).length;
+    const correctCount = questions.filter((question) => {
+      const record = recordForQuestion(question);
+      return record && record.correct;
+    }).length;
+    const yearPct = answered > 0 ? Math.round((correctCount / answered) * 100) : 0;
+    const color = yearPct >= 80 ? "#16a34a" : yearPct >= 60 ? "#d97706" : "#1d4ed8";
+    yearBreakdown.innerHTML +=
+      `<div class="yr-row"><div class="yr-top"><span class="yr-name">${year}年</span><span class="yr-pct" style="color:${color}">${answered > 0 ? `${yearPct}%` : "未挑戦"}</span></div><div class="yr-bar"><div class="yr-fill" style="width:${Math.round((answered / questions.length) * 100)}%;background:${color}"></div></div><div class="yr-sub">${answered}/${questions.length}問解答 · 正解 ${correctCount}問</div></div>`;
+  });
+
+  const catBreakdown = $("cat-breakdown");
+  catBreakdown.innerHTML = "";
+  CATEGORIES.forEach((category) => {
+    const questions = QUESTIONS.filter((question) => question.category === category);
+    const answered = questions.filter((question) => Boolean(recordForQuestion(question))).length;
+    const correctCount = questions.filter((question) => {
+      const record = recordForQuestion(question);
+      return record && record.correct;
+    }).length;
+    const catPct = answered > 0 ? Math.round((correctCount / answered) * 100) : 0;
+    const color = catPct >= 80 ? "#16a34a" : catPct >= 60 ? "#d97706" : "#7c3aed";
+    catBreakdown.innerHTML +=
+      `<div class="yr-row"><div class="yr-top"><span class="yr-name">${escapeHtml(category)}</span><span class="yr-pct" style="color:${color}">${answered > 0 ? `${catPct}%` : "未挑戦"}</span></div><div class="yr-bar"><div class="yr-fill" style="width:${Math.round((answered / questions.length) * 100)}%;background:${color}"></div></div><div class="yr-sub">${answered}/${questions.length}問解答 · 正解 ${correctCount}問</div></div>`;
+  });
+
+  const history = $("hist-list");
+  history.innerHTML = "";
+  if (!progressState.sessions.length) {
+    history.innerHTML = '<div class="empty"><div class="empty-icon">📋</div><div>まだセッション履歴がありません。</div></div>';
+    return;
+  }
+  progressState.sessions.slice(0, 15).forEach((session) => {
+    const title = session.year ? `${session.year}年 ${modeLabel(session.mode)}` : session.category ? `${session.category} ${modeLabel(session.mode)}` : `全問 ${modeLabel(session.mode)}`;
+    history.innerHTML +=
+      `<div class="hist-item"><div><div class="hi-title">${escapeHtml(title)}</div><div class="hi-meta">${formatTimestamp(session.dateMs)} · ${formatDuration(session.elapsed || 0)}</div></div><div class="hi-score">${session.correct}/${session.total} (${session.pct}%)</div></div>`;
+  });
+}
+
+async function startSrsReview() {
+  const due = await SRS.getDue();
+  if (!due.length) {
+    showToast("今日の復習はありません。通常モードで新しい問題を進めましょう。", "info", 3400);
+    return;
+  }
+  const questions = hydrateQuestionIds(due.map((item) => item.id));
+  sessionState = {
+    questions,
+    index: 0,
+    mode: "srs",
+    year: null,
+    category: null,
+    srsMode: "review",
+    submitted: {},
+    userAns: {},
+    correct: 0,
+    startMs: Date.now()
+  };
+  await renderQuestion();
+  showPage("pg-quiz");
+}
+
+async function openSrsModal(type) {
+  srsTarget = type;
+  const pool = type === "ease" ? await SRS.getEaseSorted() : await SRS.getRecentWrong();
+  if (!pool.length) {
+    showToast(type === "ease" ? "弱点プールがまだ空です。" : "直近3回で不正解の問題がありません。", "info");
+    return;
+  }
+  $("srs-modal-title").textContent = type === "ease" ? "弱点集中（ease順）" : "試験前日・当日";
+  $("srs-modal-info").textContent = `対象: ${pool.length}問`;
+  openOverlay("srs-modal-bg");
+}
+
+function closeSrsModal() {
+  closeOverlay("srs-modal-bg");
+}
+
+async function startSrsCram(limit) {
+  closeSrsModal();
+  const pool = srsTarget === "ease" ? await SRS.getEaseSorted(limit) : await SRS.getRecentWrong(limit);
+  if (!pool.length) {
+    showToast("対象の問題がありません。", "warn");
+    return;
+  }
+  const questions = hydrateQuestionIds(pool.map((item) => item.id));
+  sessionState = {
+    questions,
+    index: 0,
+    mode: "srs",
+    year: null,
+    category: null,
+    srsMode: srsTarget === "ease" ? "ease" : "recent",
+    submitted: {},
+    userAns: {},
+    correct: 0,
+    startMs: Date.now()
+  };
+  await renderQuestion();
+  showPage("pg-quiz");
+}
+
+async function handleRating(rating) {
+  if (!sessionState) return;
+  const question = sessionState.questions[sessionState.index];
+  if (sessionState.srsMode === "review") {
+    await SRS.update(question, rating);
+  }
+  hide("srs-rating-area");
+  await renderHome();
+  await nextQuestion();
+}
+
+async function markAsWrong() {
+  if (!sessionState) return;
+  const index = sessionState.index;
+  const question = sessionState.questions[index];
+  const wasCorrect = isCorrect(question, sessionState.userAns[index] || []) === true;
+  progressState.perQ[question.id] = {
+    correct: false,
+    userAnswer: (sessionState.userAns[index] || []).join(","),
+    updatedAt: Date.now()
+  };
+  await saveProgressState();
+  await SRS.addToPool(question);
+  if (wasCorrect && sessionState.correct > 0) {
+    sessionState.correct -= 1;
+  }
+  $("q-score-live").textContent = `✓ ${sessionState.correct}`;
+  const feedback = $("feedback");
+  feedback.className = "feedback fb-warn";
+  feedback.textContent = "未正解リストへ移動しました。";
+  await renderHome();
+}
+
+function openBackupModal() {
+  openOverlay("backup-modal-bg");
+}
+
+function closeBackupModal() {
+  closeOverlay("backup-modal-bg");
+}
+
+function updateMemoRendered() {
+  const rendered = $("memo-rendered");
+  const text = currentMemo.text || "";
+  if (!rendered) return;
+  if (!text.trim()) {
+    rendered.innerHTML = '<span class="memo-rendered-empty">学習メモを記入してください...</span>';
+    return;
+  }
+  const escaped = escapeHtml(text);
+  rendered.innerHTML = escaped.replace(
+    /(https?:\/\/[^\s<>"\u3000-\u30ff\u4e00-\u9fff]+)/g,
+    '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>'
+  );
+}
+
+function enterMemoEdit() {
+  const rendered = $("memo-rendered");
+  const textarea = $("memo-text");
+  if (!rendered || !textarea) return;
+  rendered.classList.add("hidden");
+  textarea.classList.remove("hidden");
+  textarea.focus();
+}
+
+function exitMemoEdit() {
+  const rendered = $("memo-rendered");
+  const textarea = $("memo-text");
+  if (!rendered || !textarea) return;
+  textarea.classList.add("hidden");
+  rendered.classList.remove("hidden");
+  updateMemoRendered();
+}
+
+async function loadMemoAssetImage(assetId) {
+  const asset = await Database.getRecord("memoAssets", assetId);
+  if (!asset || !asset.blob) return null;
+  const url = URL.createObjectURL(asset.blob);
+  currentMemoUrls.push(url);
+  return {
+    id: asset.id,
+    name: asset.name || "memo-image",
+    mimeType: asset.type || asset.blob.type || "image/*",
+    size: asset.blob.size || 0,
+    url
+  };
+}
+
+async function renderMemo(qid) {
+  cleanupCurrentMemoUrls();
+  const memoRecord = await Database.getRecord("memos", qid);
+  const text = memoRecord && typeof memoRecord.text === "string" ? memoRecord.text : "";
+  const imageIds = memoRecord && Array.isArray(memoRecord.imageIds) ? memoRecord.imageIds : [];
+  const images = [];
+  for (const imageId of imageIds) {
+    const image = await loadMemoAssetImage(imageId);
+    if (image) images.push(image);
+  }
+  currentMemo = { id: qid, text, images };
+
+  const textarea = $("memo-text");
+  textarea.value = currentMemo.text;
+  textarea.classList.add("hidden");
+  $("memo-rendered").classList.remove("hidden");
+  updateMemoRendered();
+  renderMemoImages();
+  $("memo-status").textContent = memoRecord && memoRecord.updatedAt ? `保存 ${formatTimestamp(memoRecord.updatedAt)}` : "";
+}
+
+function renderMemoImages() {
+  const wrap = $("memo-imgs");
+  wrap.innerHTML = "";
+  currentMemo.images.forEach((image, index) => {
+    const thumb = document.createElement("div");
+    thumb.className = "memo-img-thumb";
+    const img = document.createElement("img");
+    img.src = image.url;
+    img.alt = image.name;
+    img.addEventListener("click", () => {
+      window.open(image.url, "_blank", "noopener,noreferrer");
+    });
+    const remove = document.createElement("button");
+    remove.className = "memo-img-del";
+    remove.textContent = "✕";
+    remove.addEventListener("click", (event) => {
+      event.stopPropagation();
+      void deleteMemoImage(index);
+    });
+    thumb.appendChild(img);
+    thumb.appendChild(remove);
+    wrap.appendChild(thumb);
+  });
+}
+
+function scheduleMemoSave() {
+  clearTimeout(memoSaveTimer);
+  memoSaveTimer = setTimeout(() => {
+    void saveMemoNow(true);
+  }, 900);
+}
+
+async function saveMemoNow(showStatus) {
+  if (!currentMemo.id) return;
+  currentMemo.text = $("memo-text").value;
+  updateMemoRendered();
+  const record = {
+    id: currentMemo.id,
+    text: currentMemo.text,
+    imageIds: currentMemo.images.map((image) => image.id),
+    updatedAt: Date.now()
+  };
+  if (!record.text.trim() && record.imageIds.length === 0) {
+    await Database.deleteRecord("memos", currentMemo.id);
+    if (showStatus) $("memo-status").textContent = "";
+    return;
+  }
+  await Database.putRecord("memos", record);
+  if (showStatus) {
+    $("memo-status").textContent = "保存済み ✓";
+    setTimeout(() => {
+      if ($("memo-status").textContent === "保存済み ✓") {
+        $("memo-status").textContent = `保存 ${formatTimestamp(record.updatedAt)}`;
+      }
+    }, 1800);
+  } else {
+    $("memo-status").textContent = `保存 ${formatTimestamp(record.updatedAt)}`;
+  }
+}
+
+async function addMemoImage(file) {
+  if (!currentMemo.id) return;
+  const assetId = `${currentMemo.id}:${Date.now()}:${Math.random().toString(16).slice(2, 8)}`;
+  await Database.putRecord("memoAssets", {
+    id: assetId,
+    name: file.name || "memo-image",
+    type: file.type || "image/png",
+    createdAt: Date.now(),
+    blob: file
+  });
+  const url = URL.createObjectURL(file);
+  currentMemoUrls.push(url);
+  currentMemo.images.push({
+    id: assetId,
+    name: file.name || "memo-image",
+    mimeType: file.type || "image/png",
+    size: file.size || 0,
+    url
+  });
+  renderMemoImages();
+  await saveMemoNow(true);
+}
+
+async function deleteMemoImage(index) {
+  const target = currentMemo.images[index];
+  if (!target) return;
+  await Database.deleteRecord("memoAssets", target.id);
+  if (target.url && target.url.startsWith("blob:")) {
+    URL.revokeObjectURL(target.url);
+  }
+  currentMemo.images.splice(index, 1);
+  renderMemoImages();
+  await saveMemoNow(true);
+}
+
+function insertTemplate(kind) {
+  const snippet = TEMPLATE_INSERTIONS[kind];
+  if (!snippet) return;
+  if ($("memo-text").classList.contains("hidden")) {
+    enterMemoEdit();
+  }
+  const textarea = $("memo-text");
+  const start = textarea.selectionStart || textarea.value.length;
+  const end = textarea.selectionEnd || textarea.value.length;
+  const nextValue = textarea.value.slice(0, start) + snippet + textarea.value.slice(end);
+  textarea.value = nextValue;
+  textarea.selectionStart = textarea.selectionEnd = start + snippet.length;
+  currentMemo.text = textarea.value;
+  scheduleMemoSave();
+}
+
+async function appendWrongMemo(container, qid) {
+  const memoRecord = await Database.getRecord("memos", qid);
+  if (!memoRecord || (!memoRecord.text && !(memoRecord.imageIds || []).length)) return;
+  if (memoRecord.text) {
+    const body = document.createElement("div");
+    body.className = "wi-memo-text";
+    body.textContent = memoRecord.text;
+    container.appendChild(body);
+  }
+  if (Array.isArray(memoRecord.imageIds) && memoRecord.imageIds.length) {
+    const wrap = document.createElement("div");
+    wrap.className = "wi-memo-imgs";
+    for (const imageId of memoRecord.imageIds) {
+      const asset = await Database.getRecord("memoAssets", imageId);
+      if (!asset || !asset.blob) continue;
+      const url = URL.createObjectURL(asset.blob);
+      wrongMemoUrls.push(url);
+      const image = document.createElement("img");
+      image.src = url;
+      image.alt = asset.name || "memo-image";
+      image.addEventListener("click", () => {
+        window.open(url, "_blank", "noopener,noreferrer");
+      });
+      wrap.appendChild(image);
+    }
+    if (wrap.children.length) {
+      container.appendChild(wrap);
+    }
+  }
+  container.classList.remove("hidden");
+}
+
+async function searchMemos(term) {
+  const all = await Database.getAll("memos");
+  const normalized = term.toLowerCase();
+  return all
+    .filter((memo) => memo.text && memo.text.toLowerCase().includes(normalized))
+    .map((memo) => ({
+      id: memo.id,
+      memoText: memo.text
+    }));
+}
+
+async function doSearch() {
+  const term = $("search-input").value.trim();
+  const output = $("search-results");
+  if (!term) {
+    output.innerHTML = "";
+    return;
+  }
+  output.innerHTML = '<div class="empty">検索中...</div>';
+  const normalized = term.toLowerCase();
+  const questionResults = QUESTIONS.filter((question) => buildSearchIndex(question).includes(normalized));
+  const memoResults = await searchMemos(term);
+  renderSearchResults(questionResults, memoResults, term);
+}
+
+function makeSearchResultCard(question, extraHtml) {
+  const div = document.createElement("div");
+  div.className = "search-result-item";
+  let head = `<div class="sri-head"><span class="badge badge-year">${question.year}年 Q${question.num}</span>`;
+  if (question.category) head += `<span class="badge badge-cat">${escapeHtml(question.category)}</span>`;
+  head += "</div>";
+  const text = `<div class="sri-qtext">${escapeHtml(question.text.length > 120 ? `${question.text.slice(0, 120)}…` : question.text)}</div>`;
+  div.innerHTML = head + text + (extraHtml || "");
+  div.addEventListener("click", () => {
+    void viewQuestion(question.year, question.num);
+  });
+  return div;
+}
+
+function renderSearchResults(questionResults, memoResults, term) {
+  const output = $("search-results");
+  output.innerHTML = "";
+  if (!questionResults.length && !memoResults.length) {
+    output.innerHTML = `<div class="empty"><div class="empty-icon">🔍</div><div>「${escapeHtml(term)}」に一致する結果はありません。</div></div>`;
+    return;
+  }
+
+  const questionSection = document.createElement("div");
+  const questionLabel = document.createElement("div");
+  questionLabel.className = "section-label";
+  questionLabel.textContent = `問題欄 — ${questionResults.length}件`;
+  questionSection.appendChild(questionLabel);
+  if (!questionResults.length) {
+    questionSection.innerHTML += '<div class="empty" style="padding:10px 0;font-size:.85rem">問題文・解説・選択肢・カテゴリに一致する結果はありません。</div>';
+  } else {
+    questionResults.forEach((question) => {
+      questionSection.appendChild(makeSearchResultCard(question, ""));
+    });
+  }
+  output.appendChild(questionSection);
+
+  const memoSection = document.createElement("div");
+  memoSection.style.marginTop = "16px";
+  const memoLabel = document.createElement("div");
+  memoLabel.className = "section-label";
+  memoLabel.textContent = `メモ欄 — ${memoResults.length}件`;
+  memoSection.appendChild(memoLabel);
+  if (!memoResults.length) {
+    memoSection.innerHTML += '<div class="empty" style="padding:10px 0;font-size:.85rem">メモに一致する結果はありません。</div>';
+  } else {
+    memoResults.forEach((item) => {
+      const question = QUESTION_MAP.get(item.id);
+      if (!question) return;
+      const preview = escapeHtml(item.memoText.length > 180 ? `${item.memoText.slice(0, 180)}…` : item.memoText);
+      memoSection.appendChild(makeSearchResultCard(question, `<div class="sri-memo">${preview}</div>`));
+    });
+  }
+  output.appendChild(memoSection);
+}
+
+async function viewQuestion(year, num) {
+  const question = QUESTION_MAP.get(`${year}-${num}`);
+  if (!question) return;
+  const record = recordForQuestion(question);
+  sessionState = {
+    questions: [question],
+    index: 0,
+    mode: "view",
+    year: null,
+    category: null,
+    srsMode: null,
+    submitted: {},
+    userAns: {},
+    correct: 0,
+    startMs: Date.now()
+  };
+  if (record) {
+    sessionState.submitted[0] = true;
+    sessionState.userAns[0] = record.userAnswer ? record.userAnswer.split(",").filter(Boolean) : [];
+    if (record.correct) sessionState.correct = 1;
+  }
+  await renderQuestion();
+  showPage("pg-quiz");
+}
+
+async function goHome() {
+  if (sessionState && Object.keys(sessionState.submitted).length > 0 && sessionState.mode !== "view") {
+    const confirmed = await askConfirm({
+      title: "ホームへ戻りますか？",
+      message: "進捗は「続きから再開」として保存されます。",
+      confirmText: "保存して戻る"
+    });
+    if (!confirmed) return;
+    await saveSessionState();
+  }
+  await renderHome();
+  showPage("pg-home");
+}
+
+async function pauseSession() {
+  if (sessionState && sessionState.mode === "view") {
+    sessionState = null;
+    showPage("pg-search");
+    return;
+  }
+  await ensureMemoSaved(false);
+  await saveSessionState();
+  await renderHome();
+  showPage("pg-home");
+  showToast("中断しました。ホームから続きに戻れます。", "success");
+}
+
+async function handleImportSelection(event) {
+  const file = event.target.files && event.target.files[0];
+  event.target.value = "";
+  if (!file) return;
+  const confirmed = await askConfirm({
+    title: "バックアップを復元しますか？",
+    message: "現在の学習履歴、メモ、SRSはバックアップ内容で置き換わります。",
+    confirmText: "復元する"
+  });
+  if (!confirmed) return;
+  try {
+    await importBackupFromFile(file);
+  } catch (error) {
+    console.error(error);
+    showToast(error.message || "バックアップの復元に失敗しました。", "error", 3600);
+  }
+}
+
+async function registerServiceWorker() {
+  if (FILE_PROTOCOL || !("serviceWorker" in navigator)) return;
+  try {
+    await navigator.serviceWorker.register("./service-worker.js");
+  } catch (error) {
+    console.warn("service worker registration failed", error);
+  }
+}
+
+async function requestPersistentStorage() {
+  if (navigator.storage && navigator.storage.persist) {
+    try {
+      await navigator.storage.persist();
+    } catch (error) {
+      console.warn("storage persistence request failed", error);
+    }
+  }
+}
+
+function wireEvents() {
+  $("btn-search").addEventListener("click", () => {
+    $("search-input").value = "";
+    $("search-results").innerHTML = "";
+    showPage("pg-search");
+  });
+  $("btn-stats").addEventListener("click", async () => {
+    await renderStats();
+    showPage("pg-stats");
+  });
+  $("btn-backup").addEventListener("click", openBackupModal);
+  $("btn-all").addEventListener("click", () => openModeModal("all"));
+  $("btn-wrong").addEventListener("click", () => openModeModal("wrong"));
+  $("btn-unseen").addEventListener("click", () => openModeModal("unseen"));
+  $("btn-resume").addEventListener("click", () => {
+    void resumeSession();
+  });
+
+  $("modal-seq").addEventListener("click", () => {
+    void startQuiz("seq");
+  });
+  $("modal-rand").addEventListener("click", () => {
+    void startQuiz("rand");
+  });
+  $("modal-rand10").addEventListener("click", () => {
+    void startQuiz("rand10");
+  });
+  $("modal-cancel").addEventListener("click", closeModeModal);
+  $("modal-bg").addEventListener("click", (event) => {
+    if (event.target === $("modal-bg")) closeModeModal();
+  });
+
+  $("btn-pause").addEventListener("click", () => {
+    void pauseSession();
+  });
+  $("btn-quiz-home").addEventListener("click", () => {
+    void goHome();
+  });
+  $("btn-submit").addEventListener("click", () => {
+    void submitAnswer();
+  });
+  $("btn-next").addEventListener("click", () => {
+    void nextQuestion();
+  });
+  $("btn-prev").addEventListener("click", () => {
+    void previousQuestion();
+  });
+
+  $("btn-result-home").addEventListener("click", async () => {
+    sessionState = null;
+    await renderHome();
+    showPage("pg-home");
+  });
+  $("btn-result-home2").addEventListener("click", async () => {
+    sessionState = null;
+    await renderHome();
+    showPage("pg-home");
+  });
+  $("btn-retry").addEventListener("click", () => {
+    void retryWrong();
+  });
+
+  $("btn-stats-home").addEventListener("click", async () => {
+    await renderHome();
+    showPage("pg-home");
+  });
+
+  $("btn-search-home").addEventListener("click", async () => {
+    await renderHome();
+    showPage("pg-home");
+  });
+  $("btn-do-search").addEventListener("click", () => {
+    void doSearch();
+  });
+  $("search-input").addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      void doSearch();
+    }
+  });
+
+  $("btn-srs-today").addEventListener("click", () => {
+    void startSrsReview();
+  });
+  $("btn-srs-ease").addEventListener("click", () => {
+    void openSrsModal("ease");
+  });
+  $("btn-srs-recent").addEventListener("click", () => {
+    void openSrsModal("recent");
+  });
+  $("srs-modal-20").addEventListener("click", () => {
+    void startSrsCram(20);
+  });
+  $("srs-modal-50").addEventListener("click", () => {
+    void startSrsCram(50);
+  });
+  $("srs-modal-all").addEventListener("click", () => {
+    void startSrsCram(null);
+  });
+  $("srs-modal-cancel").addEventListener("click", closeSrsModal);
+  $("srs-modal-bg").addEventListener("click", (event) => {
+    if (event.target === $("srs-modal-bg")) closeSrsModal();
+  });
+
+  $("btn-rate-0").addEventListener("click", () => {
+    void handleRating(0);
+  });
+  $("btn-rate-1").addEventListener("click", () => {
+    void handleRating(1);
+  });
+  $("btn-rate-2").addEventListener("click", () => {
+    void handleRating(2);
+  });
+
+  $("memo-rendered").addEventListener("click", enterMemoEdit);
+  $("memo-text").addEventListener("input", () => {
+    currentMemo.text = $("memo-text").value;
+    scheduleMemoSave();
+  });
+  $("memo-text").addEventListener("blur", () => {
+    exitMemoEdit();
+    void saveMemoNow(false);
+  });
+  $("memo-text").addEventListener("paste", (event) => {
+    const items = Array.from((event.clipboardData || window.clipboardData).items || []);
+    const imageItem = items.find((item) => item.type && item.type.includes("image"));
+    if (imageItem) {
+      event.preventDefault();
+      const file = imageItem.getAsFile();
+      if (file) {
+        void addMemoImage(file);
+      }
+    }
+  });
+  $("memo-file-input").addEventListener("change", async (event) => {
+    const files = Array.from(event.target.files || []);
+    for (const file of files) {
+      await addMemoImage(file);
+    }
+    event.target.value = "";
+  });
+  document.querySelectorAll(".template-chip").forEach((button) => {
+    button.addEventListener("click", () => insertTemplate(button.dataset.template));
+  });
+
+  $("btn-export-data").addEventListener("click", () => {
+    void exportBackup();
+  });
+  $("btn-import-data").addEventListener("click", () => {
+    $("backup-import-input").click();
+  });
+  $("btn-backup-close").addEventListener("click", closeBackupModal);
+  $("backup-modal-bg").addEventListener("click", (event) => {
+    if (event.target === $("backup-modal-bg")) closeBackupModal();
+  });
+  $("backup-import-input").addEventListener("change", (event) => {
+    void handleImportSelection(event);
+  });
+
+  $("confirm-cancel").addEventListener("click", () => resolveConfirm(false));
+  $("confirm-ok").addEventListener("click", () => resolveConfirm(true));
+  $("confirm-modal-bg").addEventListener("click", (event) => {
+    if (event.target === $("confirm-modal-bg")) resolveConfirm(false);
+  });
+
+  window.addEventListener("pagehide", () => {
+    void ensureMemoSaved(false);
+    void saveSessionState();
+  });
+}
+
+function showFatalError(error) {
+  console.error(error);
+  const home = $("pg-home");
+  home.innerHTML =
+    '<div class="page"><div class="scroll-area"><div class="inner"><div class="empty"><div class="empty-icon">⚠️</div><div>アプリの初期化に失敗しました。</div><div style="margin-top:8px;color:#64748b;font-size:.9rem">questions.json や IndexedDB の状態を確認してください。</div></div></div></div></div>';
+}
+
+async function init() {
+  try {
+    await Database.init();
+    await loadProgressState();
+    const legacyImportResult = await importLegacyMemosIfNeeded();
+    QUESTIONS = await loadQuestions();
+    QUESTION_MAP = new Map(QUESTIONS.map((question) => [question.id, question]));
+    YEARS = Array.from(new Set(QUESTIONS.map((question) => question.year))).sort((a, b) => a - b);
+    CATEGORIES = getCategoryOrder(Array.from(new Set(QUESTIONS.map((question) => question.category))));
+    setRuntimeBanner();
+    wireEvents();
+    await requestPersistentStorage();
+    await renderHome();
+    await registerServiceWorker();
+    if (legacyImportResult && legacyImportResult.imported) {
+      showToast(`旧版メモを ${legacyImportResult.imported} 件引き継ぎました。`, "success", 4200);
+    }
+  } catch (error) {
+    showFatalError(error);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  void init();
+});

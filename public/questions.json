@@ -780,8 +780,8 @@
     },
     "answer": "d,e",
     "multi": true,
-    "explanation": "a,b：0〜2歳の乳幼児では50％の頻度で正常胸腺が上縦隔の陰影として胸部 Xpで確認できる。特に、左葉よりも右葉の拡大をみることが多く、上縦隔から右肺野に突出する三角形の胸腺陰影はヨットの帆に似ていることから、sail signと呼ばれる。胸腺が肋軟骨で圧排されるために生じるwave signもよく知られている。\n(https://www.teramoto.or.jp/teramoto_hp/kousin/sinryou/gazoushindan/case/case8/index.html))\n(http://nagasawanorio.cocolog-nifty.com/blog/2013/03/x-dc23.html)\nc：The thymic notch sign represents the normal thymus in a newborn on a frontal chest radiograph. Interruption of the cardiac silhouette forms a notch, which may be seen on either side, but more frequently is seen on the left side.\n(https://radiopaedia.org/articles/thymic-notch-sign)\nd：The spinnaker sign (also known as the angel wing sign) is a sign of pneumomediastinum seen on neonatal chest radiographs. It refers to the thymus being outlined by air with each lobe displaced laterally and appearing like spinnaker sails.\n( https://radiopaedia.org/articles/spinnaker-sign-mediastinum)\ne：The double-density sign, also known as the double right heart border, is seen on frontal chest radiographs in the presence of left atrial enlargement, and occurs when the right side of the left atrium extends behind the right cardiac shadow, indenting the adjacent lung and forming its own distinct silhouette.\n(https://radiopaedia.org/articles/double-density-sign-left-atrium)\n被虐待児症候群と関連が低いのはどれか。1つ選べ。",
-    "category": "医の倫理・医療の質"
+    "explanation": "d spinnaker sign: 縦隔気腫。乳幼児に縦隔気腫が生じると、縦隔内に貯留した空気が胸腺を上方に押し上げます。\n胸腺の周囲を空気が取り囲むことで、ヨットのスピネーカー（追い風用の帆）のように見えるサインであり、「angel wing sign（天使の羽サイン）」と呼ばれることもあります。\ne distinct cardiac border sign: 気胸。新生児や乳児が仰臥位（仰向け）でポータブル撮影された場合、空気は前方の内側（縦隔寄り）に貯留しやすくなります。\nこの縦隔に接して貯留した気胸により、心陰影の辺縁が異常に鮮明（くっきり）と描出される病的サインです。\nその他の選択肢（正常胸腺のサイン：病的ではない）： 以下の3つは、新生児・乳児において正常な胸腺が作る代表的な陰影であり、病的所見ではありません。\na sail sign: 胸腺の右葉下縁が、上中葉間胸膜（minor fissure）によって直線状に区切られ、ヨットの帆のように見える正常サイン。\nb wavy sign: 胸腺は非常に柔らかい組織であるため、前方の肋骨や肋間隙に圧迫されて辺縁が波打つように（陥凹して）見える正常サインです。Thymic wave signとも呼ばれる。\nc notch sign: 正面像において、心陰影と胸腺陰影の境界部分に見られる切れ込み（くびれ）のことです。左側に多く見られる正常サインです。",
+    "category": "小児"
   },
   {
     "year": 2016,

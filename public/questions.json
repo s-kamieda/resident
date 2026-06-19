@@ -1806,12 +1806,18 @@
       "b": "入射光子 反跳電子 散乱光子",
       "c": "入射電子 散乱光子 反跳電子",
       "d": "入射電子 反跳光子 散乱電子",
-      "e": "入射光子 散乱電子 反跳光子 (B) (A) (C)"
+      "e": "入射光子 散乱電子 反跳光子"
     },
+    "images": [
+      {
+        "src": "assets/questions/2017/q8-compton-diagram.png",
+        "alt": "コンプトン効果の模式図"
+      }
+    ],
     "answer": "b",
     "multi": false,
     "explanation": "コンプトン効果：入射光子が電子と相互作用し、反跳電子（recoil electron）と散乱光子（scattered photon）を生じる。（A）=入射光子、（B）=反跳電子、（C）=散乱光子。",
-    "category": "医の倫理・医療の質"
+    "category": "医学物理学"
   },
   {
     "year": 2017,

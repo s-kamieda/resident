@@ -1,4 +1,4 @@
-const CACHE_NAME = "rad-quiz-cache-20260513-112819";
+const CACHE_NAME = "rad-quiz-cache-20260619-q86-image";
 const STATIC_ASSETS = [
   "./",
   "./専門医試験_問題集.html",
@@ -11,7 +11,8 @@ const STATIC_ASSETS = [
   "./icon.svg",
   "./icon-192.png",
   "./icon-512.png",
-  "./apple-touch-icon-180.png"
+  "./apple-touch-icon-180.png",
+  "./assets/questions/2016/q86-depth-dose.png"
 ];
 
 self.addEventListener("install", (event) => {

@@ -590,6 +590,67 @@ function buildSearchIndex(question) {
     .toLowerCase();
 }
 
+function getQuestionImages(question) {
+  if (!question) return [];
+  const fallbackAlt = `${question.year}年 Q${question.num} 図`;
+
+  if (Array.isArray(question.images)) {
+    return question.images
+      .map((image) => {
+        if (typeof image === "string" && image.trim()) {
+          return { src: image.trim(), alt: fallbackAlt, caption: "" };
+        }
+        if (!image || typeof image.src !== "string" || !image.src.trim()) return null;
+        return {
+          src: image.src.trim(),
+          alt: typeof image.alt === "string" && image.alt.trim() ? image.alt.trim() : fallbackAlt,
+          caption: typeof image.caption === "string" ? image.caption.trim() : ""
+        };
+      })
+      .filter(Boolean);
+  }
+
+  if (typeof question.image === "string" && question.image.trim()) {
+    return [{ src: question.image.trim(), alt: fallbackAlt, caption: "" }];
+  }
+
+  return [];
+}
+
+function renderQuestionImages(question) {
+  const container = $("q-media");
+  if (!container) return;
+
+  container.innerHTML = "";
+  const images = getQuestionImages(question);
+  if (!images.length) {
+    container.classList.add("hidden");
+    return;
+  }
+
+  images.forEach((image, index) => {
+    const figure = document.createElement("figure");
+    figure.className = "q-media-figure";
+
+    const img = document.createElement("img");
+    img.src = image.src;
+    img.alt = image.alt || `${question.year}年 Q${question.num} 図${images.length > 1 ? ` ${index + 1}` : ""}`;
+    img.loading = index === 0 ? "eager" : "lazy";
+    figure.appendChild(img);
+
+    if (image.caption) {
+      const figcaption = document.createElement("figcaption");
+      figcaption.className = "q-media-caption";
+      figcaption.textContent = image.caption;
+      figure.appendChild(figcaption);
+    }
+
+    container.appendChild(figure);
+  });
+
+  container.classList.remove("hidden");
+}
+
 const SRS = {
   POOL_MAX: 100,
 
@@ -1008,6 +1069,7 @@ async function renderQuestion() {
   if (isMulti) badges += `<span class="badge badge-multi">${need}つ選べ</span>`;
   $("q-badges").innerHTML = badges;
   $("q-text").textContent = question.text;
+  renderQuestionImages(question);
 
   const choices = $("choices");
   choices.innerHTML = "";

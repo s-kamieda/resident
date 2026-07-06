@@ -671,16 +671,20 @@ const SRS = {
     const existing = await this.get(id);
     const today = localDateKey();
     if (existing) {
-      const updated = {
+      // 既出問題を再度間違えた＝つまずき（lapse）。難易度を下げ、当日から復習対象へ前倒しする。
+      // これにより、どのモードで間違えても忘却曲線のスケジュールに即反映される。
+      const history = Array.isArray(existing.recentHistory) ? existing.recentHistory.slice(-2) : [];
+      history.push(0);
+      await this.put({
         ...existing,
-        totalWrong: (existing.totalWrong || 0) + 1
-      };
-      if (!existing.inPool) {
-        updated.inPool = true;
-        updated.interval = 0;
-        updated.nextDue = today;
-      }
-      await this.put(updated);
+        easeFactor: Math.max(1.3, Number(existing.easeFactor || 2.5) - 0.2),
+        interval: 1,
+        nextDue: today,
+        recentHistory: history,
+        totalWrong: (existing.totalWrong || 0) + 1,
+        lapses: (existing.lapses || 0) + 1,
+        inPool: true
+      });
       return;
     }
 
@@ -703,6 +707,7 @@ const SRS = {
       nextDue: today,
       recentHistory: [0],
       totalWrong: 1,
+      lapses: 0,
       inPool: true,
       addedDate: today
     });
@@ -767,12 +772,16 @@ const SRS = {
 
   async getStats() {
     const today = localDateKey();
+    const tomorrow = addDaysToKey(today, 1);
+    const weekEnd = addDaysToKey(today, 6);
     const all = await this.all();
     const pool = all.filter((item) => item.inPool);
     return {
       poolSize: pool.length,
       dueCount: pool.filter((item) => item.nextDue <= today).length,
       overdueCount: pool.filter((item) => item.nextDue < today).length,
+      dueTomorrow: pool.filter((item) => item.nextDue === tomorrow).length,
+      dueThisWeek: pool.filter((item) => item.nextDue > today && item.nextDue <= weekEnd).length,
       recentWrongCount: pool.filter((item) => (item.recentHistory || []).includes(0)).length
     };
   }
@@ -861,6 +870,7 @@ async function renderHome() {
 
   const srsStats = await SRS.getStats();
   renderHomeOverview(srsStats);
+  renderRecoAction(srsStats);
   renderWeakCategories();
 
   if (progressState.saved) {
@@ -878,21 +888,57 @@ function renderHomeOverview(stats) {
   const correct = Object.values(progressState.perQ).filter((record) => record.correct).length;
   const accuracy = attempted > 0 ? Math.round((correct / attempted) * 100) : 0;
   $("home-overview").innerHTML =
-    `<div class="ov-card"><div class="ov-label">今日の復習</div><div class="ov-val">${stats.dueCount}</div><div class="ov-sub">期限中</div></div>` +
-    `<div class="ov-card"><div class="ov-label">期限超過</div><div class="ov-val">${stats.overdueCount}</div><div class="ov-sub">先に片付けたい問題</div></div>` +
-    `<div class="ov-card"><div class="ov-label">直近不正解</div><div class="ov-val">${stats.recentWrongCount}</div><div class="ov-sub">直近3回の復習候補</div></div>` +
+    `<div class="ov-card"><div class="ov-label">今日やる復習</div><div class="ov-val">${stats.dueCount}</div><div class="ov-sub">期限中＋超過</div></div>` +
+    `<div class="ov-card"><div class="ov-label">明日</div><div class="ov-val">${stats.dueTomorrow}</div><div class="ov-sub">予定</div></div>` +
+    `<div class="ov-card"><div class="ov-label">今後7日</div><div class="ov-val">${stats.dueThisWeek}</div><div class="ov-sub">予定</div></div>` +
     `<div class="ov-card"><div class="ov-label">総正解率</div><div class="ov-val">${accuracy}%</div><div class="ov-sub">${correct}/${attempted || 0}問</div></div>`;
 
   $("srs-today-desc").textContent = stats.dueCount > 0
-    ? `${stats.dueCount}問 期限中（プール${stats.poolSize}問）`
-    : `今日は期限なし（プール${stats.poolSize}問）`;
-  $("srs-ease-desc").textContent = `ease factor 低い順（プール${stats.poolSize}問）`;
-  $("srs-recent-desc").textContent = `直近3回で不正解（${stats.recentWrongCount}問）`;
+    ? `${stats.dueCount}問 待機中（期限超過${stats.overdueCount}問）`
+    : `今日はゼロ（プール${stats.poolSize}問）`;
+  $("srs-ease-desc").textContent = `弱点を苦手な順に総ざらい（プール${stats.poolSize}問）`;
   if (stats.dueCount > 0) {
     $("srs-today-badge").textContent = String(stats.dueCount);
     show("srs-today-badge");
   } else {
     hide("srs-today-badge");
+  }
+}
+
+function renderRecoAction(stats) {
+  const el = $("reco-action");
+  if (!el) return;
+  const unseen = QUESTIONS.filter((question) => !recordForQuestion(question)).length;
+  if (stats.dueCount > 0) {
+    el.className = "reco-action reco-review";
+    el.innerHTML =
+      `<div class="reco-head">📅 今日の復習</div>` +
+      `<div class="reco-main">${stats.dueCount}<span class="reco-unit">問</span></div>` +
+      `<div class="reco-sub">忘却曲線で「今」が復習の適期です${stats.overdueCount > 0 ? `（うち期限超過 ${stats.overdueCount}問）` : ""}</div>` +
+      `<button class="reco-btn" id="reco-go">復習を始める</button>`;
+  } else if (unseen > 0) {
+    el.className = "reco-action reco-new";
+    el.innerHTML =
+      `<div class="reco-head">✅ 今日の復習は完了</div>` +
+      `<div class="reco-main">未解答 ${unseen}<span class="reco-unit">問</span></div>` +
+      `<div class="reco-sub">新しい問題を進めて、復習プールを育てましょう</div>` +
+      `<button class="reco-btn" id="reco-go">新しい問題へ</button>`;
+  } else {
+    el.className = "reco-action reco-done";
+    el.innerHTML =
+      `<div class="reco-head">🎉 お疲れさまです</div>` +
+      `<div class="reco-main">今日やることは完了</div>` +
+      `<div class="reco-sub">全問クリア＆今日の復習も終わりました</div>`;
+  }
+  const go = $("reco-go");
+  if (go) {
+    go.addEventListener("click", () => {
+      if (stats.dueCount > 0) {
+        void startSrsReview();
+      } else {
+        openModeModal("unseen");
+      }
+    });
   }
 }
 
@@ -1054,8 +1100,8 @@ async function renderQuestion() {
 
   const labels = {
     review: "今日の復習",
-    ease: "弱点集中",
-    recent: "試験前日・当日"
+    ease: "試験直前",
+    recent: "試験直前"
   };
   $("quiz-title").textContent = sessionState.srsMode
     ? `${labels[sessionState.srsMode]} (${total}問)`
@@ -1134,8 +1180,8 @@ async function renderQuestion() {
   if (done && sessionState.srsMode) {
     srsArea.classList.remove("hidden");
     $("srs-pool-note").textContent = sessionState.srsMode === "review"
-      ? "評価後に次の問題へ進みます（SM-2間隔を更新）"
-      : "評価はスケジュールに影響しません（確認用）";
+      ? "評価すると次回の復習日を自動計算します"
+      : "評価は記録しません（間違えた問題は自動で復習予定に入ります）";
   } else {
     srsArea.classList.add("hidden");
   }
@@ -1208,7 +1254,9 @@ async function submitAnswer() {
   };
   await saveProgressState();
 
-  if (result === false) {
+  if (result === false && sessionState.srsMode !== "review") {
+    // 「今日の復習」モードは評価（handleRating→SRS.update）でスケジュールを更新するため二重処理を避ける。
+    // それ以外のモード（年度別・全問・未解答・試験直前など）で間違えた場合はここでプールへ前倒し登録する。
     await SRS.addToPool(question);
   }
   await renderQuestion();
@@ -1421,13 +1469,13 @@ async function startSrsReview() {
 
 async function openSrsModal(type) {
   srsTarget = type;
-  const pool = type === "ease" ? await SRS.getEaseSorted() : await SRS.getRecentWrong();
+  const pool = type === "recent" ? await SRS.getRecentWrong() : await SRS.getEaseSorted();
   if (!pool.length) {
-    showToast(type === "ease" ? "弱点プールがまだ空です。" : "直近3回で不正解の問題がありません。", "info");
+    showToast("復習プールがまだ空です。問題を解いて間違えると、ここに弱点が溜まります。", "info", 3400);
     return;
   }
-  $("srs-modal-title").textContent = type === "ease" ? "弱点集中（ease順）" : "試験前日・当日";
-  $("srs-modal-info").textContent = `対象: ${pool.length}問`;
+  $("srs-modal-title").textContent = "試験直前（弱点まとめ）";
+  $("srs-modal-info").textContent = `苦手な順に ${pool.length}問。何問やりますか？`;
   openOverlay("srs-modal-bg");
 }
 
@@ -1464,6 +1512,13 @@ async function handleRating(rating) {
   const question = sessionState.questions[sessionState.index];
   if (sessionState.srsMode === "review") {
     await SRS.update(question, rating);
+    const rec = await SRS.get(question.id);
+    if (rec && !rec.inPool) {
+      showToast("この問題は習得済みに移行しました 🎉", "info", 2600);
+    } else if (rec && rec.nextDue) {
+      const d = parseDateKey(rec.nextDue);
+      showToast(`次回の復習: ${d.getMonth() + 1}/${d.getDate()}`, "info", 2200);
+    }
   }
   hide("srs-rating-area");
   await renderHome();
@@ -1892,7 +1947,6 @@ function wireEvents() {
   });
   $("btn-backup").addEventListener("click", openBackupModal);
   $("btn-all").addEventListener("click", () => openModeModal("all"));
-  $("btn-wrong").addEventListener("click", () => openModeModal("wrong"));
   $("btn-unseen").addEventListener("click", () => openModeModal("unseen"));
   $("btn-resume").addEventListener("click", () => {
     void resumeSession();
@@ -1965,9 +2019,6 @@ function wireEvents() {
   });
   $("btn-srs-ease").addEventListener("click", () => {
     void openSrsModal("ease");
-  });
-  $("btn-srs-recent").addEventListener("click", () => {
-    void openSrsModal("recent");
   });
   $("srs-modal-20").addEventListener("click", () => {
     void startSrsCram(20);

@@ -19644,7 +19644,7 @@
     "answer": "b",
     "multi": false,
     "explanation": "いずれの選択肢も代謝物質に関わるものですが、クレアチンは病的状態でも濃度が比較的安定しており（internal reference）、高エネルギーリン酸化の程度を反映するわけではないということでしょうか。この出題意図がわかった受験生は果たしているのでしょうか…。\n以下、頭部勘ドコロNEOp120より。\nNAA：N-acetyl aspartate(2.0ppm)。神経細胞の密度に相関する。腫瘍、炎症、脱髄などさまざまな疾患で低下する。\nCr：creatine(3.0ppm, 3.9ppm)。エネルギーを貯蔵する役割を果たす。細胞内に存在。病的状態でも濃度が比較的安定しており、internal referenceとして用いられる。\nCho：choline containing compounds(3.2ppm)。細胞膜に存在し、細胞膜・細胞の代謝の亢進により高値を示す。腫瘍、炎症、脱髄など、多くの疾患で上昇する。\nLac：lactate(1.3ppm)。糖の嫌気性代謝により生成される,悪性腫瘍のほか,脱髄や壊死でも観察される。J-couplingによってニ峰性のpeak (doublet) を形成する。Short TE MRSでは上向きだが、TE=144msec程度で反転し、288mecで再び上向きとなる。\nグリシン：glycine(3.5ppm)。アミノ酸の一種で、myo-inositol(Ins)とほぼ同じ位置にpeakを形成する。Insとは異なりlong TE MRSでも観察できる。 Ins：myo-inositol (3.5ppm)。脳内では神経膠細胞内に存在する。低悪性度神経膠腫や神経膠症 (gliosis) で高値を示す。\nGlx：glutamine and glutamate complex(2.1-2.5ppm)。glutamine (Gln) とglutamate (Glu)は2.1-2.5ppmに多数のpeakをもち、1.5T-3Tの臨床用MRIでは区別が困難である。この2つのpeakを合わせてGlxと呼称する。\nLip：lipid (0.9ppm, 1.3ppm)。壊死組織で観察されるほか、悪性リンパ腫で観察される。CSIでは頭蓋骨や皮下に含まれる脂肪の混入が問題となる。",
-    "category": "医学物理学"
+    "category": "中枢神経（脳・脊髄）"
   },
   {
     "year": 2024,
@@ -19660,7 +19660,7 @@
     "answer": "e",
     "multi": false,
     "explanation": "選択肢中で造影が必要なものはDSCのみです。\nDSC法とDCE法の違いが過去問でも問われていました。こちらも抑えておきましょう。",
-    "category": "医学物理学"
+    "category": "画像診断学総論（モダリティ・造影剤）"
   },
   {
     "year": 2024,
@@ -19692,7 +19692,7 @@
     "answer": "e",
     "multi": false,
     "explanation": "脊髄造影は非イオン性で低浸透圧であるだけでなく、神経毒性の低いもののみが許容されるようです（http://kyodokodo.jp/wp/wp-content/uploads/2018/06/teigen20180516.pdf）。イオン性ヨード造影剤（ウログラフィン）の誤投与が有名ですね。\n昔は油性造影剤も使われており、現在でもその遺残や合併症がみられます（https://radiology-history.online/history-neuro2.html）。\nGd造影剤は添付文書上「髄腔内には投与しないこと」となっています。\n選択肢の順番も、これらに則っていそうですね。",
-    "category": "放射線防護・安全管理"
+    "category": "画像診断学総論（モダリティ・造影剤）"
   },
   {
     "year": 2024,
@@ -19740,7 +19740,7 @@
     "answer": "e",
     "multi": false,
     "explanation": "a スライス厚を薄くする利点は、部分容積効果の減少による特異度上昇でしょうか。小さな出血の検出感度は上昇するような気もしますが。またこの選択肢はシークエンスが限定されていません。\nb T2強調像よりT2*強調像の方が、磁化率効果が強調されるため、微小出血の感度が高いです。\nc T2*強調像よりSWIの方が微小出血の感度は高いです(PMID: 21784348）\nd 静磁場強度が下がると磁化率効果が強くなるため、微小出血の検出感度は低下すると思われます。\ne TEを長くすることによりT2*強調効果の増加が想定されます(が、微小出血の検出感度はどうでしょうか)\nhttps://www.jstage.jst.go.jp/article/jjrt/advpub/0/advpub_2022-1189/_pdf",
-    "category": "呼吸器・縦隔"
+    "category": "中枢神経（脳・脊髄）"
   },
   {
     "year": 2024,
@@ -19788,7 +19788,7 @@
     "answer": "e",
     "multi": false,
     "explanation": "若年性血管線維腫：血管に富んだ稀な良性腫瘍で、若年男性に多い。\n発生部位は鼻腔後方、後鼻孔、蝶口蓋孔周囲から翼口蓋窩が多い。翼口蓋窩に進展する場合、上顎洞後側壁を前方に圧排する。\n翼状突起や頭蓋底の骨破壊を示す場合もある。\n富血管性により著明な造影効果を呈し、MRIでは腫瘍の内部に多数のflow voidとして認められることが多い。\n局在や進展形式、著明な造影効果から診断可能となる。\n術中出血の軽減目的に術前血管塞栓術が必要であり、術前画像での鑑別が重要となる。\n（画像診断Vol.41 No.7 (2021) p688より）",
-    "category": "画像診断学総論（モダリティ・造影剤）"
+    "category": "頭頸部"
   },
   {
     "year": 2024,
@@ -20044,7 +20044,7 @@
     "answer": "b",
     "multi": false,
     "explanation": "ACSリスクの高い冠動脈プラークにはSpotty calcification, napkin ring sign, positive remodeling, 低CT値を示すものなどが挙げられます。",
-    "category": "医学物理学"
+    "category": "心臓・大血管"
   },
   {
     "year": 2024,
@@ -20076,7 +20076,7 @@
     "answer": "e",
     "multi": false,
     "explanation": "高安動脈炎の画像所見は、大動脈とその第一次分枝の両方あるいはどちらかに検出される、多発性またはびまん性の肥厚性病変、狭窄性病変（閉塞を含む）あるいは拡張性病変（瘤を含む）の所見です。大動脈とその一次分枝とは、大動脈（上行、弓行、胸部下行、腹部下行）、大動脈の一次分枝（冠動脈を含む）、肺動脈とされています。\n浅側頭動脈は側頭動脈炎で高頻度に侵されます。\nhttps://www.nanbyou.or.jp/entry/290\nhttps://www.nanbyou.or.jp/entry/3929",
-    "category": "脊椎・脊髄・骨関節・軟部"
+    "category": "心臓・大血管"
   },
   {
     "year": 2024,
@@ -20092,7 +20092,7 @@
     "answer": "b",
     "multi": false,
     "explanation": "過去問で類題がありました。",
-    "category": "画像診断学総論（モダリティ・造影剤）"
+    "category": "乳房"
   },
   {
     "year": 2024,
@@ -20124,7 +20124,7 @@
     "answer": "c",
     "multi": false,
     "explanation": "マンモグラフィではまず、明らかに良性の石灰化パターンを把握することが重要です。\n微小円形石灰化、中心透亮性石灰化、ポップコーン状石灰化、large rod-like calcificationsは明らかな良性石灰化です。\n微細分枝状石灰化はどのような分布であっても強く悪性が疑われ、カテゴリー5に分類されます。\nhttps://www.jstage.jst.go.jp/article/jjabcs1992/7/1/7_1_63/_pdf/-char/ja\nhttps://mammography.pro/category1/",
-    "category": "医学物理学"
+    "category": "乳房"
   },
   {
     "year": 2024,
@@ -20140,7 +20140,7 @@
     "answer": "c,e",
     "multi": true,
     "explanation": "乳房MRIでDCISに見られやすい所見は非腫瘤性濃染（non-mass pattern）,粒の集合（clumped enhancement）リング状の集簇（clustered ring enhancement）,樹枝状（branching ductal pattern）です。\nUSのDCISの所見と合わせてチェックしましょう。\nrim enhancement\nspiculated margin\ndark internal septations",
-    "category": "医学物理学"
+    "category": "乳房"
   },
   {
     "year": 2024,
@@ -20156,7 +20156,7 @@
     "answer": "d",
     "multi": false,
     "explanation": "single bubble sign:肥厚性幽門狭窄症\ndouble bubble sign：十二指腸閉鎖症\ntriple bubble sign:空腸閉鎖\n参考：シングルバブル、ダブルバブル、トリプルバブルサインの違い – とある内科医の雑記帳",
-    "category": "消化器（消化管・腹壁）"
+    "category": "小児"
   },
   {
     "year": 2024,
@@ -20172,7 +20172,7 @@
     "answer": "b",
     "multi": false,
     "explanation": "若木骨折：小児に特有の不全骨折です。骨の一部が折れ曲がりますが、完全には断裂せず、一部の連続性が保たれます。小児の骨の柔軟性と厚い骨膜により発生します。\nhttps://www.joa.or.jp/public/sick/condition/infants_bone_fracture.html\n大腿骨頭すべり症：主に小学校高学年から中学生の成長期に発症します。大腿骨頭が骨端線部分で後下方にすべることで起こります。体重増加や成長のアンバランス、過度のスポーツ活動などが原因となることがあります。\nhttps://kcmc.kanagawa-pho.jp/diseases/daitaikotto.html\nよちよち歩き骨折：2-3歳頃の幼児に見られる特徴的な脛骨骨折です。歩き始めの不安定な歩行中に、脛骨に捻じれの力が加わることで発生します。多くの場合、明らかな外傷がなく、突然歩けなくなるという症状で気づかれます。単純写真で骨折線が見えにくいことがあるため、診断に注意が必要です。\nhttps://www.jstage.jst.go.jp/article/jspr/33/2/33_51/_pdf/-char/ja\n以上の小児特有の骨折は、子どもの骨の特性（柔軟性、厚い骨膜、成長軟骨の存在など）により発生します。\n古典的骨幹端骨折は小児の身体的虐待の所見として特徴的です。\n大腿骨頸部骨折は高齢者で典型的と思われます。",
-    "category": "脊椎・脊髄・骨関節・軟部"
+    "category": "小児"
   },
   {
     "year": 2024,
@@ -20188,7 +20188,7 @@
     "answer": "a,b",
     "multi": true,
     "explanation": "先天性横隔膜ヘルニアはBochdalek孔ヘルニアやMorgagoni孔ヘルニア、Larrey孔ヘルニアなどがあります。このうち、Bochdalek孔ヘルニアは小児期に後発し左側に多く、患側肺の発育不全や腸回転異常を来します。\nc.傍胸骨裂孔ヘルニアで右側がMorgani孔ヘルニア、左側がLarry孔ヘルニアです。\nd.最多はBochdalek孔ヘルニア\ne.後側方裂孔に生じますが、左側が90％を占めます。\n（参考）小児慢性特定疾病情報センター　13先天性横隔膜ヘルニア",
-    "category": "呼吸器・縦隔"
+    "category": "小児"
   },
   {
     "year": 2024,
@@ -20220,7 +20220,7 @@
     "answer": "b",
     "multi": false,
     "explanation": "chemical shift imagingは水と脂肪の共鳴周波数差を利用した画像である。In-phase像とopposed-phase像を撮像し、脂肪含有の有無を判断する。\nhttp://kanamri.umin.ne.jp/45_PDF_fatsat_minami.pdf\n同じ画像のピクセル内に水と脂肪が同程度混在した場合に、opposed-phase像で最も信号低下が起こるのが特徴で、皮下脂肪や腹腔内のマクロな脂肪組織はopposed-phaseでの信号低下は起こらない。\n肝細胞腺腫は様々な画像所見を呈しうるが、HNF1α 不活化型ではびまん性の脂肪化が特徴の一つである。\nhttps://www.jstage.jst.go.jp/article/naika/103/1/103_61/_pdf\nhttps://www.jstage.jst.go.jp/article/jjgs/51/6/51_2017.0017/_pdf/-char/ja\n偽脂肪腫はマクロな脂肪成分が主体のため、opposed-phaseでの信号低下は起こりにくいと思われますが、全体に軽度信号低下したとする文献はあります。\nhttps://doi.org/10.11477/mf.1427900255\nなお、Microscopicな脂肪含有する肝腫瘤の鑑別は、肝細胞癌、肝細胞腺腫、血管筋脂肪腫、転移性肝腫瘍　(腎細胞癌、奇形腫など）、FNHです。",
-    "category": "脊椎・脊髄・骨関節・軟部"
+    "category": "消化器（肝・胆・膵・脾）"
   },
   {
     "year": 2024,
@@ -20236,7 +20236,7 @@
     "answer": "e",
     "multi": false,
     "explanation": "a.音響陰影を伴います\nb.通常コンベックスプローブを用います。が、小さな病変の拾い上げには高周波プローブを用いるとあるので、適さないとは言えないです。なお、コンベックスは3.5~6Hz,リニアは7.5MHz以上です。（引用）岡庭　USによる胆道の描出と診断のポイント\nc.腸管ガスのアーチファクトを受けやすいです。\nd.まず疑うべきは胆嚢ポリープです。増大傾向にあれば癌を疑います。\ne.RASといえばcomet様エコーが有名ですが、嚢胞様に描出されることもあり、その場合は類円形の無エコー域として描出されます。",
-    "category": "医学物理学"
+    "category": "消化器（肝・胆・膵・脾）"
   },
   {
     "year": 2024,
@@ -20284,7 +20284,7 @@
     "answer": "c,e",
     "multi": true,
     "explanation": "Flank stripeは後腎傍腔の脂肪層を指します。腹水貯留があると傍結腸溝が広がり、flank stripe signを呈します。\n後腎傍腔は前方で腹膜前脂肪層と連続するため、正解はc,eとなります。\n（引用）臨床画像Vol32  No14,よクウわかる腹膜腔・後腹膜腔の画像診断",
-    "category": "泌尿器・生殖器"
+    "category": "消化器（消化管・腹壁）"
   },
   {
     "year": 2024,
@@ -20332,7 +20332,7 @@
     "answer": "a",
     "multi": false,
     "explanation": "前立腺癌\na.高信号に描出されます。\nb.1500s/mm2以上が有用とされます。\nc.特にそのような報告は見つけられませんでした。\nd.一般的に前立腺癌でADC値は低下しますが、PSAのようなカットオフ値は設定されていません。\ne.隣接する直腸ガスの影響を強く受けるので、検査前日に下剤を内服させる施設もある様です。\n（参考）多智花他　当院の前立腺癌におけるcomputed DWIの画像特性の評価",
-    "category": "画像診断学総論（モダリティ・造影剤）"
+    "category": "泌尿器・生殖器"
   },
   {
     "year": 2024,
@@ -20348,7 +20348,7 @@
     "answer": "a",
     "multi": false,
     "explanation": "ガイドラインCQ4より。\nhttp://jsco-cpg.jp/guideline/25.html",
-    "category": "画像診断学総論（モダリティ・造影剤）"
+    "category": "泌尿器・生殖器"
   },
   {
     "year": 2024,
@@ -20412,7 +20412,7 @@
     "answer": "b",
     "multi": false,
     "explanation": "卵巣腫瘍の鑑別の論文(PMID: 26671276)では、Brenner腫瘍で石灰化が特徴とされています\n(80%ともhttps://trc-rad.jp/case/382/s8/382_8_2.html)。\nその他、漿液性乳頭状腺癌(serous cystadenocarcinoma)は、病理で砂粒小体（psammoma body）がみられることがあり、CT上も高吸収を呈することがあるようです。https://doi.org/10.15105/GZ.0000000246\n奇形腫でも石灰化はみられます。",
-    "category": "頭頸部"
+    "category": "泌尿器・生殖器"
   },
   {
     "year": 2024,
@@ -20428,7 +20428,7 @@
     "answer": "d",
     "multi": false,
     "explanation": "月経周期と内膜、筋層の関係についての問題です。\n月経期に内膜は菲薄化、筋層はT2WIでややlow、Junctional Zoneは不明瞭化します。\n増殖期では内膜はやや肥厚、筋層はややhign。\n分泌期に内膜肥厚は最大化、筋層は高信号に描出されます。",
-    "category": "医学物理学"
+    "category": "泌尿器・生殖器"
   },
   {
     "year": 2024,
@@ -20460,7 +20460,7 @@
     "answer": "b",
     "multi": false,
     "explanation": "日本IVR学会が出しているCVPに関するガイドラインを見てほしいのでしょうか。https://www.jsir.or.jp/about/guide_line/cvp/\na　鎖骨下静脈、内頚静脈、上腕・前腕静脈からの留置が一般的です。\nb　CVポートはヒューバー針／フーバー針と呼ばれる専用の針で穿刺します。調べても”注射針”という呼称はみつけられませんでした。\nc　製品によっては25 psi以上の圧力がシステム内に加わった場合には破損の可能性があり、フラッシュに容量の小さなシリンジを用いた際には耐圧限度を超えた圧力が加わる危険性が高く、10mL容量以上のシリンジを用いることが望ましいそうです。製品によっては、CT造影時の造影剤高圧注入が可能です。\nd　ピンチオフは鎖骨下で周囲組織により挟まれることでカテーテルが断裂する事象です。鎖骨下静脈の穿刺で起こります。https://medisuke.jp/oncology/support/catheter-pinch-off\ne　フィブリンシースやカテーテル内血栓の診断にはポートからの造影が有用であり、壁在血栓や静脈血栓症には超音波検査や静脈造影が有用です。フィブリンシースは、まず中心静脈ポートから注入はできるが吸引できないときに疑い、ポートからの造影で診断します。",
-    "category": "放射線防護・安全管理"
+    "category": "IVR"
   },
   {
     "year": 2024,
@@ -20492,7 +20492,7 @@
     "answer": "a",
     "multi": false,
     "explanation": "下行大動脈瘤は、頸部分枝から距離がある場合ステントグラフト治療が、第一選択になります。\n参考：2020 年改訂版 大動脈瘤・大動脈解離診療ガイドライン\nhttps://www.j-circ.or.jp/cms/wp-content/uploads/2020/07/JCS2020_Ogino.pdf\nhttps://www.m.chiba-u.ac.jp/dept/cvs-surg/disease/daikekkan/",
-    "category": "心臓・大血管"
+    "category": "IVR"
   },
   {
     "year": 2024,
@@ -20508,7 +20508,7 @@
     "answer": "a,e",
     "multi": true,
     "explanation": "参考文献：https://www.jsir.or.jp/docs/kouhoukara/PR_PDF/Q&A/16.pdf、https://hosp.juntendo.ac.jp/clinic/department/hoshasenka/senmon/disease03.html\na　○　アルゴンガスを使用します。\nb　×　痛みはほとんどありません。RFAでは疼痛を伴います。\nc　×　多発病変はよい適応です。\nd　×　アイスボールの範囲はCTで低吸収域として認められます。\nhttps://www.okayama-u.ac.jp/user/ivr-c/medical/cancer.html\ne　○　径4cm以下がよい適応です。",
-    "category": "泌尿器・生殖器"
+    "category": "IVR"
   },
   {
     "year": 2024,
@@ -20556,7 +20556,7 @@
     "answer": "a,c",
     "multi": true,
     "explanation": "参考文献：https://jsnm.org/wp_jsnm/wp-content/themes/theme_jsnm/doc/kaku_bk/1997/003408/03d/0572-0572.pdf、https://radiological.site/archives/%E7%94%BB%E5%83%8F%E5%B7%A5%E5%AD%A6-%E7%94%BB%E5%83%8F%E5%86%8D%E6%A7%8B%E6%88%90%E6%B3%95.html\nChang法、Transmission CT法：吸収補正\nTriple energy window法：散乱補正\nOSEM法：再構成法\nPatlak plot法：定量法",
-    "category": "医学物理学"
+    "category": "核医学"
   },
   {
     "year": 2024,
@@ -20572,7 +20572,7 @@
     "answer": "b",
     "multi": false,
     "explanation": "Gaシンチは48-72時間後に撮影です。\n患者さんが翌日も来ていたのを思い出しました。",
-    "category": "医学物理学"
+    "category": "核医学"
   },
   {
     "year": 2024,
@@ -20588,7 +20588,7 @@
     "answer": "b",
     "multi": false,
     "explanation": "a: Lewy小体型認知症では後頭葉の血流は相対的に低下します。視覚野が弱くなるので幻視が出現すると理解しています。\nb: 〇。脳血流が上昇/低下する病態は頻出問題なので確実に抑えましょう。\nc: Alzheimer型認知症では一次感覚運動野の血流は保たれます。頭頂連合野、側頭連合野、後部帯状回、楔前部の血流が低下します。\nd: アミロイド蓄積がないからといってLewy小体型認知症は否定はできません。\ne: こちらも頻出です。Parkinson病では尾状核頭のドパミントランスポーター分布密度が低下します。\nhttps://www.nmp.co.jp/member/ninchisho/point/03.html",
-    "category": "中枢神経（脳・脊髄）"
+    "category": "核医学"
   },
   {
     "year": 2024,
@@ -20620,7 +20620,7 @@
     "answer": "d",
     "multi": false,
     "explanation": "ソマトスタチンシンチIn1111-pentetreotideは大部分が尿中排泄で、投与量は111Mbqです。\nソマトスタチンは標的細胞のSSTRに結合することで活性を示しますが、SSTRは膵頭部や膵鉤部で多く発現しており、生理的集積が見られます。\n（参考）岸田ほか　ソマトスタチン受容体シンチグラフィーで集積を来した腎癌膵転移の一例",
-    "category": "医学物理学"
+    "category": "核医学"
   },
   {
     "year": 2024,
@@ -20652,7 +20652,7 @@
     "answer": "c",
     "multi": false,
     "explanation": "副腎髄質シンチは交感神経終末細胞の中のクロム親和性細胞へ特異的に取り込まれる123I-MIBG(ノルアドレナリンに類似)を用いて、褐色細胞腫・パラガングリオーマや神経芽腫、甲状腺髄様癌、カルチノイドなどを描出する検査です。131Iもβ線(治療用)に加えγ線を放出するため、イメージング可能です。\na　×　そもそもα線はイメージングには用いられません。123Iは159keV のγ線を放出します。\nb　×　脂肪酸代謝を反映するのは123I-BMIPPです。\nc　○\nd　×　コレステロール類似物質を投与するのは副腎皮質シンチ(131I-アドステロール)です。\ne　×　静注後、概ね6時間後および24時間後に撮影します。",
-    "category": "泌尿器・生殖器"
+    "category": "核医学"
   },
   {
     "year": 2024,
@@ -20716,7 +20716,7 @@
     "answer": "b",
     "multi": false,
     "explanation": "脳血流SPECTで血流低下をきたすものはこの中ではparkinsonのみです。",
-    "category": "中枢神経（脳・脊髄）"
+    "category": "核医学"
   },
   {
     "year": 2024,
@@ -20748,7 +20748,7 @@
     "answer": "a",
     "multi": false,
     "explanation": "塩化ラジウム（Ra-223）注射液を用いる内用療法の適正使用マニュアル\nhttps://www.jrias.or.jp/report/pdf/Ra-223manual_v1-2.pdf\na　×　静脈内投与後、血中から速やかに消失して骨に分布し、小腸壁を介して腸管内に排出されます。主要排泄経路は糞便中であり、尿中排泄率は極めて低いです。投与後1週間以内で投与量の約63％は便を介して体外へ排出されます。これがわかれば解けた問題ですね。\nb　○　添付文書（https://pins.japic.or.jp/pdf/newPINS/00066287.pdf）では重大な副作用として骨髄抑制が記載されています。\nc　○　繰り返し出題されています。症候性骨転移を有するCRPCを対象とした海外のプラセボ対照無作為化二重盲検第Ⅲ相臨床試験（ALSYMPCA：ALpharadin in SYMptomatic Prostate CAncer 試験）において、主要評価項目である全生存期間（OS）の有意な延長効果が確認されており、副次評価項目であるALPの変化率及び増悪までの期間、症候性骨関連事象（SSE）発現までの期間、PSAの変化率及び増悪までの期間なども有意に改善しました。\nd　○　ライン確保し、血液の逆流を確認した後に側管から薬液を約1分間かけてゆっくりと注入し、20mLを目途に生理食塩液でフラッシュします。\ne　○　妊孕性への影響 に関して、「放射性医薬品のため、本剤投与中及び投与後6ヵ月間は適切な避妊を行うよう指導すること。また、生殖可能な年齢の患者に投与する場合には、性腺に対する影響を考慮すること。」とあります。",
-    "category": "脊椎・脊髄・骨関節・軟部"
+    "category": "核医学"
   },
   {
     "year": 2024,
@@ -20796,7 +20796,7 @@
     "answer": "d",
     "multi": false,
     "explanation": "声門癌、食道癌、肺癌、前立腺癌はいずれも早期癌が根治的放射線治療の適応になりますね。\n胃ではⅠ期MALTリンパ腫が放射線単独治療の適応となります。",
-    "category": "消化器（消化管・腹壁）"
+    "category": "放射線治療"
   },
   {
     "year": 2024,
@@ -20812,7 +20812,7 @@
     "answer": "c",
     "multi": false,
     "explanation": "2022年90番\n悪性腫瘍以外の放射線治療適応疾患ではケロイド、甲状腺眼症、翼状片、血管奇形、脾腫などです。",
-    "category": "中枢神経（脳・脊髄）"
+    "category": "放射線治療"
   },
   {
     "year": 2024,
@@ -20828,7 +20828,7 @@
     "answer": "c,d",
     "multi": true,
     "explanation": "密封小線源治療の種類は使用核種と合わせて押さえましょう。\n腔内照射：体腔内に線源を挿入\n子宮頸癌192Ir(高線量率)\nRALS:(Remote After Loading System)\n組織内照射：組織内刺入針を刺入\n舌癌192Ir(一時刺入)\n前立腺癌192Ir, 125I(永久刺入, 低線量率)\n口腔癌198Au(永久刺入)\nモールド：線源を埋め込んだ治療器具を患部装着\n口腔癌198Au",
-    "category": "泌尿器・生殖器"
+    "category": "放射線治療"
   },
   {
     "year": 2024,
@@ -20860,7 +20860,7 @@
     "answer": "b",
     "multi": false,
     "explanation": "類題2023年76番、2022年77番\n脳腫瘍と照射範囲の問題は頻発です。\na局所\nc全脳室\nd局所\ne全脳",
-    "category": "中枢神経（脳・脊髄）"
+    "category": "放射線治療"
   },
   {
     "year": 2024,
@@ -20876,7 +20876,7 @@
     "answer": "d",
     "multi": false,
     "explanation": "膠芽腫の寡分割照射は40Gy/15Fr/3週が推奨されます。\n参考:放射線治療計画ガイドライン2020 p.71",
-    "category": "医学物理学"
+    "category": "放射線治療"
   },
   {
     "year": 2024,
@@ -20892,7 +20892,7 @@
     "answer": "b",
     "multi": false,
     "explanation": "甲状腺癌では根治的化学放射線療法は行われません。",
-    "category": "頭頸部"
+    "category": "放射線治療"
   },
   {
     "year": 2024,
@@ -20908,7 +20908,7 @@
     "answer": "a",
     "multi": false,
     "explanation": "選択肢の中で原発巣のみを照射するのは声門癌のみです。\n他はリンパ節領域を含みます。",
-    "category": "頭頸部"
+    "category": "放射線治療"
   },
   {
     "year": 2024,
@@ -20924,7 +20924,7 @@
     "answer": "b",
     "multi": false,
     "explanation": "単発坐骨転移に対して全骨盤照射は照射野が広すぎます。\n全骨盤照射の適応は子宮頸癌の根治的照射、子宮体癌の術後照射等です。",
-    "category": "呼吸器・縦隔"
+    "category": "放射線治療"
   },
   {
     "year": 2024,
@@ -20940,7 +20940,7 @@
     "answer": "c",
     "multi": false,
     "explanation": "放射線治療計画ガイドライン(2020)を参照しました。\na　×　近年の臨床試験データのメタ解析や登録症例のプール解析では、切除不能局所進行癌でも、予防的リンパ節照射(elective nodal irradiation: ENI)を省いて、GTVに限局した照射野(involved field radiation therapy: IFRT)で照射しても治療成績に差は認められず,むしろIFRTの方が予後良好な傾向が示されています。\nb　×　対側肺門リンパ節転移を除くⅢB、ⅢC期の局所進行癌は根治的放射線治療の適応となります。\nc　○？\nd　×　同時化学放射線療法後に、デュルバルマブによる地固め療法を行う。\ne　×　SBRTは5cm以内でリンパ節転移のない原発性肺癌に適応があります。",
-    "category": "呼吸器・縦隔"
+    "category": "放射線治療"
   },
   {
     "year": 2024,
@@ -20956,7 +20956,7 @@
     "answer": "c",
     "multi": false,
     "explanation": "乳癌術後照射の絶対的禁忌を抑えれば解答できます。\n相対禁忌は\n背臥位で患肢挙上不能\n活動性強皮症やSLE\n同一部位への最照射\nLi Fraumeni（TP53の生殖細胞系列病的バリアント保持者）\n絶対禁忌が妊娠中\nホモ接合性ATM病的バリアントです。\nBRCAについては全摘推奨だが、部分切除＋照射も選択しても良いとされています。",
-    "category": "乳房"
+    "category": "放射線治療"
   },
   {
     "year": 2024,
@@ -20972,7 +20972,7 @@
     "answer": "c",
     "multi": false,
     "explanation": "割れていましたが、腫瘍床部に当たっていなければ再発予防目的の術後照射の意味がないと思い、cと考えます。",
-    "category": "乳房"
+    "category": "放射線治療"
   },
   {
     "year": 2024,
@@ -20988,7 +20988,7 @@
     "answer": "e",
     "multi": false,
     "explanation": "a　×　扁平上皮癌が60-80%です。\nb　×　肛門管の上部にできる癌は比較的女性に多く、肛門縁にできる癌は男性に多いようです。\nc　×　大部分の症例で肛門温存が可能です。\nd　×　リンパ節領域は内腸骨LN、外腸骨LN、閉鎖LN、直腸周囲LN、仙骨前LN、鼠径LNです。\ne　○　併用化学療法はマイトマイシンC+5-FUが標準です（RTOG 9811: OS: MMC+5FU群>CDDP+5-FU群）。",
-    "category": "脊椎・脊髄・骨関節・軟部"
+    "category": "放射線治療"
   },
   {
     "year": 2024,
@@ -21004,7 +21004,7 @@
     "answer": "b",
     "multi": false,
     "explanation": "胸部食道癌において、鎖骨上リンパ節転移は遠隔転移と見なされます。\n正直全てカバーすることは困難ですが、TMN分類ではステージの境目やM1になるものが良く問われている印象です。",
-    "category": "消化器（消化管・腹壁）"
+    "category": "放射線治療"
   },
   {
     "year": 2024,
@@ -21020,7 +21020,7 @@
     "answer": "d,e",
     "multi": true,
     "explanation": "ガイドライン通りです。\n参考:放射線治療計画ガイドライン2020 p.277",
-    "category": "泌尿器・生殖器"
+    "category": "放射線治療"
   },
   {
     "year": 2024,
@@ -21052,7 +21052,7 @@
     "answer": "b,c",
     "multi": true,
     "explanation": "晩期有害事象は主要なものについては耐容線量と合わせて覚えましょう。\na.過去問でも子宮頸癌の有害事象でひっかけ選択肢として出題されていました\nb血便などを来します。頻度は1-3%以下です。\nc血尿などを来します。頻度は5%以下です。\nd記載は見つけられませんでした。\ne迷いましたが、IMRTで骨折をきたすほどの線量が照射される可能性は低いと思いました。",
-    "category": "泌尿器・生殖器"
+    "category": "放射線治療"
   },
   {
     "year": 2024,
@@ -21084,7 +21084,7 @@
     "answer": "d",
     "multi": false,
     "explanation": "体積1/3の耐容線量TD5/5は\n肝(肝不全)：50Gy\n肺(放射線肺炎)：45Gy\n小腸(閉塞・穿孔)：50Gy\n大脳(脳壊死)：60Gy\n視神経(失明)：50Gy",
-    "category": "呼吸器・縦隔"
+    "category": "放射線治療"
   },
   {
     "year": 2024,
@@ -21100,7 +21100,7 @@
     "answer": "c",
     "multi": false,
     "explanation": "レジデントセミナーの放射線生物学のコマでも説明ありました。\nアブスコパル効果は放射線治療により照射範囲外の腫瘍にも抗腫瘍効果が見られるものをさし、腫瘍細胞からの抗原放出、樹状細胞への抗原提示と、抗原提示を受けたT細胞による腫瘍殺傷のimmunity cycleが知られています。\n（参考）高橋他　基礎的観点から見た腫瘍免疫に対する放射線の役割",
-    "category": "医学物理学"
+    "category": "放射線生物学"
   },
   {
     "year": 2024,
@@ -21148,7 +21148,7 @@
     "answer": "e",
     "multi": false,
     "explanation": "ウェッジフィルタは線量分布の不均一性改善に使用され、線量分布の傾きに応じて15,30,45,60度のフィルタが用いられます。\n（参考）滝口他　一般撮影領域のDRL",
-    "category": "医学物理学"
+    "category": "放射線治療"
   },
   {
     "year": 2024,
@@ -21164,7 +21164,7 @@
     "answer": "e",
     "multi": false,
     "explanation": "1MeV前後でのX線と水の相互作用ではCompton散乱が最も起こります。\n参考：https://radiological.site/archives/光子と物質の相互作用.html",
-    "category": "医の倫理・医療の質"
+    "category": "医学物理学"
   },
   {
     "year": 2024,
@@ -21244,7 +21244,7 @@
     "answer": "c",
     "multi": false,
     "explanation": "放射線領域の関連法規は例年数題、まあまあ細かいところまで聞かれている印象です。\n造影剤静脈投与さえ医師が行う病院で勤務していたため、どれも不正解に見えてしまいました。\n2021年5月21日に\n「良質かつ適切な医療を効率的に提供する体制の確保を推進するための医療法等の一部を改正する法律案」が成立しました。\nこれには診療放射線技師法の改正も含まれており上記法律案の成立により、2021年10月1日より新たな診療放射線技師法が施行されました。\n診療放射線技師の新たな業務内容\n1. 造影剤を使用した検査やRI検査のために、静脈路を確保する行為、RI検査医薬品の投与が終了した後に抜針及び止血を行う行為\n2. RI検査のために、RI検査医薬品を注入するための装置を接続し、当該装置を操作する行為\n3. 動脈路に造影剤注入装置を接続する行為（動脈路確保のためのものを除く）、動脈に造影剤\nを投与するために当該造影剤注入装置を操作する行為\n4. 下部消化管検査（CT コロノグラフィ検査を含む）のため、注入した造影剤及び空気を吸引する行為\n5. 上部消化管検査のために挿入した鼻腔カテーテルから造影剤を注入する行為、当該造影剤の投与が終了した後に鼻腔カテーテルを抜去する行為\n6. 医師又は歯科医師が診察した患者について、その医師又は歯科医師の指示を受け、病院又は診療所以外の場所に出張して行う超音波検査\n（引用）https://sensitiv.jp/radiological-technologist221020/",
-    "category": "放射線防護・安全管理"
+    "category": "医の倫理・医療の質"
   },
   {
     "year": 2024,
@@ -21260,7 +21260,7 @@
     "answer": "e",
     "multi": false,
     "explanation": "以下サイトを参考にしてください。\n過剰相対リスクは乳癌が一番高いですが、症例数としては胃癌が最多です。\nhttps://www.rerf.or.jp/programs/roadmap/health_effects/late/site/\nhttps://www.env.go.jp/chemi/rhm/h29kisoshiryo/h29kiso-03-07-02.html",
-    "category": "消化器（肝・胆・膵・脾）"
+    "category": "放射線生物学"
   },
   {
     "year": 2024,
@@ -21276,7 +21276,7 @@
     "answer": "a,b",
     "multi": true,
     "explanation": "a　○　実効線量は通常、単年度で50mSv、5年で100mSvが線量限度です。\nb　○　手指の被ばくが体幹部（胸部、腹部）より多く被ばくする可能性のある場合はリングバッジの装着が推奨されます。https://www.nagase-landauer.co.jp/luminess/ring-badge.html\nc　×　妊娠可能女性の5mSv/3ヶ月の線量限度は、本人の申し出により除外申請が可能です。妊娠中の線量限度は除外できないのではないでしょうか。\nd　×　個人線量計は、測定値を直読できるアクティブ形と測定後に読取装置にて指示値を読み取るパッシブ形の2種類に分類されます。直読式のものであれば、一定期間ごと、あるいは作業ごとに、被ばくの程度を自分で確認することができますが、必須ではないと思われます。https://www.jemima.or.jp/tech/6-03-02-06.html\ne　×　医療法施行規則第30条の18に、「病院又は診療所の管理者は、…放射線診療従事者等が被ばくする線量が第30条の27に定める実効線量限度及び等価線量限度を超えないようにしなければならない。」と記載があります。",
-    "category": "医学物理学"
+    "category": "放射線防護・安全管理"
   },
   {
     "year": 2024,

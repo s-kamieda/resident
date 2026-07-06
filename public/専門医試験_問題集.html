@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#1d4ed8">
+<meta name="theme-color" content="#0f9e99">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="専門医試験">
-<meta name="app-build" content="2026-07-06 復習モード再設計">
+<meta name="app-build" content="2026-07-06 英検カコモン風UI">
 <title>放射線科専門医試験 問題集</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
@@ -16,12 +16,10 @@
 <link rel="stylesheet" href="app.css">
 </head>
 <body>
-<div id="pg-home" class="page">
+<div id="pg-home" class="page with-nav">
   <div class="topbar">
     <span class="topbar-title">放射線科専門医試験 問題集</span>
     <div class="topbar-actions">
-      <button class="tb-btn" id="btn-search" title="問題・メモ検索">🔍</button>
-      <button class="tb-btn" id="btn-stats" title="学習統計">📊 統計</button>
       <button class="tb-btn" id="btn-backup" title="バックアップ管理">📁</button>
     </div>
   </div>
@@ -29,67 +27,87 @@
   <div class="scroll-area">
     <div class="inner">
       <div class="home-title">
-        <h1>専門医試験 問題集</h1>
         <p id="home-subtitle">2012〜2025年 計1437問</p>
+      </div>
+
+      <div class="top-cards">
+        <button class="exam-card" id="exam-card" title="タップして受験日を変更">
+          <div class="tc-label">🚩 あなたの受験日</div>
+          <div class="tc-main" id="exam-date-main">-</div>
+          <div class="tc-sub" id="exam-countdown"></div>
+        </button>
+        <div class="status-card">
+          <div class="tc-label">📈 総正解率</div>
+          <div class="tc-main" id="home-accuracy">-</div>
+          <div class="tc-sub" id="home-progress">-</div>
+        </div>
       </div>
 
       <div id="reco-action" class="reco-action"></div>
 
-      <div class="section-label">復習する（忘却曲線）</div>
-      <div class="mode-grid">
-        <button class="mode-btn srs-mode-btn" id="btn-srs-today">
-          <span class="mode-icon">📅</span>
-          <div>
-            <div class="mode-name">今日の復習</div>
-            <div class="mode-desc" id="srs-today-desc">忘却曲線で今が適期の問題</div>
-          </div>
-          <span class="srs-badge hidden" id="srs-today-badge">0</span>
-        </button>
-        <button class="mode-btn srs-mode-btn" id="btn-srs-ease">
-          <span class="mode-icon">⚡</span>
-          <div>
-            <div class="mode-name">試験直前</div>
-            <div class="mode-desc" id="srs-ease-desc">弱点を苦手な順に総ざらい</div>
-          </div>
-        </button>
+      <div class="home-card">
+        <div class="hc-head"><span class="hc-icon">🔁</span>復習する（忘却曲線）</div>
+        <div class="mode-grid">
+          <button class="mode-btn srs-mode-btn" id="btn-srs-today">
+            <span class="mode-icon">📅</span>
+            <div>
+              <div class="mode-name">今日の復習</div>
+              <div class="mode-desc" id="srs-today-desc">忘却曲線で今が適期の問題</div>
+            </div>
+            <span class="srs-badge hidden" id="srs-today-badge">0</span>
+          </button>
+          <button class="mode-btn srs-mode-btn" id="btn-srs-ease">
+            <span class="mode-icon">⚡</span>
+            <div>
+              <div class="mode-name">試験直前</div>
+              <div class="mode-desc" id="srs-ease-desc">弱点を苦手な順に総ざらい</div>
+            </div>
+          </button>
+        </div>
+        <div class="ov-grid" id="home-overview"></div>
       </div>
 
-      <div class="section-label">今日の学習</div>
-      <div class="ov-grid" id="home-overview"></div>
-
-      <div class="section-label">弱点カテゴリ</div>
-      <div id="weak-cats"></div>
-
-      <div class="section-label">新しく進める</div>
-      <div class="mode-grid">
-        <button class="mode-btn" id="btn-unseen">
-          <span class="mode-icon">🆕</span>
-          <div>
-            <div class="mode-name">未解答問題</div>
-            <div class="mode-desc">まだ解いていない問題</div>
-          </div>
-        </button>
-        <button class="mode-btn" id="btn-all">
-          <span class="mode-icon">📚</span>
-          <div>
-            <div class="mode-name">全問まとめて</div>
-            <div class="mode-desc" id="all-btn-desc">ランダムに出題</div>
-          </div>
-        </button>
-        <button class="mode-btn resume-btn hidden" id="btn-resume">
-          <span class="mode-icon">▶</span>
-          <div>
-            <div class="mode-name">続きから再開</div>
-            <div class="mode-desc" id="resume-desc">-</div>
-          </div>
-        </button>
+      <div class="home-card">
+        <div class="hc-head"><span class="hc-icon">🆕</span>新しく進める</div>
+        <div class="mode-grid">
+          <button class="mode-btn" id="btn-unseen">
+            <span class="mode-icon">🆕</span>
+            <div>
+              <div class="mode-name">未解答問題</div>
+              <div class="mode-desc">まだ解いていない問題</div>
+            </div>
+          </button>
+          <button class="mode-btn" id="btn-all">
+            <span class="mode-icon">📚</span>
+            <div>
+              <div class="mode-name">全問まとめて</div>
+              <div class="mode-desc" id="all-btn-desc">ランダムに出題</div>
+            </div>
+          </button>
+          <button class="mode-btn resume-btn hidden" id="btn-resume">
+            <span class="mode-icon">▶</span>
+            <div>
+              <div class="mode-name">続きから再開</div>
+              <div class="mode-desc" id="resume-desc">-</div>
+            </div>
+          </button>
+        </div>
       </div>
 
-      <div class="section-label">年度別に解く</div>
-      <div class="year-grid" id="year-grid"></div>
+      <div class="home-card">
+        <div class="hc-head"><span class="hc-icon">📚</span>年度別に解く</div>
+        <div class="year-scroll" id="year-grid"></div>
+      </div>
 
-      <div class="section-label">カテゴリ別に解く</div>
-      <div class="cat-grid" id="cat-grid"></div>
+      <div class="home-card">
+        <div class="hc-head"><span class="hc-icon">🗂️</span>カテゴリ別に解く</div>
+        <div id="cat-grid"></div>
+      </div>
+
+      <div class="home-card">
+        <div class="hc-head"><span class="hc-icon">📉</span>弱点カテゴリ</div>
+        <div id="weak-cats"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -199,7 +217,7 @@
   </div>
 </div>
 
-<div id="pg-stats" class="page hidden">
+<div id="pg-stats" class="page with-nav hidden">
   <div class="topbar">
     <span class="topbar-title">学習統計</span>
     <div class="topbar-actions">
@@ -219,7 +237,7 @@
   </div>
 </div>
 
-<div id="pg-search" class="page hidden">
+<div id="pg-search" class="page with-nav hidden">
   <div class="topbar">
     <span class="topbar-title">問題・メモ検索</span>
     <div class="topbar-actions">
@@ -236,6 +254,12 @@
     </div>
   </div>
 </div>
+
+<nav id="bottom-nav" class="bottom-nav">
+  <button class="bn-btn active" id="bn-home"><span class="bn-icon">🏠</span><span>ホーム</span></button>
+  <button class="bn-btn" id="bn-stats"><span class="bn-icon">📋</span><span>学習記録</span></button>
+  <button class="bn-btn" id="bn-search"><span class="bn-icon">🔍</span><span>検索</span></button>
+</nav>
 
 <div id="modal-bg" class="modal-bg hidden">
   <div class="modal">
@@ -267,6 +291,18 @@
       <strong>全件</strong><span>対象すべて（上限100問）</span>
     </button>
     <button class="modal-cancel" id="srs-modal-cancel">キャンセル</button>
+  </div>
+</div>
+
+<div id="exam-modal-bg" class="modal-bg hidden">
+  <div class="modal">
+    <h2>受験日を設定</h2>
+    <p class="modal-copy">ホームのカウントダウンに使われます。</p>
+    <input type="date" id="exam-date-input" class="date-input">
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="exam-cancel">キャンセル</button>
+      <button class="btn btn-primary" id="exam-save">保存</button>
+    </div>
   </div>
 </div>
 

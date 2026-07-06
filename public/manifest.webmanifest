@@ -6,8 +6,8 @@
   "start_url": "./専門医試験_問題集.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#f1f5f9",
-  "theme_color": "#1d4ed8",
+  "background_color": "#f2f5f4",
+  "theme_color": "#0f9e99",
   "lang": "ja",
   "icons": [
     {

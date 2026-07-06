@@ -96,6 +96,48 @@ function addDaysToKey(dateKey, days) {
   return localDateKey(next);
 }
 
+const EXAM_DATE_STORAGE_KEY = "radQuizExamDate";
+const DEFAULT_EXAM_DATE = "2026-08-21";
+
+function getExamDate() {
+  try {
+    const stored = localStorage.getItem(EXAM_DATE_STORAGE_KEY);
+    if (stored && /^\d{4}-\d{2}-\d{2}$/.test(stored)) return stored;
+  } catch (error) {
+    /* localStorage不可でもデフォルトで動作 */
+  }
+  return DEFAULT_EXAM_DATE;
+}
+
+function setExamDate(dateKey) {
+  try {
+    localStorage.setItem(EXAM_DATE_STORAGE_KEY, dateKey);
+  } catch (error) {
+    /* 保存失敗時もセッション中は表示だけ更新される */
+  }
+}
+
+function renderExamCard() {
+  const main = $("exam-date-main");
+  const countdown = $("exam-countdown");
+  if (!main || !countdown) return;
+  const examKey = getExamDate();
+  const exam = parseDateKey(examKey);
+  const today = parseDateKey(localDateKey());
+  const diff = Math.round((exam - today) / 86400000);
+  const dow = "日月火水木金土"[exam.getDay()];
+  main.innerHTML = `${exam.getMonth() + 1}/${exam.getDate()}<small>（${dow}）</small>`;
+  if (diff > 1) {
+    countdown.innerHTML = `あと <strong>${diff}</strong> 日`;
+  } else if (diff === 1) {
+    countdown.innerHTML = `<strong>明日</strong> が試験日！`;
+  } else if (diff === 0) {
+    countdown.innerHTML = `<strong>本日試験日</strong> 🔥`;
+  } else {
+    countdown.textContent = "お疲れさまでした";
+  }
+}
+
 function formatDuration(sec) {
   const mins = Math.floor(sec / 60);
   const rem = sec % 60;
@@ -161,7 +203,25 @@ function showPage(id) {
   });
   const page = $(id);
   if (page) page.classList.remove("hidden");
+  updateBottomNav(id);
   window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+}
+
+const NAV_PAGE_MAP = { "pg-home": "bn-home", "pg-stats": "bn-stats", "pg-search": "bn-search" };
+
+function updateBottomNav(pageId) {
+  const nav = $("bottom-nav");
+  if (!nav) return;
+  const activeBtn = NAV_PAGE_MAP[pageId];
+  if (activeBtn) {
+    nav.classList.remove("hidden");
+    Object.values(NAV_PAGE_MAP).forEach((btnId) => {
+      const btn = $(btnId);
+      if (btn) btn.classList.toggle("active", btnId === activeBtn);
+    });
+  } else {
+    nav.classList.add("hidden");
+  }
 }
 
 function cleanupObjectUrls(list) {
@@ -817,6 +877,58 @@ function setRuntimeBanner() {
   }
 }
 
+const CAT_GROUPS = [
+  { label: "基礎", cats: ["医学物理学", "放射線生物学", "放射線防護・安全管理", "画像診断学総論（モダリティ・造影剤）"] },
+  { label: "画像診断", cats: ["中枢神経（脳・脊髄）", "頭頸部", "呼吸器・縦隔", "心臓・大血管", "乳房", "消化器（肝・胆・膵・脾）", "消化器（消化管・腹壁）", "泌尿器・生殖器", "脊椎・脊髄・骨関節・軟部", "小児"] },
+  { label: "核医学・治療・IVR", cats: ["核医学", "放射線治療", "IVR"] },
+  { label: "その他", cats: ["医の倫理・医療の質", "未分類"] }
+];
+
+function collectProgress(questions) {
+  const attempted = questions.filter((question) => Boolean(recordForQuestion(question))).length;
+  const correct = questions.filter((question) => {
+    const record = recordForQuestion(question);
+    return record && record.correct;
+  }).length;
+  return {
+    total: questions.length,
+    attempted,
+    correct,
+    pct: attempted > 0 ? Math.round((correct / attempted) * 100) : 0,
+    fill: questions.length > 0 ? Math.round((attempted / questions.length) * 100) : 0
+  };
+}
+
+/* ★評価: ★=着手済み / ★★=全問解答 / ★★★=全問解答＋正答率80%以上 */
+function progressStars(stats) {
+  if (stats.attempted === 0) return 0;
+  if (stats.attempted < stats.total) return 1;
+  return stats.pct >= 80 ? 3 : 2;
+}
+
+function starMarkup(stars) {
+  let html = "";
+  for (let i = 1; i <= 3; i += 1) {
+    html += `<span class="${i <= stars ? "on" : "off"}">★</span>`;
+  }
+  return html;
+}
+
+function buildCatRow(category, number) {
+  const stats = collectProgress(QUESTIONS.filter((question) => question.category === category));
+  const button = document.createElement("button");
+  button.className = "cat-row";
+  button.innerHTML =
+    `<span class="cat-row-num">${number}</span>` +
+    `<span class="cat-row-body">` +
+      `<span class="cat-row-name">${escapeHtml(category)}</span>` +
+      `<span class="cat-row-bar"><span class="cat-row-fill" style="width:${stats.fill}%"></span></span>` +
+    `</span>` +
+    `<span class="cat-row-info">${stats.attempted}/${stats.total}問${stats.attempted > 0 ? `<br>${stats.pct}%` : ""}</span>`;
+  button.addEventListener("click", () => openModeModal(`cat:${category}`));
+  return button;
+}
+
 async function renderHome() {
   const totalQuestions = QUESTIONS.length;
   const yearGrid = $("year-grid");
@@ -829,44 +941,46 @@ async function renderHome() {
   $("all-btn-desc").textContent = `${totalQuestions}問から選択`;
 
   yearGrid.innerHTML = "";
-  YEARS.forEach((year) => {
-    const questions = QUESTIONS.filter((question) => question.year === year);
-    const attempted = questions.filter((question) => Boolean(recordForQuestion(question))).length;
-    const correct = questions.filter((question) => {
-      const record = recordForQuestion(question);
-      return record && record.correct;
-    }).length;
-    const pct = attempted > 0 ? Math.round((correct / attempted) * 100) : 0;
-    const fill = questions.length > 0 ? Math.round((attempted / questions.length) * 100) : 0;
+  YEARS.slice().reverse().forEach((year) => {
+    const stats = collectProgress(QUESTIONS.filter((question) => question.year === year));
+    const stars = progressStars(stats);
     const button = document.createElement("button");
-    button.className = "year-btn";
+    button.className = "year-card";
     button.innerHTML =
-      `<div class="y-num">${year}</div>` +
-      `<div class="y-info">${attempted}/${questions.length}問${attempted > 0 ? ` ${pct}%` : ""}</div>` +
-      `<div class="y-bar"><div class="y-fill" style="width:${fill}%"></div></div>`;
+      `<div class="yc-year">${year}</div>` +
+      `<div class="yc-info">${stats.attempted}/${stats.total}問${stats.attempted > 0 ? ` ${stats.pct}%` : ""}</div>` +
+      `<div class="yc-stars">${starMarkup(stars)}</div>` +
+      `<div class="yc-bar"><div class="yc-fill" style="width:${stats.fill}%"></div></div>`;
     button.addEventListener("click", () => openModeModal(year));
     yearGrid.appendChild(button);
   });
 
   catGrid.innerHTML = "";
-  CATEGORIES.forEach((category) => {
-    const questions = QUESTIONS.filter((question) => question.category === category);
-    const attempted = questions.filter((question) => Boolean(recordForQuestion(question))).length;
-    const correct = questions.filter((question) => {
-      const record = recordForQuestion(question);
-      return record && record.correct;
-    }).length;
-    const pct = attempted > 0 ? Math.round((correct / attempted) * 100) : 0;
-    const fill = questions.length > 0 ? Math.round((attempted / questions.length) * 100) : 0;
-    const button = document.createElement("button");
-    button.className = "cat-btn";
-    button.innerHTML =
-      `<div class="c-name">${escapeHtml(category)}</div>` +
-      `<div class="c-info">${attempted}/${questions.length}問${attempted > 0 ? ` · ${pct}%` : ""}</div>` +
-      `<div class="c-bar"><div class="c-fill" style="width:${fill}%"></div></div>`;
-    button.addEventListener("click", () => openModeModal(`cat:${category}`));
-    catGrid.appendChild(button);
+  const groupedCats = new Set();
+  CAT_GROUPS.forEach((group) => {
+    const cats = group.cats.filter((category) => CATEGORIES.includes(category));
+    if (!cats.length) return;
+    const label = document.createElement("div");
+    label.className = "cat-group-label";
+    label.textContent = group.label;
+    catGrid.appendChild(label);
+    cats.forEach((category, index) => {
+      groupedCats.add(category);
+      catGrid.appendChild(buildCatRow(category, index + 1));
+    });
   });
+  const leftoverCats = CATEGORIES.filter((category) => !groupedCats.has(category));
+  if (leftoverCats.length) {
+    const label = document.createElement("div");
+    label.className = "cat-group-label";
+    label.textContent = "その他";
+    catGrid.appendChild(label);
+    leftoverCats.forEach((category, index) => {
+      catGrid.appendChild(buildCatRow(category, index + 1));
+    });
+  }
+
+  renderExamCard();
 
   const srsStats = await SRS.getStats();
   renderHomeOverview(srsStats);
@@ -890,8 +1004,12 @@ function renderHomeOverview(stats) {
   $("home-overview").innerHTML =
     `<div class="ov-card"><div class="ov-label">今日やる復習</div><div class="ov-val">${stats.dueCount}</div><div class="ov-sub">期限中＋超過</div></div>` +
     `<div class="ov-card"><div class="ov-label">明日</div><div class="ov-val">${stats.dueTomorrow}</div><div class="ov-sub">予定</div></div>` +
-    `<div class="ov-card"><div class="ov-label">今後7日</div><div class="ov-val">${stats.dueThisWeek}</div><div class="ov-sub">予定</div></div>` +
-    `<div class="ov-card"><div class="ov-label">総正解率</div><div class="ov-val">${accuracy}%</div><div class="ov-sub">${correct}/${attempted || 0}問</div></div>`;
+    `<div class="ov-card"><div class="ov-label">今後7日</div><div class="ov-val">${stats.dueThisWeek}</div><div class="ov-sub">予定</div></div>`;
+
+  const accuracyEl = $("home-accuracy");
+  const progressEl = $("home-progress");
+  if (accuracyEl) accuracyEl.textContent = attempted > 0 ? `${accuracy}%` : "—";
+  if (progressEl) progressEl.textContent = `${attempted}/${QUESTIONS.length}問 解答済`;
 
   $("srs-today-desc").textContent = stats.dueCount > 0
     ? `${stats.dueCount}問 待機中（期限超過${stats.overdueCount}問）`
@@ -1936,15 +2054,41 @@ async function requestPersistentStorage() {
 }
 
 function wireEvents() {
-  $("btn-search")?.addEventListener("click", () => {
+  $("bn-home")?.addEventListener("click", async () => {
+    await renderHome();
+    showPage("pg-home");
+  });
+  $("bn-stats")?.addEventListener("click", async () => {
+    await renderStats();
+    showPage("pg-stats");
+  });
+  $("bn-search")?.addEventListener("click", () => {
     $("search-input").value = "";
     $("search-results").innerHTML = "";
     showPage("pg-search");
   });
-  $("btn-stats")?.addEventListener("click", async () => {
-    await renderStats();
-    showPage("pg-stats");
+
+  $("exam-card")?.addEventListener("click", () => {
+    const input = $("exam-date-input");
+    if (input) input.value = getExamDate();
+    $("exam-modal-bg")?.classList.remove("hidden");
   });
+  $("exam-save")?.addEventListener("click", () => {
+    const input = $("exam-date-input");
+    if (input && /^\d{4}-\d{2}-\d{2}$/.test(input.value)) {
+      setExamDate(input.value);
+      renderExamCard();
+      showToast("受験日を更新しました", "success");
+    }
+    $("exam-modal-bg")?.classList.add("hidden");
+  });
+  $("exam-cancel")?.addEventListener("click", () => {
+    $("exam-modal-bg")?.classList.add("hidden");
+  });
+  $("exam-modal-bg")?.addEventListener("click", (event) => {
+    if (event.target === $("exam-modal-bg")) $("exam-modal-bg").classList.add("hidden");
+  });
+
   $("btn-backup")?.addEventListener("click", openBackupModal);
   $("btn-all")?.addEventListener("click", () => openModeModal("all"));
   $("btn-unseen")?.addEventListener("click", () => openModeModal("unseen"));

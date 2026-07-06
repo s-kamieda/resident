@@ -1157,7 +1157,7 @@ async function renderQuestion() {
     } else if (result) {
       feedback.className = "feedback fb-ok";
       feedback.innerHTML = '<span>✓ 正解</span><button class="btn-mark-wrong" id="btn-mark-wrong">未正解リストへ</button>';
-      $("btn-mark-wrong").addEventListener("click", () => {
+      $("btn-mark-wrong")?.addEventListener("click", () => {
         void markAsWrong();
       });
     } else {
@@ -1936,124 +1936,124 @@ async function requestPersistentStorage() {
 }
 
 function wireEvents() {
-  $("btn-search").addEventListener("click", () => {
+  $("btn-search")?.addEventListener("click", () => {
     $("search-input").value = "";
     $("search-results").innerHTML = "";
     showPage("pg-search");
   });
-  $("btn-stats").addEventListener("click", async () => {
+  $("btn-stats")?.addEventListener("click", async () => {
     await renderStats();
     showPage("pg-stats");
   });
-  $("btn-backup").addEventListener("click", openBackupModal);
-  $("btn-all").addEventListener("click", () => openModeModal("all"));
-  $("btn-unseen").addEventListener("click", () => openModeModal("unseen"));
-  $("btn-resume").addEventListener("click", () => {
+  $("btn-backup")?.addEventListener("click", openBackupModal);
+  $("btn-all")?.addEventListener("click", () => openModeModal("all"));
+  $("btn-unseen")?.addEventListener("click", () => openModeModal("unseen"));
+  $("btn-resume")?.addEventListener("click", () => {
     void resumeSession();
   });
 
-  $("modal-seq").addEventListener("click", () => {
+  $("modal-seq")?.addEventListener("click", () => {
     void startQuiz("seq");
   });
-  $("modal-rand").addEventListener("click", () => {
+  $("modal-rand")?.addEventListener("click", () => {
     void startQuiz("rand");
   });
-  $("modal-rand10").addEventListener("click", () => {
+  $("modal-rand10")?.addEventListener("click", () => {
     void startQuiz("rand10");
   });
-  $("modal-cancel").addEventListener("click", closeModeModal);
-  $("modal-bg").addEventListener("click", (event) => {
+  $("modal-cancel")?.addEventListener("click", closeModeModal);
+  $("modal-bg")?.addEventListener("click", (event) => {
     if (event.target === $("modal-bg")) closeModeModal();
   });
 
-  $("btn-pause").addEventListener("click", () => {
+  $("btn-pause")?.addEventListener("click", () => {
     void pauseSession();
   });
-  $("btn-quiz-home").addEventListener("click", () => {
+  $("btn-quiz-home")?.addEventListener("click", () => {
     void goHome();
   });
-  $("btn-submit").addEventListener("click", () => {
+  $("btn-submit")?.addEventListener("click", () => {
     void submitAnswer();
   });
-  $("btn-next").addEventListener("click", () => {
+  $("btn-next")?.addEventListener("click", () => {
     void nextQuestion();
   });
-  $("btn-prev").addEventListener("click", () => {
+  $("btn-prev")?.addEventListener("click", () => {
     void previousQuestion();
   });
 
-  $("btn-result-home").addEventListener("click", async () => {
+  $("btn-result-home")?.addEventListener("click", async () => {
     sessionState = null;
     await renderHome();
     showPage("pg-home");
   });
-  $("btn-result-home2").addEventListener("click", async () => {
+  $("btn-result-home2")?.addEventListener("click", async () => {
     sessionState = null;
     await renderHome();
     showPage("pg-home");
   });
-  $("btn-retry").addEventListener("click", () => {
+  $("btn-retry")?.addEventListener("click", () => {
     void retryWrong();
   });
 
-  $("btn-stats-home").addEventListener("click", async () => {
+  $("btn-stats-home")?.addEventListener("click", async () => {
     await renderHome();
     showPage("pg-home");
   });
 
-  $("btn-search-home").addEventListener("click", async () => {
+  $("btn-search-home")?.addEventListener("click", async () => {
     await renderHome();
     showPage("pg-home");
   });
-  $("btn-do-search").addEventListener("click", () => {
+  $("btn-do-search")?.addEventListener("click", () => {
     void doSearch();
   });
-  $("search-input").addEventListener("keydown", (event) => {
+  $("search-input")?.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
       void doSearch();
     }
   });
 
-  $("btn-srs-today").addEventListener("click", () => {
+  $("btn-srs-today")?.addEventListener("click", () => {
     void startSrsReview();
   });
-  $("btn-srs-ease").addEventListener("click", () => {
+  $("btn-srs-ease")?.addEventListener("click", () => {
     void openSrsModal("ease");
   });
-  $("srs-modal-20").addEventListener("click", () => {
+  $("srs-modal-20")?.addEventListener("click", () => {
     void startSrsCram(20);
   });
-  $("srs-modal-50").addEventListener("click", () => {
+  $("srs-modal-50")?.addEventListener("click", () => {
     void startSrsCram(50);
   });
-  $("srs-modal-all").addEventListener("click", () => {
+  $("srs-modal-all")?.addEventListener("click", () => {
     void startSrsCram(null);
   });
-  $("srs-modal-cancel").addEventListener("click", closeSrsModal);
-  $("srs-modal-bg").addEventListener("click", (event) => {
+  $("srs-modal-cancel")?.addEventListener("click", closeSrsModal);
+  $("srs-modal-bg")?.addEventListener("click", (event) => {
     if (event.target === $("srs-modal-bg")) closeSrsModal();
   });
 
-  $("btn-rate-0").addEventListener("click", () => {
+  $("btn-rate-0")?.addEventListener("click", () => {
     void handleRating(0);
   });
-  $("btn-rate-1").addEventListener("click", () => {
+  $("btn-rate-1")?.addEventListener("click", () => {
     void handleRating(1);
   });
-  $("btn-rate-2").addEventListener("click", () => {
+  $("btn-rate-2")?.addEventListener("click", () => {
     void handleRating(2);
   });
 
-  $("memo-rendered").addEventListener("click", enterMemoEdit);
-  $("memo-text").addEventListener("input", () => {
+  $("memo-rendered")?.addEventListener("click", enterMemoEdit);
+  $("memo-text")?.addEventListener("input", () => {
     currentMemo.text = $("memo-text").value;
     scheduleMemoSave();
   });
-  $("memo-text").addEventListener("blur", () => {
+  $("memo-text")?.addEventListener("blur", () => {
     exitMemoEdit();
     void saveMemoNow(false);
   });
-  $("memo-text").addEventListener("paste", (event) => {
+  $("memo-text")?.addEventListener("paste", (event) => {
     const items = Array.from((event.clipboardData || window.clipboardData).items || []);
     const imageItem = items.find((item) => item.type && item.type.includes("image"));
     if (imageItem) {
@@ -2064,7 +2064,7 @@ function wireEvents() {
       }
     }
   });
-  $("memo-file-input").addEventListener("change", async (event) => {
+  $("memo-file-input")?.addEventListener("change", async (event) => {
     const files = Array.from(event.target.files || []);
     for (const file of files) {
       await addMemoImage(file);
@@ -2075,23 +2075,23 @@ function wireEvents() {
     button.addEventListener("click", () => insertTemplate(button.dataset.template));
   });
 
-  $("btn-export-data").addEventListener("click", () => {
+  $("btn-export-data")?.addEventListener("click", () => {
     void exportBackup();
   });
-  $("btn-import-data").addEventListener("click", () => {
+  $("btn-import-data")?.addEventListener("click", () => {
     $("backup-import-input").click();
   });
-  $("btn-backup-close").addEventListener("click", closeBackupModal);
-  $("backup-modal-bg").addEventListener("click", (event) => {
+  $("btn-backup-close")?.addEventListener("click", closeBackupModal);
+  $("backup-modal-bg")?.addEventListener("click", (event) => {
     if (event.target === $("backup-modal-bg")) closeBackupModal();
   });
-  $("backup-import-input").addEventListener("change", (event) => {
+  $("backup-import-input")?.addEventListener("change", (event) => {
     void handleImportSelection(event);
   });
 
-  $("confirm-cancel").addEventListener("click", () => resolveConfirm(false));
-  $("confirm-ok").addEventListener("click", () => resolveConfirm(true));
-  $("confirm-modal-bg").addEventListener("click", (event) => {
+  $("confirm-cancel")?.addEventListener("click", () => resolveConfirm(false));
+  $("confirm-ok")?.addEventListener("click", () => resolveConfirm(true));
+  $("confirm-modal-bg")?.addEventListener("click", (event) => {
     if (event.target === $("confirm-modal-bg")) resolveConfirm(false);
   });
 

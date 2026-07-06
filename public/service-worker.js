@@ -1,4 +1,4 @@
-const CACHE_NAME = "rad-quiz-cache-20260706-srs-redesign";
+const CACHE_NAME = "rad-quiz-cache-20260706-init-guard";
 const STATIC_ASSETS = [
   "./",
   "./専門医試験_問題集.html",
@@ -42,6 +42,27 @@ self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
 
   if (url.origin === self.location.origin) {
+    // アプリのシェル（HTMLナビゲーションと中核JS/CSS）はネットワーク優先にして、
+    // デプロイ直後に「新しいHTML＋古いapp.js」のような不整合が起きないようにする。
+    const isShell =
+      event.request.mode === "navigate" ||
+      /\.(html|js|css)$/i.test(url.pathname);
+
+    if (isShell) {
+      event.respondWith(
+        fetch(event.request)
+          .then((response) => {
+            if (response.ok) {
+              const copy = response.clone();
+              caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+            }
+            return response;
+          })
+          .catch(() => caches.match(event.request))
+      );
+      return;
+    }
+
     event.respondWith(
       caches.match(event.request).then((cached) => {
         const fetchPromise = fetch(event.request)

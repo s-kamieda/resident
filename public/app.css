@@ -193,9 +193,9 @@ textarea{resize:vertical}
   flex-shrink:0;
 }
 .cat-row-body{flex:1;min-width:0}
-.cat-row-name{font-size:.86rem;font-weight:700;color:#2f3a38;line-height:1.3}
-.cat-row-bar{height:4px;background:#e5eae8;border-radius:99px;overflow:hidden;margin-top:5px}
-.cat-row-fill{height:100%;border-radius:99px;background:#ef6d8b;transition:width .35s ease}
+.cat-row-name{display:block;font-size:.86rem;font-weight:700;color:#2f3a38;line-height:1.3}
+.cat-row-bar{display:block;height:4px;background:#e5eae8;border-radius:99px;overflow:hidden;margin-top:5px}
+.cat-row-fill{display:block;height:100%;border-radius:99px;background:#ef6d8b;transition:width .35s ease}
 .cat-row-info{font-size:.71rem;color:#8b9793;white-space:nowrap;flex-shrink:0;text-align:right;line-height:1.4}
 
 /* ===== モードボタン ===== */

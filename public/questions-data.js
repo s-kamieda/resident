@@ -237,7 +237,7 @@ window.__QUESTIONS__ = [
     "answer": "b",
     "multi": false,
     "explanation": "DICOMは広く普及しているが、すべてのモダリティが準拠しているわけではない。「すべて」とする断定が誤り。",
-    "category": "画像診断学総論（モダリティ・造影剤）"
+    "category": "医の倫理・医療の質"
   },
   {
     "year": 2012,
@@ -1389,7 +1389,7 @@ window.__QUESTIONS__ = [
     "answer": "c",
     "multi": false,
     "explanation": "Ewing肉腫は放射線感受性が高い。悪性黒色腫・骨肉腫は抵抗性。",
-    "category": "放射線治療"
+    "category": "放射線生物学"
   },
   {
     "year": 2012,
@@ -1437,7 +1437,7 @@ window.__QUESTIONS__ = [
     "answer": "b",
     "multi": false,
     "explanation": "131Iのβ線が組織内の飛程内で電離を起こし腫瘍細胞を破壊する。γ線は画像化に利用される。",
-    "category": "放射線治療"
+    "category": "核医学"
   },
   {
     "year": 2012,
@@ -1661,7 +1661,7 @@ window.__QUESTIONS__ = [
     "answer": "e",
     "multi": false,
     "explanation": "ケミカルシフトアーチファクトは脂肪と水の共鳴周波数の差により生じる。",
-    "category": "画像診断学総論（モダリティ・造影剤）"
+    "category": "医学物理学"
   },
   {
     "year": 2013,
@@ -2605,7 +2605,7 @@ window.__QUESTIONS__ = [
     "answer": "c,e",
     "multi": true,
     "explanation": "STIR法（短TIによる脂肪抑制）とCHESS法（周波数選択的脂肪抑制）は脂肪抑制法。FLAIRは水（髄液）抑制、EPI・GREは撮像法。",
-    "category": "画像診断学総論（モダリティ・造影剤）"
+    "category": "医学物理学"
   },
   {
     "year": 2013,
@@ -2653,7 +2653,7 @@ window.__QUESTIONS__ = [
     "answer": "a",
     "multi": false,
     "explanation": "リングアーチファクトは検出器不整によるCTのアーチファクト。他はいずれもMRIで生じる。",
-    "category": "画像診断学総論（モダリティ・造影剤）"
+    "category": "医学物理学"
   },
   {
     "year": 2013,
@@ -4685,7 +4685,7 @@ window.__QUESTIONS__ = [
     "answer": "d,e",
     "multi": true,
     "explanation": "上咽頭リンパ上皮腫と低分化扁平上皮癌は放射線感受性が比較的高い。甲状腺未分化癌・悪性黒色腫・腺様囊胞癌は抵抗性。",
-    "category": "放射線治療"
+    "category": "放射線生物学"
   },
   {
     "year": 2014,
@@ -4925,7 +4925,7 @@ window.__QUESTIONS__ = [
     "answer": "b,d",
     "multi": true,
     "explanation": "STIRは脂肪と水の縦緩和時間（T1）の差を、CHESS（周波数選択的脂肪抑制）は共鳴周波数の差を利用する。",
-    "category": "画像診断学総論（モダリティ・造影剤）"
+    "category": "医学物理学"
   },
   {
     "year": 2015,
@@ -5341,7 +5341,7 @@ window.__QUESTIONS__ = [
     "answer": "d",
     "multi": false,
     "explanation": "軟骨無形成症は近位優位の四肢短縮（rhizomelic短縮）を特徴とする。膜様頭蓋・出生時多発骨折は骨形成不全症の所見。",
-    "category": "小児"
+    "category": "脊椎・脊髄・骨関節・軟部"
   },
   {
     "year": 2015,
@@ -5693,7 +5693,7 @@ window.__QUESTIONS__ = [
     "answer": "b,e",
     "multi": true,
     "explanation": "副腎静脈サンプリングは左右のアルドステロン/コルチゾール比を測定し、片側性腺腫と両側性過形成を鑑別する。手術適応決定が目的で、手術を希望しない症例には行わない。",
-    "category": "泌尿器・生殖器"
+    "category": "IVR"
   },
   {
     "year": 2015,
@@ -6253,7 +6253,7 @@ window.__QUESTIONS__ = [
     "answer": "b,c",
     "multi": true,
     "explanation": "胚細胞腫（germinoma）と神経芽腫は放射線感受性が高い。膠芽腫・平滑筋肉腫・聴神経鞘腫は比較的抵抗性。",
-    "category": "放射線治療"
+    "category": "放射線生物学"
   },
   {
     "year": 2015,
@@ -6605,7 +6605,7 @@ window.__QUESTIONS__ = [
     "answer": "d",
     "multi": false,
     "explanation": "数Gy（3〜6 Gy程度）の全身被ばくでは骨髄の造血機能障害が主な死因となる（骨髄死）。腸管死は6〜10 Gy、中枢神経死は10 Gy以上で生じる。",
-    "category": "中枢神経（脳・脊髄）"
+    "category": "放射線生物学"
   },
   {
     "year": 2016,
@@ -6653,7 +6653,7 @@ window.__QUESTIONS__ = [
     "answer": "a,e",
     "multi": true,
     "explanation": "放射線感受性の高い腫瘍：胚腫（germinoma）とHodgkinリンパ腫はともに非常に高い放射線感受性を示す。膠芽腫・腎細胞癌・甲状腺乳頭癌は感受性が低い。",
-    "category": "泌尿器・生殖器"
+    "category": "放射線生物学"
   },
   {
     "year": 2016,
@@ -6701,7 +6701,7 @@ window.__QUESTIONS__ = [
     "answer": "b,c",
     "multi": true,
     "explanation": "ヨード造影剤使用に際して注意が必要な疾患：甲状腺機能亢進症（ヨード負荷で甲状腺クリーゼ誘発リスク）と重症筋無力症（ヨード造影剤で筋力低下増悪の報告あり）。",
-    "category": "呼吸器・縦隔"
+    "category": "画像診断学総論（モダリティ・造影剤）"
   },
   {
     "year": 2016,
@@ -6717,7 +6717,7 @@ window.__QUESTIONS__ = [
     "answer": "a",
     "multi": false,
     "explanation": "実効線量は各臓器への等価線量に組織加重係数を乗じて合算した値で、複数の臓器への被ばくを単一の指標で表す定義上の計算量であり実測できない。吸収線量・放射能量・入射皮膚表面線量・DLPはいずれも実測可能。",
-    "category": "小児"
+    "category": "放射線防護・安全管理"
   },
   {
     "year": 2016,
@@ -6749,7 +6749,7 @@ window.__QUESTIONS__ = [
     "answer": "a,c",
     "multi": true,
     "explanation": "保険診療では健康診断に保険適用は不可（保険外）。研究目的の検査は保険請求できず研究費から支出する。特定薬局への誘導・必要以上の検査は保険診療の原則に反する。",
-    "category": "医学物理学"
+    "category": "医の倫理・医療の質"
   },
   {
     "year": 2016,
@@ -7149,7 +7149,7 @@ window.__QUESTIONS__ = [
     "answer": "e",
     "multi": false,
     "explanation": "外傷性大動脈損傷は動脈靭帯付着部の大動脈峡部（左鎖骨下動脈起始部遠位）に最も多く生じる。横隔膜損傷は左側に多い（右は肝臓が保護）。外傷性肺囊胞は消退に数ヶ月かかることがある。胸骨骨折の単純X線での検出は困難。",
-    "category": "脊椎・脊髄・骨関節・軟部"
+    "category": "呼吸器・縦隔"
   },
   {
     "year": 2016,
@@ -7277,7 +7277,7 @@ window.__QUESTIONS__ = [
     "answer": "c,e",
     "multi": true,
     "explanation": "a：\n(新乳房画像診断の勘ドコロ p133)\nb：\n(新乳房画像診断の勘ドコロ p118)\nc：局所的非対称性陰影(focal asymmetric density：FAD)\n非対称性の陰影として認められ、腫瘤の候補であるが、真の腫瘤としての境界や濃度を有していない。部位、濃度、内部構造、境界・辺縁、随伴する他の所見の有無などを評価し、正常乳腺か真の腫瘤であるかを判定する。(新乳房画像診断の勘ドコロ p121)\nFADはカテゴリー3(おそらく良性：悪性の可能性2％以下)。(新乳房画像診断の勘ドコロ p122)\nd,e：\n(新乳房画像診断の勘ドコロ p126)",
-    "category": "画像診断学総論（モダリティ・造影剤）"
+    "category": "乳房"
   },
   {
     "year": 2016,
@@ -7293,7 +7293,7 @@ window.__QUESTIONS__ = [
     "answer": "b",
     "multi": false,
     "explanation": "・胆道閉鎖症\n腹部超音波検査では以下に示す所見を呈することが多い。\ntriangular cord：肝門部で門脈前方の三角形あるいは帯状高エコー。縦断像あるいは横断像で評価し、厚さが４mm以上を陽性と判定。\n(https://www.nanbyou.or.jp/entry/4736)\n新生児・乳児に認められる胸部X 線所見として病的なのはどれか。2つ選べ。",
-    "category": "消化器（肝・胆・膵・脾）"
+    "category": "小児"
   },
   {
     "year": 2016,
@@ -7325,7 +7325,7 @@ window.__QUESTIONS__ = [
     "answer": "c",
     "multi": false,
     "explanation": "・頭蓋骨骨折：多発性、両側性\n・骨幹端骨折(コーナー骨折、バケツ柄状骨折)、肋骨骨折（横突起がテコになる）、胸骨・棘突起骨折、肩甲骨骨折、らせん状骨折、鉛管骨折。\n・全身骨スクリーニングをする。各パーツ毎にレントゲンを撮る。20枚撮る。これをSkeltal surveyという。\n頭部2R、胸郭2R、頸椎・腰椎側面、骨盤正面、上腕、前腕、手、大腿・下腿・足正面\nこれを、2歳未満では全例行なう。2-5歳では虐待による骨折＋の場合に行なう。5歳以上では不要（会話できるので）。\n・最重症ならば、警察緊急報告、児童相談所緊急報告、高次病院緊急転送。\n(https://xn--o1qq22cjlllou16giuj.jp/archives/7954)\n小児の肋骨骨折はmineral deficiency以外では極めて稀で交通事故でも1.8ｍ異常の転落でも、CPRであっても、まず起こらない。小児の肋骨骨折は虐待を考える。\n(http://www.nishiizu.gr.jp/intro/conference/h19/conference-19_05.pdf)\n頭蓋の骨折に関しては、乳幼児の縫合線を越えない単純な線状骨折は事故によることが多い一方で、複雑骨折、多発骨折、陥没骨折、離開骨折、反復骨折といった単純な線状骨折に留まらない骨折は、虐待を考慮すべき所見。\n(臨床画像 vol.33 no.11 2017 p1365)",
-    "category": "脊椎・脊髄・骨関節・軟部"
+    "category": "小児"
   },
   {
     "year": 2016,
@@ -7341,7 +7341,7 @@ window.__QUESTIONS__ = [
     "answer": "d,e",
     "multi": true,
     "explanation": "肝臓びまん性高吸収の鑑別：\n・鉄過剰症\nヘモクロマトーシスのような遺伝性鉄過剰症と、長期輸血などによる二次性鉄過剰症に分けられる。\n・アミオダロン\n・Wilson病\n・糖原病\n・MRI造影剤(ガドリニウム造影剤)\n鉄過剰症を疑う場合は血清フェリチン値を、Wilson病を疑う場合は血清セルロプラスミン値や尿中銅排泄量の測定を主治医にrecommendする。\n(画像診断 vol.36 no.9 2016 p878,879)\nPeriportal collar sign を示す病態として考えにくいのはどれか。1つ選べ。",
-    "category": "画像診断学総論（モダリティ・造影剤）"
+    "category": "消化器（肝・胆・膵・脾）"
   },
   {
     "year": 2016,
@@ -7517,7 +7517,7 @@ window.__QUESTIONS__ = [
     "answer": "d",
     "multi": false,
     "explanation": "PI-RADSにout of phaseの記載はない。\n後腹膜解剖について誤っているのはどれか。1つ選べ。",
-    "category": "画像診断学総論（モダリティ・造影剤）"
+    "category": "泌尿器・生殖器"
   },
   {
     "year": 2016,
@@ -7629,7 +7629,7 @@ window.__QUESTIONS__ = [
     "answer": "a",
     "multi": false,
     "explanation": "NBCA（N-ブチルシアノアクリレート）は動静脈奇形・出血等の塞栓に用いる永久塞栓剤。肝細胞癌のIVR治療にはリピオドール+化学療法剤のTACE、または塞栓物質を用いるが、NBCAは通常選択しない。",
-    "category": "心臓・大血管"
+    "category": "IVR"
   },
   {
     "year": 2016,
@@ -7645,7 +7645,7 @@ window.__QUESTIONS__ = [
     "answer": "d",
     "multi": false,
     "explanation": "内腸骨動脈起始部に及ぶ片側外腸骨動脈の閉塞は、内腸骨動脈の側副血行温存が必要なため技術的にIVRが困難であり手術が選択される。両側外腸骨動脈の閉塞・総腸骨動脈の病変はIVR（PTA・ステント）の適応。",
-    "category": "脊椎・脊髄・骨関節・軟部"
+    "category": "IVR"
   },
   {
     "year": 2016,
@@ -7661,7 +7661,7 @@ window.__QUESTIONS__ = [
     "answer": "d",
     "multi": false,
     "explanation": "物理学的半減期：18F=110分、99mTc=6時間、111In=2.8日、131I=8.04日（最長）、201Tl=3.04日（73.1時間）。",
-    "category": "放射線防護・安全管理"
+    "category": "医学物理学"
   },
   {
     "year": 2016,
@@ -7709,7 +7709,7 @@ window.__QUESTIONS__ = [
     "answer": "e",
     "multi": false,
     "explanation": "FDG-PETでの生理的集積部位：脳・肝臓・腸管・骨髄・腎臓・膀胱（排泄）・扁桃など。胆囊はFDGの生理的集積をほとんど示さず、明瞭な集積があれば胆囊炎・胆囊癌等の病的状態を疑う。",
-    "category": "画像診断学総論（モダリティ・造影剤）"
+    "category": "核医学"
   },
   {
     "year": 2016,
@@ -7773,7 +7773,7 @@ window.__QUESTIONS__ = [
     "answer": "b",
     "multi": false,
     "explanation": "123I-ioflupane（DaTSCAN）は主にドーパミントランスポータ（DAT）の分布を反映し、主に線条体（被殻・尾状核）に集積する。加齢とともにDAT集積はわずかに低下する（正常加齢変化）。症状の強い側と対側の線条体に集積低下が見られる。",
-    "category": "中枢神経（脳・脊髄）"
+    "category": "核医学"
   },
   {
     "year": 2016,
@@ -7789,7 +7789,7 @@ window.__QUESTIONS__ = [
     "answer": "d",
     "multi": false,
     "explanation": "99mTc-MAAは投与時の体位（座位・臥位等）の影響を受け、重力方向に血流分布が変化するため画像分布が変わる。血流画像に脳が描出された場合は右→左シャントを疑う。81mKrの半減期は約13秒（13時間ではない）。99mTc-MAAの粒子径（10〜90μm）は肺毛細血管内径（7〜10μm）より大きい。",
-    "category": "呼吸器・縦隔"
+    "category": "核医学"
   },
   {
     "year": 2016,
@@ -7805,7 +7805,7 @@ window.__QUESTIONS__ = [
     "answer": "c,e",
     "multi": true,
     "explanation": "心不全では交感神経が慢性的に活性化されるため、123I-MIBG心筋シンチグラフィでは心筋への集積が低下し心/縦隔（H/M）比が低下（c）、また心筋からの洗い出し率（washout rate）が増加する（e）。",
-    "category": "呼吸器・縦隔"
+    "category": "核医学"
   },
   {
     "year": 2016,
@@ -7821,7 +7821,7 @@ window.__QUESTIONS__ = [
     "answer": "a",
     "multi": false,
     "explanation": "虚血性心筋（hibernating myocardium）では血流低下＞脂肪酸代謝（BMIPP）低下のミスマッチパターンを示す（flow↓＞metabolism↓）。すなわち血流画像の方が集積低下範囲が広い。虚血性心不全でより高頻度に見られる。",
-    "category": "心臓・大血管"
+    "category": "核医学"
   },
   {
     "year": 2016,
@@ -7901,7 +7901,7 @@ window.__QUESTIONS__ = [
     "answer": "c",
     "multi": false,
     "explanation": "10 MV X線の深部線量百分率曲線は皮膚線量が低く（スキンスペアリング効果）、線量最大点（Dmax）は約2.5 cm深度に位置し、その後深部で緩やかに減衰する特徴的な曲線を示す。（図問題のため要確認）",
-    "category": "放射線生物学"
+    "category": "医学物理学"
   },
   {
     "year": 2016,
@@ -7933,7 +7933,7 @@ window.__QUESTIONS__ = [
     "answer": "c",
     "multi": false,
     "explanation": "臓器障害のTD値：肝臓1/3体積への50 Gyは放射線誘発肝障害（RILD: Radiation-Induced Liver Disease）を起こしうるが、障害の名称は「慢性肝炎」ではなく「RILD（肝静脈閉塞性疾患様変化）」が正しい。また1/3肝臓の耐容線量は50 Gyより高いとされる。",
-    "category": "中枢神経（脳・脊髄）"
+    "category": "放射線治療"
   },
   {
     "year": 2016,
@@ -7965,7 +7965,7 @@ window.__QUESTIONS__ = [
     "answer": "c,e",
     "multi": true,
     "explanation": "定位放射線照射（SRS/SBRT）の適応：肝細胞癌（早期HCCへのSBRT）と聴神経腫瘍（ガンマナイフ等）は標準的適応。乳癌は全乳房照射が基本、子宮頸癌は腔内照射、膵癌SBRTは研究的（当時）。",
-    "category": "消化器（肝・胆・膵・脾）"
+    "category": "放射線治療"
   },
   {
     "year": 2016,
@@ -7981,7 +7981,7 @@ window.__QUESTIONS__ = [
     "answer": "e",
     "multi": false,
     "explanation": "甲状腺未分化癌は分化型甲状腺癌と異なりヨードを取り込まないため、131I内用療法の適応にならない。未分化癌には外照射±化療が行われる。",
-    "category": "頭頸部"
+    "category": "放射線治療"
   },
   {
     "year": 2016,
@@ -8013,7 +8013,7 @@ window.__QUESTIONS__ = [
     "answer": "a,d",
     "multi": true,
     "explanation": "化学放射線療法の適応：膠芽腫（Stupp protocol: TMZ+RT）とⅢB期肺癌（根治的CRT）。喉頭癌Ⅰ期はRT単独が標準、胃癌Ⅰ期は手術が標準、前立腺癌Ⅱ期はRT±ホルモン療法。",
-    "category": "呼吸器・縦隔"
+    "category": "放射線治療"
   },
   {
     "year": 2016,
@@ -8029,7 +8029,7 @@ window.__QUESTIONS__ = [
     "answer": "c",
     "multi": false,
     "explanation": "髄芽腫は髄液播種のリスクが高く、術後に全脳全脊髄照射（CSI: Craniospinal Irradiation）＋後頭蓋窩ブーストが標準治療。上衣腫は局所照射、髄膜腫・星細胞腫も局所照射、胚細胞腫はCRなら全脳室照射。",
-    "category": "中枢神経（脳・脊髄）"
+    "category": "放射線治療"
   },
   {
     "year": 2016,
@@ -8061,7 +8061,7 @@ window.__QUESTIONS__ = [
     "answer": "e",
     "multi": false,
     "explanation": "IIIB期非小細胞肺癌の根治的CRTで照射野に含めるべきでないもの：対側鎖骨上窩は予防的照射野に通常含めない。同側鎖骨上窩は腫瘍の位置によっては含めることあり。気管分岐部・同側縦隔は含める。",
-    "category": "呼吸器・縦隔"
+    "category": "放射線治療"
   },
   {
     "year": 2016,
@@ -8093,7 +8093,7 @@ window.__QUESTIONS__ = [
     "answer": "d,e",
     "multi": true,
     "explanation": "乳房温存術後照射の禁忌併存症：全身性強皮症（強皮症は放射線による重篤な線維化・皮膚壊死のリスク）と色素性乾皮症（XP：DNA修復障害で放射線感受性が著しく高い）。乾癬・ざ瘡・掌蹠角化症は禁忌でない。",
-    "category": "医の倫理・医療の質"
+    "category": "放射線治療"
   },
   {
     "year": 2016,
@@ -8157,7 +8157,7 @@ window.__QUESTIONS__ = [
     "answer": "a,b",
     "multi": true,
     "explanation": "放射線照射後の消化管有害反応：早期反応（照射中〜数週以内）として下痢・腸炎・悪心がある（a）。晩期反応（数ヶ月〜数年後）として腸閉塞・瘻孔・狭窄がある（b）。晩期反応は大腸より小腸で起こりやすい。",
-    "category": "消化器（消化管・腹壁）"
+    "category": "放射線治療"
   },
   {
     "year": 2016,
@@ -8173,7 +8173,7 @@ window.__QUESTIONS__ = [
     "answer": "a,d",
     "multi": true,
     "explanation": "子宮頸癌の放射線治療：HDR腔内照射には192Irを使用する（a）。腔内照射のB点（膣側壁から3 cm外側）は骨盤壁・閉鎖リンパ節領域の線量指標（d）。Ib期は外照射＋腔内照射が標準（腔内単独ではない）。子宮腔内にはタンデム（tandem）を挿入しオボイドは腟内（穹窿部）に置く。",
-    "category": "泌尿器・生殖器"
+    "category": "放射線治療"
   },
   {
     "year": 2016,
@@ -8189,7 +8189,7 @@ window.__QUESTIONS__ = [
     "answer": "c",
     "multi": false,
     "explanation": "前立腺癌根治的外照射後の晩期有害事象として最も頻度が低いもの：恥骨骨折。性機能障害・出血性膀胱炎・直腸潰瘍・尿道狭窄は比較的起こりうる合併症。",
-    "category": "泌尿器・生殖器"
+    "category": "放射線治療"
   },
   {
     "year": 2016,
@@ -8205,7 +8205,7 @@ window.__QUESTIONS__ = [
     "answer": "c",
     "multi": false,
     "explanation": "Wilms腫瘍（腎芽腫）は術後腹腔内播種・腹膜破砕があった場合、COGプロトコールに基づき術後9日以内に照射を開始することが推奨されている。",
-    "category": "小児"
+    "category": "放射線治療"
   },
   {
     "year": 2017,

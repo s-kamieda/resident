@@ -989,8 +989,7 @@ async function renderHome() {
 
   if (progressState.saved) {
     const saved = progressState.saved;
-    const label = saved.year ? `${saved.year}年` : saved.category ? saved.category : "全問";
-    $("resume-desc").textContent = `${label} ${saved.index + 1}/${saved.questionIds.length}問目`;
+    $("resume-desc").textContent = `${savedSessionLabel(saved)} ${saved.index + 1}/${saved.questionIds.length}問目`;
     show("btn-resume");
   } else {
     hide("btn-resume");
@@ -1134,6 +1133,7 @@ async function startQuiz(mode) {
     pool = pool.slice(0, 10);
   }
   sessionState = {
+    sessionId: newSessionId(),
     questions: pool,
     index: 0,
     mode,
@@ -1149,6 +1149,14 @@ async function startQuiz(mode) {
   showPage("pg-quiz");
 }
 
+function newSessionId() {
+  return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
+function savedSessionLabel(saved) {
+  return saved.year ? `${saved.year}年` : saved.category ? saved.category : "全問";
+}
+
 async function resumeSession() {
   if (!progressState.saved) return;
   const saved = progressState.saved;
@@ -1160,7 +1168,12 @@ async function resumeSession() {
     await renderHome();
     return;
   }
+  if (!saved.sessionId) {
+    saved.sessionId = newSessionId();
+    await saveProgressState();
+  }
   sessionState = {
+    sessionId: saved.sessionId,
     questions,
     index: Math.min(saved.index || 0, questions.length - 1),
     mode: saved.mode || "seq",
@@ -1178,7 +1191,14 @@ async function resumeSession() {
 
 async function saveSessionState() {
   if (!sessionState || sessionState.srsMode || sessionState.mode === "view") return;
+  // 進捗ゼロのセッションで、別セッションの保存を黙って上書きしない
+  if (
+    progressState.saved &&
+    progressState.saved.sessionId !== sessionState.sessionId &&
+    Object.keys(sessionState.submitted).length === 0
+  ) return;
   progressState.saved = {
+    sessionId: sessionState.sessionId,
     questionIds: sessionState.questions.map((question) => question.id),
     index: sessionState.index,
     mode: sessionState.mode,
@@ -1190,11 +1210,6 @@ async function saveSessionState() {
     correct: sessionState.correct,
     elapsed: Date.now() - sessionState.startMs
   };
-  await saveProgressState();
-}
-
-async function clearSavedSession() {
-  progressState.saved = null;
   await saveProgressState();
 }
 
@@ -1411,7 +1426,15 @@ async function finishSession() {
   const correct = sessionState.correct;
   const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
 
-  await clearSavedSession();
+  // 「続きから再開」の保存は、このセッション自身が保存されている場合のみ消す
+  // （復習セッションや別のクイズを終えても、中断中の進捗は保持する）
+  if (
+    progressState.saved &&
+    sessionState.sessionId &&
+    progressState.saved.sessionId === sessionState.sessionId
+  ) {
+    progressState.saved = null;
+  }
   progressState.sessions.unshift({
     dateMs: Date.now(),
     year: sessionState.year,
@@ -1991,10 +2014,17 @@ async function viewQuestion(year, num) {
 
 async function goHome() {
   if (sessionState && Object.keys(sessionState.submitted).length > 0 && sessionState.mode !== "view") {
+    let message = "進捗は「続きから再開」として保存されます。";
+    if (sessionState.srsMode) {
+      message = "評価済みの分は記録されています（復習の途中経過は保存されません）。";
+    } else if (progressState.saved && progressState.saved.sessionId !== sessionState.sessionId) {
+      const saved = progressState.saved;
+      message = `保存済みの「${savedSessionLabel(saved)} ${saved.index + 1}/${saved.questionIds.length}問目」は上書きされます。`;
+    }
     const confirmed = await askConfirm({
       title: "ホームへ戻りますか？",
-      message: "進捗は「続きから再開」として保存されます。",
-      confirmText: "保存して戻る"
+      message,
+      confirmText: sessionState.srsMode ? "戻る" : "保存して戻る"
     });
     if (!confirmed) return;
     await saveSessionState();
@@ -2009,11 +2039,29 @@ async function pauseSession() {
     showPage("pg-search");
     return;
   }
+  const savable = sessionState && !sessionState.srsMode;
+  if (
+    savable &&
+    Object.keys(sessionState.submitted).length > 0 &&
+    progressState.saved &&
+    progressState.saved.sessionId !== sessionState.sessionId
+  ) {
+    const saved = progressState.saved;
+    const confirmed = await askConfirm({
+      title: "保存済みの進捗を上書きしますか？",
+      message: `「${savedSessionLabel(saved)} ${saved.index + 1}/${saved.questionIds.length}問目」の保存は消え、今のセッションに置き換わります。`,
+      confirmText: "上書きして中断"
+    });
+    if (!confirmed) return;
+  }
   await ensureMemoSaved(false);
   await saveSessionState();
   await renderHome();
   showPage("pg-home");
-  showToast("中断しました。ホームから続きに戻れます。", "success");
+  showToast(
+    savable ? "中断しました。ホームから続きに戻れます。" : "ホームに戻りました。評価済みの分は記録されています。",
+    "success"
+  );
 }
 
 async function handleImportSelection(event) {
@@ -2091,7 +2139,6 @@ function wireEvents() {
 
   $("btn-backup")?.addEventListener("click", openBackupModal);
   $("btn-all")?.addEventListener("click", () => openModeModal("all"));
-  $("btn-unseen")?.addEventListener("click", () => openModeModal("unseen"));
   $("btn-resume")?.addEventListener("click", () => {
     void resumeSession();
   });

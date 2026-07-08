@@ -878,10 +878,9 @@ function setRuntimeBanner() {
 }
 
 const CAT_GROUPS = [
-  { label: "基礎", cats: ["医学物理学", "放射線生物学", "放射線防護・安全管理", "画像診断学総論（モダリティ・造影剤）"] },
+  { label: "基礎", cats: ["医学物理学", "放射線生物学", "放射線防護・安全管理", "画像診断学総論（モダリティ・造影剤）", "医の倫理・医療の質"] },
   { label: "画像診断", cats: ["中枢神経（脳・脊髄）", "頭頸部", "呼吸器・縦隔", "心臓・大血管", "乳房", "消化器（肝・胆・膵・脾）", "消化器（消化管・腹壁）", "泌尿器・生殖器", "脊椎・脊髄・骨関節・軟部", "小児"] },
-  { label: "核医学・治療・IVR", cats: ["核医学", "放射線治療", "IVR"] },
-  { label: "その他", cats: ["医の倫理・医療の質", "未分類"] }
+  { label: "核医学・治療・IVR", cats: ["核医学", "放射線治療", "IVR"] }
 ];
 
 function collectProgress(questions) {
@@ -919,19 +918,17 @@ function accuracyColor(pct) {
   return pct >= 80 ? "#16a34a" : pct >= 60 ? "#d97706" : "#dc2626";
 }
 
-function buildCatRow(category, number) {
+function buildCatCard(category) {
   const stats = collectProgress(QUESTIONS.filter((question) => question.category === category));
   const stars = progressStars(stats);
   const button = document.createElement("button");
-  button.className = "cat-row";
-  // バーは進捗（解答済み/全問）。正答率は右列の★評価＋%表記で表す（年度別と同じ基準）。
+  button.className = "year-card cat-card";
+  // 年度カードと同じ構成: 名前 / 問数・正答率 / ★評価 / 進捗バー
   button.innerHTML =
-    `<span class="cat-row-num">${number}</span>` +
-    `<span class="cat-row-body">` +
-      `<span class="cat-row-name">${escapeHtml(category)}</span>` +
-      `<span class="cat-row-bar"><span class="cat-row-fill" style="width:${stats.fill}%"></span></span>` +
-    `</span>` +
-    `<span class="cat-row-info"><span class="cat-row-stars">${starMarkup(stars)}</span><br>${stats.attempted}/${stats.total}問${stats.attempted > 0 ? `<br>正答率${stats.pct}%` : ""}</span>`;
+    `<div class="cc-name">${escapeHtml(category)}</div>` +
+    `<div class="yc-info">${stats.attempted}/${stats.total}問${stats.attempted > 0 ? ` 正答率${stats.pct}%` : ""}</div>` +
+    `<div class="yc-stars">${starMarkup(stars)}</div>` +
+    `<div class="yc-bar"><div class="yc-fill" style="width:${stats.fill}%"></div></div>`;
   button.addEventListener("click", () => openModeModal(`cat:${category}`));
   return button;
 }
@@ -964,27 +961,25 @@ async function renderHome() {
 
   catGrid.innerHTML = "";
   const groupedCats = new Set();
+  const appendCatScroll = (labelText, cats) => {
+    const label = document.createElement("div");
+    label.className = "cat-group-label";
+    label.textContent = labelText;
+    catGrid.appendChild(label);
+    const row = document.createElement("div");
+    row.className = "year-scroll";
+    cats.forEach((category) => row.appendChild(buildCatCard(category)));
+    catGrid.appendChild(row);
+  };
   CAT_GROUPS.forEach((group) => {
     const cats = group.cats.filter((category) => CATEGORIES.includes(category));
     if (!cats.length) return;
-    const label = document.createElement("div");
-    label.className = "cat-group-label";
-    label.textContent = group.label;
-    catGrid.appendChild(label);
-    cats.forEach((category, index) => {
-      groupedCats.add(category);
-      catGrid.appendChild(buildCatRow(category, index + 1));
-    });
+    cats.forEach((category) => groupedCats.add(category));
+    appendCatScroll(group.label, cats);
   });
   const leftoverCats = CATEGORIES.filter((category) => !groupedCats.has(category));
   if (leftoverCats.length) {
-    const label = document.createElement("div");
-    label.className = "cat-group-label";
-    label.textContent = "その他";
-    catGrid.appendChild(label);
-    leftoverCats.forEach((category, index) => {
-      catGrid.appendChild(buildCatRow(category, index + 1));
-    });
+    appendCatScroll("その他", leftoverCats);
   }
 
   renderExamCard();

@@ -189,7 +189,7 @@ function normalizeProgress(raw) {
 }
 
 function normalizeQuestion(raw) {
-  return {
+  const normalized = {
     id: `${raw.year}-${raw.num}`,
     year: Number(raw.year),
     num: Number(raw.num),
@@ -200,6 +200,9 @@ function normalizeQuestion(raw) {
     explanation: String(raw.explanation || ""),
     category: raw.category ? String(raw.category) : "未分類"
   };
+  if (Array.isArray(raw.images)) normalized.images = raw.images.slice();
+  if (typeof raw.image === "string") normalized.image = raw.image;
+  return normalized;
 }
 
 function getCorrectChoices(question) {

@@ -914,17 +914,26 @@ function starMarkup(stars) {
   return html;
 }
 
+/* 正答率の信号色（弱点カテゴリと共通） */
+function accuracyColor(pct) {
+  return pct >= 80 ? "#16a34a" : pct >= 60 ? "#d97706" : "#dc2626";
+}
+
 function buildCatRow(category, number) {
   const stats = collectProgress(QUESTIONS.filter((question) => question.category === category));
   const button = document.createElement("button");
   button.className = "cat-row";
+  // バーは正答率を表す（長さ＝正答率、色は信号色）。未着手はバー空。
+  const bar = stats.attempted > 0
+    ? `<span class="cat-row-bar"><span class="cat-row-fill" style="width:${Math.max(stats.pct, 6)}%;background:${accuracyColor(stats.pct)}"></span></span>`
+    : `<span class="cat-row-bar"></span>`;
   button.innerHTML =
     `<span class="cat-row-num">${number}</span>` +
     `<span class="cat-row-body">` +
       `<span class="cat-row-name">${escapeHtml(category)}</span>` +
-      `<span class="cat-row-bar"><span class="cat-row-fill" style="width:${stats.fill}%"></span></span>` +
+      bar +
     `</span>` +
-    `<span class="cat-row-info">${stats.attempted}/${stats.total}問${stats.attempted > 0 ? `<br>${stats.pct}%` : ""}</span>`;
+    `<span class="cat-row-info">${stats.attempted}/${stats.total}問${stats.attempted > 0 ? `<br>正答率${stats.pct}%` : ""}</span>`;
   button.addEventListener("click", () => openModeModal(`cat:${category}`));
   return button;
 }
@@ -1074,7 +1083,7 @@ function renderWeakCategories() {
     row.className = "yr-row";
     row.innerHTML =
       `<div class="yr-top"><span class="yr-name">${escapeHtml(item.category)}</span><span class="yr-pct">${item.pct}%</span></div>` +
-      `<div class="yr-bar"><div class="yr-fill" style="width:${Math.max(item.pct, 8)}%;background:${item.pct >= 80 ? "#16a34a" : item.pct >= 60 ? "#d97706" : "#dc2626"}"></div></div>` +
+      `<div class="yr-bar"><div class="yr-fill" style="width:${Math.max(item.pct, 8)}%;background:${accuracyColor(item.pct)}"></div></div>` +
       `<div class="yr-sub">${item.attempted}問挑戦 · ${item.correct}問正解 · ${item.wrong}問見直し候補</div>`;
     target.appendChild(row);
   });

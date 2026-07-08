@@ -3187,6 +3187,7 @@ window.__QUESTIONS__ = [
     "year": 2014,
     "num": 1,
     "text": "図はエックス線発生装置を示している。エックス線発生過程で、フィラメントから（A）が放出され、（A）が高電圧で加速され（B）に衝突してエックス線が発生する。（A）（B）の組み合わせとして正しいのはどれか。1つ選べ。",
+    "images": ["assets/questions/2014/q1-xray-tube.png"],
     "choices": {
       "a": "熱電子・カソード",
       "b": "熱電子・ターゲット",
@@ -3235,6 +3236,7 @@ window.__QUESTIONS__ = [
     "year": 2014,
     "num": 4,
     "text": "図はエックス線のエネルギーによる相互作用の確率を示している（A：低エネルギー領域、B：中エネルギー領域、C：高エネルギー領域）。A，B，Cが示す反応の適切な組み合わせを1つ選べ。",
+    "images": ["assets/questions/2014/q4-interaction-graph.png"],
     "choices": {
       "a": "A:光電効果B:電子対生成C:コンプトン効果",
       "b": "A:光電効果B:コンプトン効果C:電子対生成",
@@ -4691,6 +4693,7 @@ window.__QUESTIONS__ = [
     "year": 2014,
     "num": 95,
     "text": "上顎洞癌の前方・側方からの4MV X線直交2門照射の線量分布を示す。線量分布を是正する方法として有用なのはどれか。1つ選べ。",
+    "images": ["assets/questions/2014/q95-dose-distribution.png"],
     "choices": {
       "a": "10 MV X線の使用",
       "b": "線量評価点の変更",
@@ -4867,6 +4870,7 @@ window.__QUESTIONS__ = [
     "year": 2015,
     "num": 1,
     "text": "カリウム40の崩壊図に関する記述である。誤っているのはどれか。1つ選べ。",
+    "images": ["assets/questions/2015/q1-k40-decay.png"],
     "choices": {
       "a": "β崩壊の後，原子量が1増える。",
       "b": "カリウム40の半減期は1.28×10^9年である。",
@@ -7331,6 +7335,7 @@ window.__QUESTIONS__ = [
     "year": 2016,
     "num": 51,
     "text": "肝腫瘤の超音波像（正中縦断走査）を示す。鑑別に役立つのはどれか。2つ選べ。",
+    "images": ["assets/questions/2016/q51-liver-us.png"],
     "choices": {
       "a": "MRI T2強調像",
       "b": "MRI磁化率強調像",
@@ -7427,6 +7432,7 @@ window.__QUESTIONS__ = [
     "year": 2016,
     "num": 57,
     "text": "70歳代の男性。昨夜から持続する胸部違和感を主訴に来院した。単純CTを示す。描出されている病態はどれか。1つ選べ。",
+    "images": ["assets/questions/2016/q57-abdomen-ct.png"],
     "choices": {
       "a": "食道癌",
       "b": "アカラシア",
@@ -7891,6 +7897,7 @@ window.__QUESTIONS__ = [
     "year": 2016,
     "num": 86,
     "text": "10 MV X線の深部線量百分率曲線はどれか。1つ選べ。",
+    "images": ["assets/questions/2016/q86-depth-dose.png"],
     "choices": {
       "a": "ア",
       "b": "イ",
@@ -8323,6 +8330,7 @@ window.__QUESTIONS__ = [
     "year": 2017,
     "num": 8,
     "text": "コンプトン効果の模式図を示す。（A），（B）および（C）の組み合わせとして正しいのはどれか。1つ選べ。 （A） （B） （C）",
+    "images": ["assets/questions/2017/q8-compton-diagram.png"],
     "choices": {
       "a": "入射光子散乱電子反跳光子",
       "b": "入射光子反跳電子散乱光子",
@@ -9986,6 +9994,7 @@ window.__QUESTIONS__ = [
     "year": 2018,
     "num": 7,
     "text": "CT画像で，図のA～Eに該当する物質及び組織で正しいのはどれか。2つ選べ。A～Eは水，空気，骨皮質，骨格筋，脂肪組織のいずれかである。",
+    "images": ["assets/questions/2018/q7-ct-tissues.png"],
     "choices": {
       "a": "A空気",
       "b": "B水",
@@ -11954,6 +11963,7 @@ window.__QUESTIONS__ = [
     "year": 2019,
     "num": 25,
     "text": "足の副骨の部位を示す。外脛骨はどれか。1つ選べ。",
+    "images": ["assets/questions/2019/q25-foot-bones.png"],
     "choices": {
       "a": "1",
       "b": "2",
@@ -14450,6 +14460,7 @@ window.__QUESTIONS__ = [
     "year": 2020,
     "num": 76,
     "text": "図はエックス線エネルギーに対する水の相互作用を示す。Aの相互作用で正しいのはどれか。1つ選べ。",
+    "images": ["assets/questions/2020/q76-water-interactions.png"],
     "choices": {
       "a": "光電効果",
       "b": "光核反応",
@@ -17746,6 +17757,7 @@ window.__QUESTIONS__ = [
     "year": 2022,
     "num": 93,
     "text": "①～⑤の線量分割について、2 Gy等価線量換算値（EQD2）の大小関係で正しいのはどれか。1つ選べ。",
+    "images": ["assets/questions/2022/q93.png"],
     "choices": {
       "a": "①＜②＞③＜④＜⑤",
       "b": "①＜②＞③＜④＞⑤",
@@ -17826,6 +17838,7 @@ window.__QUESTIONS__ = [
     "year": 2022,
     "num": 98,
     "text": "エックス線管の図について、（A）と（B）の組み合わせで正しいのはどれか。1つ選べ。 （A） （B）",
+    "images": ["assets/questions/2022/q98-xray-tube.png"],
     "choices": {
       "a": "アノードカソード",
       "b": "アンプアース",

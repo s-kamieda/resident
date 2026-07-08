@@ -1,4 +1,4 @@
-const CACHE_NAME = "rad-quiz-cache-20260708-spacefix";
+const CACHE_NAME = "rad-quiz-cache-20260708-figures2";
 const STATIC_ASSETS = [
   "./",
   "./専門医試験_問題集.html",
@@ -12,9 +12,19 @@ const STATIC_ASSETS = [
   "./icon-192.png",
   "./icon-512.png",
   "./apple-touch-icon-180.png",
+  "./assets/questions/2014/q1-xray-tube.png",
+  "./assets/questions/2014/q4-interaction-graph.png",
+  "./assets/questions/2014/q95-dose-distribution.png",
+  "./assets/questions/2015/q1-k40-decay.png",
+  "./assets/questions/2016/q51-liver-us.png",
+  "./assets/questions/2016/q57-abdomen-ct.png",
   "./assets/questions/2016/q86-depth-dose.png",
   "./assets/questions/2017/q8-compton-diagram.png",
-  "./assets/questions/2020/q76-water-interactions.png"
+  "./assets/questions/2018/q7-ct-tissues.png",
+  "./assets/questions/2019/q25-foot-bones.png",
+  "./assets/questions/2020/q76-water-interactions.png",
+  "./assets/questions/2022/q93.png",
+  "./assets/questions/2022/q98-xray-tube.png"
 ];
 
 self.addEventListener("install", (event) => {

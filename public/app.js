@@ -899,10 +899,10 @@ function collectProgress(questions) {
   };
 }
 
-/* ★評価: ★=着手済み / ★★=全問解答 / ★★★=全問解答＋正答率80%以上 */
+/* ★評価: ★=全問未了または正答率60%未満 / ★★=全問解答＋正答率60〜79% / ★★★=全問解答＋正答率80%以上 */
 function progressStars(stats) {
   if (stats.attempted === 0) return 0;
-  if (stats.attempted < stats.total) return 1;
+  if (stats.attempted < stats.total || stats.pct < 60) return 1;
   return stats.pct >= 80 ? 3 : 2;
 }
 
@@ -921,19 +921,17 @@ function accuracyColor(pct) {
 
 function buildCatRow(category, number) {
   const stats = collectProgress(QUESTIONS.filter((question) => question.category === category));
+  const stars = progressStars(stats);
   const button = document.createElement("button");
   button.className = "cat-row";
-  // バーは正答率を表す（長さ＝正答率、色は信号色）。未着手はバー空。
-  const bar = stats.attempted > 0
-    ? `<span class="cat-row-bar"><span class="cat-row-fill" style="width:${Math.max(stats.pct, 6)}%;background:${accuracyColor(stats.pct)}"></span></span>`
-    : `<span class="cat-row-bar"></span>`;
+  // バーは進捗（解答済み/全問）。正答率は右列の★評価＋%表記で表す（年度別と同じ基準）。
   button.innerHTML =
     `<span class="cat-row-num">${number}</span>` +
     `<span class="cat-row-body">` +
       `<span class="cat-row-name">${escapeHtml(category)}</span>` +
-      bar +
+      `<span class="cat-row-bar"><span class="cat-row-fill" style="width:${stats.fill}%"></span></span>` +
     `</span>` +
-    `<span class="cat-row-info">${stats.attempted}/${stats.total}問${stats.attempted > 0 ? `<br>正答率${stats.pct}%` : ""}</span>`;
+    `<span class="cat-row-info"><span class="cat-row-stars">${starMarkup(stars)}</span><br>${stats.attempted}/${stats.total}問${stats.attempted > 0 ? `<br>正答率${stats.pct}%` : ""}</span>`;
   button.addEventListener("click", () => openModeModal(`cat:${category}`));
   return button;
 }

@@ -187,7 +187,23 @@ textarea{resize:vertical}
 .mode-icon{font-size:1.35rem;line-height:1}
 .mode-name{font-size:.92rem;font-weight:700}
 .mode-desc{font-size:.73rem;color:#7d8a86;margin-top:2px;line-height:1.35}
-.resume-btn{border-color:#f59e0b!important}
+.resume-btn{border-color:#f59e0b!important;cursor:pointer}
+.resume-del{
+  position:absolute;
+  top:6px;
+  right:8px;
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  background:transparent;
+  color:#b8c2be;
+  font-size:.78rem;
+  line-height:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.resume-del:hover{background:#fee2e2;color:#dc2626}
 .srs-mode-btn{border-color:#cdebe9}
 .srs-mode-btn:hover{border-color:#0f9e99;background:#f2fbfa}
 .srs-badge{

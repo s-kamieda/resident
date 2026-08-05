@@ -6572,7 +6572,7 @@ window.__QUESTIONS__ = [
       "b": "表面コイル",
       "c": "静磁場コイル",
       "d": "傾斜磁場コイル",
-      "e": "照射コイル（RFコイル）hohsi27-02_mondai.indd 1 2016/08/03 11:38:07"
+      "e": "照射コイル（RFコイル）"
     },
     "answer": "b",
     "multi": false,
@@ -6620,7 +6620,7 @@ window.__QUESTIONS__ = [
       "b": "間接作用の比率が高い。",
       "c": "生存曲線に大きな肩ができる。",
       "d": "組織内で散乱しながら進行する。",
-      "e": "分割照射における修復は同程度である。hohsi27-02_mondai.indd 2 2016/08/03 11:38:07"
+      "e": "分割照射における修復は同程度である。"
     },
     "answer": "a",
     "multi": false,
@@ -6716,7 +6716,7 @@ window.__QUESTIONS__ = [
       "b": "放射能量",
       "c": "吸収線量",
       "d": "入射皮膚表面線量",
-      "e": "dose length product（DLP）hohsi27-02_mondai.indd 4 2016/08/03 11:38:07"
+      "e": "dose length product（DLP）"
     },
     "answer": "a",
     "multi": false,
@@ -6764,7 +6764,7 @@ window.__QUESTIONS__ = [
       "b": "地域医療連携での情報交換は専用線で行うようにする。",
       "c": "医療施設間の情報交換は情報の種類にかかわらず匿名化が必要である。",
       "d": "他院で取得された情報を利用する場合，該当患者による閲覧許可は不要である。",
-      "e": "患者医療情報は当該患者の診療に関与しない医師や看護師にも閲覧可能とする。hohsi27-02_mondai.indd 5 2016/08/03 11:38:08"
+      "e": "患者医療情報は当該患者の診療に関与しない医師や看護師にも閲覧可能とする。"
     },
     "answer": "a",
     "multi": false,
@@ -6812,7 +6812,7 @@ window.__QUESTIONS__ = [
       "b": "肝芽腫",
       "c": "褐色細胞腫",
       "d": "網膜血管芽腫",
-      "e": "中枢神経系悪性リンパ腫hohsi27-02_mondai.indd 6 2016/08/03 11:38:08"
+      "e": "中枢神経系悪性リンパ腫"
     },
     "answer": "c,d",
     "multi": true,
@@ -6860,7 +6860,7 @@ window.__QUESTIONS__ = [
       "b": "上衣腫",
       "c": "血管芽腫",
       "d": "上衣下腫",
-      "e": "脈絡叢乳頭腫hohsi27-02_mondai.indd 7 2016/08/03 11:38:08"
+      "e": "脈絡叢乳頭腫"
     },
     "answer": "c",
     "multi": false,
@@ -6908,7 +6908,7 @@ window.__QUESTIONS__ = [
       "b": "外眼筋肥厚は下直筋に最も多い。",
       "c": "画像上両側性は50％未満である。",
       "d": "甲状腺機能が正常なのは1％未満である。",
-      "e": "急性期に外眼筋はT2強調像で低信号を呈する。hohsi27-02_mondai.indd 8 2016/08/03 11:38:08"
+      "e": "急性期に外眼筋はT2強調像で低信号を呈する。"
     },
     "answer": "b",
     "multi": false,
@@ -6956,11 +6956,11 @@ window.__QUESTIONS__ = [
       "b": "内軟骨腫",
       "c": "軟骨芽細胞腫",
       "d": "非骨化性線維腫",
-      "e": "軟骨粘液線維腫hohsi27-02_mondai.indd 9 2016/08/03 11:38:08"
+      "e": "軟骨粘液線維腫"
     },
-    "answer": "e",
+    "answer": "c",
     "multi": false,
-    "explanation": "(臨床画像vol.35 no.1 2019 p80)\n(新骨軟部画像診断の勘ドコロp220)\n両側大腿骨頭壊死の原因となるのはどれか。2つ選べ。",
+    "explanation": "c：○　軟骨芽細胞腫は骨端に発生する代表的な腫瘍で、骨端線閉鎖前の小児・若年者の大腿骨、脛骨、上腕骨近位に好発する。\na：×　骨肉腫は長管骨の骨幹端に好発する。\nb：×　内軟骨腫は手足の短管骨の髄内（骨幹〜骨幹端）に好発する。\nd：×　非骨化性線維腫は長管骨骨幹端の皮質に好発する。\ne：×　軟骨粘液線維腫は脛骨近位など長管骨の骨幹端に好発する。\n(臨床画像vol.35 no.1 2019 p80)\n(新骨軟部画像診断の勘ドコロp220)",
     "category": "脊椎・脊髄・骨関節・軟部"
   },
   {
@@ -7004,7 +7004,7 @@ window.__QUESTIONS__ = [
       "b": "wormian bone",
       "c": "骨幹端杯状変形",
       "d": "腰椎椎弓間距離の狭小化",
-      "e": "小骨盤シャンパングラス様変形hohsi27-02_mondai.indd 10 2016/08/03 11:38:08"
+      "e": "小骨盤シャンパングラス様変形"
     },
     "answer": "b",
     "multi": false,
@@ -7052,7 +7052,7 @@ window.__QUESTIONS__ = [
       "b": "末梢型肺癌S sign of Golden",
       "c": "胸壁病変Incomplete border sign",
       "d": "縦隔腫瘍Continuous diaphragm sign",
-      "e": "横隔神経麻痺Juxtaphrenic peak sign hohsi27-02_mondai.indd 11 2016/08/03 11:38:08"
+      "e": "横隔神経麻痺Juxtaphrenic peak sign"
     },
     "answer": "c",
     "multi": false,
@@ -7100,7 +7100,7 @@ window.__QUESTIONS__ = [
       "b": "特発性器質化肺炎halo sign",
       "c": "粘液腺癌CT angiogram sign",
       "d": "サルコイドーシスcrazy-paving appearance",
-      "e": "血管侵襲性アスペルギルス症reversed halo sign hohsi27-02_mondai.indd 12 2016/08/03 11:38:08"
+      "e": "血管侵襲性アスペルギルス症reversed halo sign"
     },
     "answer": "c",
     "multi": false,
@@ -7148,7 +7148,7 @@ window.__QUESTIONS__ = [
       "b": "肺挫傷は区域性浸潤影を呈する。",
       "c": "外傷性肺囊胞は1～2週で消退する。",
       "d": "胸骨骨折は胸部X線写真により容易に検出できる。",
-      "e": "大動脈損傷は大動脈峡部に生じることが最も多い。hohsi27-02_mondai.indd 13 2016/08/03 11:38:08"
+      "e": "大動脈損傷は大動脈峡部に生じることが最も多い。"
     },
     "answer": "e",
     "multi": false,
@@ -7196,7 +7196,7 @@ window.__QUESTIONS__ = [
       "b": "Fallot四徴症心腰部陥凹",
       "c": "動脈管開存症肺血管陰影減弱",
       "d": "心房中隔欠損症左第1弓拡大",
-      "e": "肺動脈血栓塞栓症肺門部陰影縮小hohsi27-02_mondai.indd 14 2016/08/03 11:38:08"
+      "e": "肺動脈血栓塞栓症肺門部陰影縮小"
     },
     "answer": "b",
     "multi": false,
@@ -7244,7 +7244,7 @@ window.__QUESTIONS__ = [
       "b": "乳頭には100本程度の乳管洞が開口している。",
       "c": "輸出リンパ流の2/3以上は胸骨傍リンパ節に注ぐ。",
       "d": "妊娠後期には小葉内の腺房の増加と拡張を認める。",
-      "e": "1本の集合管に連なる乳管系と他の乳管系の間には交通はみられない。hohsi27-02_mondai.indd 15 2016/08/03 11:38:08"
+      "e": "1本の集合管に連なる乳管系と他の乳管系の間には交通はみられない。"
     },
     "answer": "d,e",
     "multi": true,
@@ -7292,7 +7292,7 @@ window.__QUESTIONS__ = [
       "b": "胆道閉鎖症",
       "c": "消化管重複症",
       "d": "肥厚性幽門狭窄症",
-      "e": "先天性胆道拡張症hohsi27-02_mondai.indd 16 2016/08/03 11:38:08"
+      "e": "先天性胆道拡張症"
     },
     "answer": "b",
     "multi": false,
@@ -7324,7 +7324,7 @@ window.__QUESTIONS__ = [
       "b": "脊椎棘突起骨折",
       "c": "脛骨骨幹部斜状骨折",
       "d": "大腿骨遠位骨幹端骨折",
-      "e": "時相の異なる複数の骨折hohsi27-02_mondai.indd 17 2016/08/03 11:38:08"
+      "e": "時相の異なる複数の骨折"
     },
     "answer": "c",
     "multi": false,
@@ -7405,7 +7405,7 @@ window.__QUESTIONS__ = [
       "b": "乳頭部癌",
       "c": "Hemosuccus pancreaticus",
       "d": "膵管内乳頭粘液性腫瘍",
-      "e": "びまん型自己免疫性膵炎hohsi27-02_mondai.indd 19 2016/08/03 11:38:08"
+      "e": "びまん型自己免疫性膵炎"
     },
     "answer": "b,c",
     "multi": true,
@@ -7421,7 +7421,7 @@ window.__QUESTIONS__ = [
       "b": "膵神経内分泌腫瘍",
       "c": "膵漿液性囊胞腫瘍（SCN）",
       "d": "膵粘液性囊胞腫瘍（MCN）",
-      "e": "膵管内乳頭粘液性腫瘍（IPMN）hohsi27-02_mondai.indd 20 2016/08/03 11:38:08"
+      "e": "膵管内乳頭粘液性腫瘍（IPMN）"
     },
     "answer": "b,c",
     "multi": true,
@@ -7438,7 +7438,7 @@ window.__QUESTIONS__ = [
       "b": "アカラシア",
       "c": "逆流性食道炎",
       "d": "魚骨による食道穿孔",
-      "e": "PTP（press through pack）誤飲hohsi27-02_mondai.indd 21 2016/08/03 11:38:08"
+      "e": "PTP（press through pack）誤飲"
     },
     "answer": "e",
     "multi": false,
@@ -7486,7 +7486,7 @@ window.__QUESTIONS__ = [
       "b": "T1強調像で高信号",
       "c": "腎実質との間にbeak sign",
       "d": "単純CTで腎実質よりも高吸収値",
-      "e": "T2強調像で骨格筋と類似の低信号hohsi27-02_mondai.indd 22 2016/08/03 11:38:08"
+      "e": "T2強調像で骨格筋と類似の低信号"
     },
     "answer": "d,e",
     "multi": true,
@@ -7534,7 +7534,7 @@ window.__QUESTIONS__ = [
       "b": "前腎傍腔には上行結腸が存在する。",
       "c": "前・後腎傍腔は横筋筋膜で境される。",
       "d": "腎周囲腔は足側で前・後腎傍腔と連続する。",
-      "e": "後腎傍腔は腹膜前脂肪（properitoneal fat）と連続する。hohsi27-02_mondai.indd 23 2016/08/03 11:38:08"
+      "e": "後腎傍腔は腹膜前脂肪（properitoneal fat）と連続する。"
     },
     "answer": "c",
     "multi": false,
@@ -7582,7 +7582,7 @@ window.__QUESTIONS__ = [
       "b": "莢膜細胞腫",
       "c": "内膜症性囊胞",
       "d": "成熟囊胞奇形腫",
-      "e": "粘液性囊胞腺腫hohsi27-02_mondai.indd 24 2016/08/03 11:38:09"
+      "e": "粘液性囊胞腺腫"
     },
     "answer": "d",
     "multi": false,
@@ -7630,7 +7630,7 @@ window.__QUESTIONS__ = [
       "b": "腹部大動脈瘤ステントグラフト",
       "c": "脾機能亢進症ゼラチンスポンジ",
       "d": "閉塞性動脈硬化症金属ステント",
-      "e": "深部静脈血栓症下大静脈フィルターhohsi27-02_mondai.indd 25 2016/08/03 11:38:09"
+      "e": "深部静脈血栓症下大静脈フィルター"
     },
     "answer": "a",
     "multi": false,
@@ -7678,7 +7678,7 @@ window.__QUESTIONS__ = [
       "b": "骨シンチグラフィ撮像前の水負荷",
       "c": "腎動態シンチグラフィ水分制限",
       "d": "アデノシン負荷心筋血流SPECTカフェイン摂取制限",
-      "e": "131I-アドステロールシンチグラフィヨード制限hohsi27-02_mondai.indd 26 2016/08/03 11:38:09"
+      "e": "131I-アドステロールシンチグラフィヨード制限"
     },
     "answer": "a,d",
     "multi": true,
@@ -7726,7 +7726,7 @@ window.__QUESTIONS__ = [
       "b": "123I-MIBG",
       "c": "123I-BMIPP",
       "d": "123I-FP-CIT",
-      "e": "131I-adosterol hohsi27-02_mondai.indd 27 2016/08/03 11:38:09"
+      "e": "131I-adosterol"
     },
     "answer": "b",
     "multi": false,
@@ -7774,7 +7774,7 @@ window.__QUESTIONS__ = [
       "b": "加齢とともに集積が低下する。",
       "c": "主にドーパミン受容体の分布を反映している。",
       "d": "症状の強い側と同側に画像で集積低下が見られることが多い。",
-      "e": "びまん性に集積低下が見られた場合は，Alzheimer型認知症が考えやすい。hohsi27-02_mondai.indd 28 2016/08/03 11:38:09"
+      "e": "びまん性に集積低下が見られた場合は，Alzheimer型認知症が考えやすい。"
     },
     "answer": "b",
     "multi": false,
@@ -7822,7 +7822,7 @@ window.__QUESTIONS__ = [
       "b": "拡張型心筋症よりも肥大型心筋症で高頻度に見られる。",
       "c": "虚血性心不全よりも非虚血性心不全で高頻度に見られる。",
       "d": "急性心筋梗塞よりも陳旧性心筋梗塞で高頻度に見られる。",
-      "e": "不安定狭心症よりも安定労作性狭心症で高頻度に見られる。hohsi27-02_mondai.indd 29 2016/08/03 11:38:09"
+      "e": "不安定狭心症よりも安定労作性狭心症で高頻度に見られる。"
     },
     "answer": "a",
     "multi": false,
@@ -7870,7 +7870,7 @@ window.__QUESTIONS__ = [
       "b": "尿管が描出された場合は，尿路上皮癌の可能性が高い。",
       "c": "18F-FDGを注射する前に，排尿を済ませておく必要がある。",
       "d": "高インスリン状態では，腫瘍病変の描出が不明瞭になる傾向がある。",
-      "e": "悪性病変のSUV値は，1時間後と比べて2時間後で低下することが多い。hohsi27-02_mondai.indd 30 2016/08/03 11:38:09"
+      "e": "悪性病変のSUV値は，1時間後と比べて2時間後で低下することが多い。"
     },
     "answer": "a,d",
     "multi": true,
@@ -7951,7 +7951,7 @@ window.__QUESTIONS__ = [
       "b": "DVHの確認",
       "c": "治療計画用CT撮影",
       "d": "標的，正常組織の輪郭入力",
-      "e": "X線エネルギーと照射ビームの設定hohsi27-02_mondai.indd 32 2016/08/03 11:38:09"
+      "e": "X線エネルギーと照射ビームの設定"
     },
     "answer": "e",
     "multi": false,
@@ -7999,7 +7999,7 @@ window.__QUESTIONS__ = [
       "b": "中咽頭癌EBV（Epstein-Barr virus）",
       "c": "子宮頸癌HPV（Human Papilloma virus）",
       "d": "胃MALTリンパ腫Helicobacter pylori",
-      "e": "脳原発悪性リンパ腫HIV（Human Immunodeficiency virus）hohsi27-02_mondai.indd 33 2016/08/03 11:38:09"
+      "e": "脳原発悪性リンパ腫HIV（Human Immunodeficiency virus）"
     },
     "answer": "b",
     "multi": false,
@@ -8047,7 +8047,7 @@ window.__QUESTIONS__ = [
       "b": "治療計画CT画像取得前の歯科受診",
       "c": "治療計画CT画像とPET画像のfusion",
       "d": "体重減少による輪郭変化に対する再計画",
-      "e": "歯冠アーチファクトの密度補正後の治療計画hohsi27-02_mondai.indd 34 2016/08/03 11:38:09"
+      "e": "歯冠アーチファクトの密度補正後の治療計画"
     },
     "answer": "a",
     "multi": false,
@@ -8095,7 +8095,7 @@ window.__QUESTIONS__ = [
       "b": "尋常性ざ瘡",
       "c": "尋常性乾癬",
       "d": "全身性強皮症",
-      "e": "色素性乾皮症hohsi27-02_mondai.indd 35 2016/08/03 11:38:09"
+      "e": "色素性乾皮症"
     },
     "answer": "d,e",
     "multi": true,
@@ -8143,7 +8143,7 @@ window.__QUESTIONS__ = [
       "b": "縦隔",
       "c": "噴門部",
       "d": "鎖骨上窩",
-      "e": "腹部大動脈周囲hohsi27-02_mondai.indd 36 2016/08/03 11:38:09"
+      "e": "腹部大動脈周囲"
     },
     "answer": "e",
     "multi": false,
@@ -8191,7 +8191,7 @@ window.__QUESTIONS__ = [
       "b": "直腸潰瘍",
       "c": "恥骨骨折",
       "d": "性機能障害",
-      "e": "出血性膀胱炎hohsi27-02_mondai.indd 37 2016/08/03 11:38:09"
+      "e": "出血性膀胱炎"
     },
     "answer": "c",
     "multi": false,
@@ -8207,7 +8207,7 @@ window.__QUESTIONS__ = [
       "b": "神経芽腫",
       "c": "Wilms腫瘍",
       "d": "横紋筋肉腫",
-      "e": "Ewing肉腫関連腫瘍hohsi27-02_mondai.indd 38 2016/08/03 11:38:09"
+      "e": "Ewing肉腫関連腫瘍"
     },
     "answer": "c",
     "multi": false,

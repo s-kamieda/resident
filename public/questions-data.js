@@ -16453,9 +16453,9 @@ window.__QUESTIONS__ = [
       "d": "Dynamic contrast-enhanced（DCE）法はGd造影剤が脳を初回通過する時相で解析する。",
       "e": "Dynamic susceptibility contrast（DSC）法はGd造影剤のT1コントラストを利用した撮像法である。"
     },
-    "answer": "d",
+    "answer": "b",
     "multi": false,
-    "explanation": "a：×　Arterial spin labellingはASLは，脳組織に供給される動脈血のスピンを磁気的に標識し，これをトレーサ（追跡子）として利用する (https://www.jstage.jst.go.jp/article/jjmrm/advpub/0/advpub_2020-1719/_pdf/-char/ja)\nb：×　DCE-MRIは，連続的に撮像を行いながらMRI造影剤を静脈内投与し，造影剤投与前から投与後数分間の画像を得る。目的組織におけるシグナル強度を時間に対してプロットして得られる曲線は，造影剤の移行速度あるいは消失速度によって異なる形状を示す。ガドリニウム系MRI造影剤は，常磁性のガドリニウムイオンをキレート化したものであり，造影剤周辺の水のプロトンのT1緩和時間を短縮し，T1強調像において信号強度を増大する。その程度は造影剤濃度に依存するため，目的組織での信号強度の増大は造影剤の移行量，すなわち組織循環血液量や血管透過性など，血管状態の指標となる。　血管透過性とは書いてありますが、「血管外漏出の程度」はたとえば脳出血やAVMの出血点の評価という意味かと思いますが、VOIが定まらないので算出困難と思われます。(https://www.innervision.co.jp/01inner/2012/pdf/iv201209_048.pdf)\nc：×　記載は見つけられませんでしたが、造影剤を使用しないのが本法のメリットかとおもわれます。\nd：○\ne：×　DSC法は造影されたT2強調画像あるいはT2＊強調画像を用いて脳血流評価に使用され，DCE法はT1強調画像を用いて血管透過性の評価に使用することが多い．(https://www.jstage.jst.go.jp/article/jstroke/advpub/0/advpub_10621/_pdf)\nDynamic susceptibility contrastはは急速静注したMR用造影剤が引き起こす脳実質の信号変化（T2* 効果）を連続的に記録してデータを取得し，得られた信号のデータから∆R2* を計算する　(https://www.jstage.jst.go.jp/article/jstroke/32/6/32_6_668/_pdf/-char/ja)",
+    "explanation": "a：×　ASLは脳組織に供給される動脈血のスピンを磁気的に標識し，これをトレーサ（追跡子）として利用する動脈灌流の評価法であり，静脈灌流は解析できない。(https://www.jstage.jst.go.jp/article/jjmrm/advpub/0/advpub_2020-1719/_pdf/-char/ja)\nb：○　DCE-MRIは，連続的に撮像を行いながらMRI造影剤を静脈内投与し，造影剤投与前から投与後数分間の画像を得る。目的組織におけるシグナル強度を時間に対してプロットして得られる曲線は，造影剤の移行速度あるいは消失速度によって異なる形状を示す。この信号変化から求まる造影剤の移行量（Ktrans等）は，造影剤が血管内から血管外細胞外腔へ漏出する程度，すなわち血管透過性を反映する。(https://www.innervision.co.jp/01inner/2012/pdf/iv201209_048.pdf)\nc：×　造影剤を使用しないことが本法の利点であり，Gd造影剤投与後はT1短縮により標識信号のコントラストはむしろ低下する。\nd：×　造影剤が脳を初回通過する時相（first pass）で解析するのはDSC法。DCE法は投与後数分にわたる濃染・washoutの経時変化を解析する。\ne：×　DSC法は造影されたT2強調画像あるいはT2＊強調画像を用いて脳血流評価に使用され，DCE法はT1強調画像を用いて血管透過性の評価に使用することが多い．(https://www.jstage.jst.go.jp/article/jstroke/advpub/0/advpub_10621/_pdf)\nDynamic susceptibility contrastは急速静注したMR用造影剤が引き起こす脳実質の信号変化（T2* 効果）を連続的に記録してデータを取得し，得られた信号のデータから∆R2* を計算する　(https://www.jstage.jst.go.jp/article/jstroke/32/6/32_6_668/_pdf/-char/ja)",
     "category": "中枢神経（脳・脊髄）"
   },
   {

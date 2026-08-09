@@ -10397,11 +10397,11 @@
     "num": 32,
     "text": "肺癌の転移が疑われた場合の検査法で誤った組み合わせはどれか。1つ選べ。",
     "choices": {
-      "a": "脳転移18F-FDG-PET/CT",
-      "b": "肝転移Gd-EOB-DTPAを用いた造影MRI",
-      "c": "胸椎転移MRI造影後脂肪抑制T1強調像",
-      "d": "副腎転移MRIのchemical shift imaging",
-      "e": "縦隔リンパ節転移超音波気管支鏡ガイド下針生検"
+      "a": "脳転移　—　18F-FDG-PET/CT",
+      "b": "肝転移　—　Gd-EOB-DTPAを用いた造影MRI",
+      "c": "胸椎転移　—　MRI造影後脂肪抑制T1強調像",
+      "d": "副腎転移　—　MRIのchemical shift imaging",
+      "e": "縦隔リンパ節転移　—　超音波気管支鏡ガイド下針生検"
     },
     "answer": "a",
     "multi": false,

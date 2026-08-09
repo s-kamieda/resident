@@ -3238,11 +3238,11 @@ window.__QUESTIONS__ = [
     "text": "図はエックス線のエネルギーによる相互作用の確率を示している（A：低エネルギー領域、B：中エネルギー領域、C：高エネルギー領域）。A，B，Cが示す反応の適切な組み合わせを1つ選べ。",
     "images": ["assets/questions/2014/q4-interaction-graph.png"],
     "choices": {
-      "a": "A:光電効果B:電子対生成C:コンプトン効果",
-      "b": "A:光電効果B:コンプトン効果C:電子対生成",
-      "c": "A:電子対生成B:光電効果C:コンプトン効果",
-      "d": "A:電子対生成B:コンプトン効果C:光電効果",
-      "e": "A:コンプトン効果B:光電効果C:電子対生成"
+      "a": "A:光電効果　—　B:電子対生成　—　C:コンプトン効果",
+      "b": "A:光電効果　—　B:コンプトン効果　—　C:電子対生成",
+      "c": "A:電子対生成　—　B:光電効果　—　C:コンプトン効果",
+      "d": "A:電子対生成　—　B:コンプトン効果　—　C:光電効果",
+      "e": "A:コンプトン効果　—　B:光電効果　—　C:電子対生成"
     },
     "answer": "b",
     "multi": false,
@@ -6360,11 +6360,11 @@ window.__QUESTIONS__ = [
     "num": 95,
     "text": "肺癌放射線治療の線量分割として正しいのはどれか。2つ選べ。",
     "choices": {
-      "a": "小細胞癌予防的全脳照射25 Gy/10回/2週",
-      "b": "小細胞癌脳転移全脳照射45 Gy/15回/3週",
-      "c": "III期非小細胞癌根治照射50.4 Gy/28回/5.5週",
-      "d": "限局型小細胞癌根治照射60 Gy/40回/4週（1日2回）",
-      "e": "I期非小細胞癌定位放射線照射48 Gy/4回/1週"
+      "a": "小細胞癌予防的全脳照射　—　25 Gy/10回/2週",
+      "b": "小細胞癌脳転移全脳照射　—　45 Gy/15回/3週",
+      "c": "III期非小細胞癌根治照射　—　50.4 Gy/28回/5.5週",
+      "d": "限局型小細胞癌根治照射　—　60 Gy/40回/4週（1日2回）",
+      "e": "I期非小細胞癌定位放射線照射　—　48 Gy/4回/1週"
     },
     "answer": "a,e",
     "multi": true,
@@ -7096,11 +7096,11 @@ window.__QUESTIONS__ = [
     "num": 36,
     "text": "肺疾患とCT所見との組み合わせとして正しいのはどれか。1つ選べ。",
     "choices": {
-      "a": "肺胞蛋白症CT galaxy sign",
-      "b": "特発性器質化肺炎halo sign",
-      "c": "粘液腺癌CT angiogram sign",
-      "d": "サルコイドーシスcrazy-paving appearance",
-      "e": "血管侵襲性アスペルギルス症reversed halo sign"
+      "a": "肺胞蛋白症　—　CT galaxy sign",
+      "b": "特発性器質化肺炎　—　halo sign",
+      "c": "粘液腺癌　—　CT angiogram sign",
+      "d": "サルコイドーシス　—　crazy-paving appearance",
+      "e": "血管侵襲性アスペルギルス症　—　reversed halo sign"
     },
     "answer": "c",
     "multi": false,
@@ -7674,11 +7674,11 @@ window.__QUESTIONS__ = [
     "num": 72,
     "text": "核医学検査と前処置との組合せで正しいのはどれか。2つ選べ。",
     "choices": {
-      "a": "FDG-PET食事制限",
-      "b": "骨シンチグラフィ撮像前の水負荷",
-      "c": "腎動態シンチグラフィ水分制限",
-      "d": "アデノシン負荷心筋血流SPECTカフェイン摂取制限",
-      "e": "131I-アドステロールシンチグラフィヨード制限"
+      "a": "FDG-PET　—　食事制限",
+      "b": "骨シンチグラフィ　—　撮像前の水負荷",
+      "c": "腎動態シンチグラフィ　—　水分制限",
+      "d": "アデノシン負荷心筋血流SPECT　—　カフェイン摂取制限",
+      "e": "131I-アドステロールシンチグラフィ　—　ヨード制限"
     },
     "answer": "a,d",
     "multi": true,
@@ -7690,11 +7690,11 @@ window.__QUESTIONS__ = [
     "num": 73,
     "text": "核医学検査と放射性医薬品を投与してから撮像を開始するまでの時間との組み合わせで正しいのはどれか。1つ選べ。",
     "choices": {
-      "a": "67Ga-citrateによる腫瘍シンチグラフィ3時間",
-      "b": "99mTc-GSAによる肝シンチグラフィ30分",
-      "c": "123I-ioflupaneによる脳SPECT 15分",
-      "d": "123I-MIBGによる副腎シンチグラフィ6時間",
-      "e": "131I-adosterolによる副腎シンチグラフィ24時間"
+      "a": "67Ga-citrateによる腫瘍シンチグラフィ　—　3時間",
+      "b": "99mTc-GSAによる肝シンチグラフィ　—　30分",
+      "c": "123I-ioflupaneによる脳SPECT　—　15分",
+      "d": "123I-MIBGによる副腎シンチグラフィ　—　6時間",
+      "e": "131I-adosterolによる副腎シンチグラフィ　—　24時間"
     },
     "answer": "b",
     "multi": false,
@@ -7995,11 +7995,11 @@ window.__QUESTIONS__ = [
     "num": 92,
     "text": "悪性腫瘍とウイルスとの組み合わせとして関連が乏しいのはどれか。1つ選べ。",
     "choices": {
-      "a": "肝細胞癌HCV（Hepatitis C virus）",
-      "b": "中咽頭癌EBV（Epstein-Barr virus）",
-      "c": "子宮頸癌HPV（Human Papilloma virus）",
-      "d": "胃MALTリンパ腫Helicobacter pylori",
-      "e": "脳原発悪性リンパ腫HIV（Human Immunodeficiency virus）"
+      "a": "肝細胞癌　—　HCV（Hepatitis C virus）",
+      "b": "中咽頭癌　—　EBV（Epstein-Barr virus）",
+      "c": "子宮頸癌　—　HPV（Human Papilloma virus）",
+      "d": "胃MALTリンパ腫　—　Helicobacter pylori",
+      "e": "脳原発悪性リンパ腫　—　HIV（Human Immunodeficiency virus）"
     },
     "answer": "b",
     "multi": false,
@@ -9372,11 +9372,11 @@ window.__QUESTIONS__ = [
     "num": 73,
     "text": "放射性医薬品と検査項目との組み合わせとして正しいのはどれか。2つ選べ。",
     "choices": {
-      "a": "99mTc-GSAアシアロ糖タンパク質受容体",
-      "b": "99mTc-HM-PAO心筋血流",
-      "c": "99mTc-MAA肺血流",
-      "d": "123I-BMIPPアミノ酸代謝",
-      "e": "123I-iomazenilドーパミン受容体"
+      "a": "99mTc-GSA　—　アシアロ糖タンパク質受容体",
+      "b": "99mTc-HM-PAO　—　心筋血流",
+      "c": "99mTc-MAA　—　肺血流",
+      "d": "123I-BMIPP　—　アミノ酸代謝",
+      "e": "123I-iomazenil　—　ドーパミン受容体"
     },
     "answer": "a,c",
     "multi": true,
@@ -10493,11 +10493,11 @@ window.__QUESTIONS__ = [
     "num": 38,
     "text": "縦隔の神経の走行で，誤っているのはどれか。1つ選べ。",
     "choices": {
-      "a": "横隔神経肺門背側",
-      "b": "内臓神経大動脈裂孔",
-      "c": "迷走神経食道裂孔",
-      "d": "左反回神経大動脈弓下",
-      "e": "右反回神経右鎖骨下動脈下"
+      "a": "横隔神経　—　肺門背側",
+      "b": "内臓神経　—　大動脈裂孔",
+      "c": "迷走神経　—　食道裂孔",
+      "d": "左反回神経　—　大動脈弓下",
+      "e": "右反回神経　—　右鎖骨下動脈下"
     },
     "answer": "a",
     "multi": false,
@@ -11085,11 +11085,11 @@ window.__QUESTIONS__ = [
     "num": 75,
     "text": "検査と放射性医薬品投与後の撮像開始時間の組み合わせで正しいのはどれか。2つ選べ。",
     "choices": {
-      "a": "18F-FDG-PET 4時間",
-      "b": "骨シンチグラフィ3時間",
-      "c": "67Ga腫瘍シンチグラフィ2時間",
-      "d": "123I甲状腺シンチグラフィ24時間",
-      "e": "123I-MIBG心臓シンチグラフィ24時間"
+      "a": "18F-FDG-PET　—　4時間",
+      "b": "骨シンチグラフィ　—　3時間",
+      "c": "67Ga腫瘍シンチグラフィ　—　2時間",
+      "d": "123I甲状腺シンチグラフィ　—　24時間",
+      "e": "123I-MIBG心臓シンチグラフィ　—　24時間"
     },
     "answer": "b,e",
     "multi": true,
@@ -11117,11 +11117,11 @@ window.__QUESTIONS__ = [
     "num": 77,
     "text": "検査と前処置の組み合わせで誤っているのはどれか。1つ選べ。",
     "choices": {
-      "a": "腎動態シンチグラフィ水負荷",
-      "b": "甲状腺123Iシンチグラフィヨード制限",
-      "c": "消化管出血シンチグラフィ飲水制限",
-      "d": "薬剤負荷心筋血流SPECTカフェイン制限",
-      "e": "18F-FDG-PET激しい運動の禁止"
+      "a": "腎動態シンチグラフィ　—　水負荷",
+      "b": "甲状腺123Iシンチグラフィ　—　ヨード制限",
+      "c": "消化管出血シンチグラフィ　—　飲水制限",
+      "d": "薬剤負荷心筋血流SPECT　—　カフェイン制限",
+      "e": "18F-FDG-PET　—　激しい運動の禁止"
     },
     "answer": "c",
     "multi": false,
@@ -11325,11 +11325,11 @@ window.__QUESTIONS__ = [
     "num": 90,
     "text": "密封小線源治療の線源種類と使用方法で誤っているのはどれか。1つ選べ。",
     "choices": {
-      "a": "60Co腔内照射",
-      "b": "125I腔内照射",
-      "c": "137Cs組織内照射",
-      "d": "192Ir腔内照射",
-      "e": "198Au組織内照射"
+      "a": "60Co　—　腔内照射",
+      "b": "125I　—　腔内照射",
+      "c": "137Cs　—　組織内照射",
+      "d": "192Ir　—　腔内照射",
+      "e": "198Au　—　組織内照射"
     },
     "answer": "b",
     "multi": false,
@@ -12622,11 +12622,11 @@ window.__QUESTIONS__ = [
     "num": 66,
     "text": "画像所見と疾患との組み合わせで誤っているのはどれか。1つ選べ。",
     "choices": {
-      "a": "Central fibrous core卵巣未分化胚細胞腫",
-      "b": "Cosmos sign分葉状頸管腺過形成",
-      "c": "Fat-fluid level卵巣成熟囊胞奇形腫",
-      "d": "Follicle preserving sign卵巣悪性リンパ腫",
-      "e": "Kissing ovary骨盤子宮内膜症"
+      "a": "Central fibrous core　—　卵巣未分化胚細胞腫",
+      "b": "Cosmos sign　—　分葉状頸管腺過形成",
+      "c": "Fat-fluid level　—　卵巣成熟囊胞奇形腫",
+      "d": "Follicle preserving sign　—　卵巣悪性リンパ腫",
+      "e": "Kissing ovary　—　骨盤子宮内膜症"
     },
     "answer": "a",
     "multi": false,
@@ -12734,11 +12734,11 @@ window.__QUESTIONS__ = [
     "num": 73,
     "text": "放射性医薬品と病変部が陽性描画される疾患の組み合わせはどれか。1つ選べ。",
     "choices": {
-      "a": "99mTc-DMSA腎瘢痕",
-      "b": "99mTc-MAA肺血栓塞栓症",
-      "c": "99mTc-pertechnetate耳下腺多形腺腫",
-      "d": "99mTc-PYP心アミロイドーシス",
-      "e": "201TlCl心サルコイドーシス"
+      "a": "99mTc-DMSA　—　腎瘢痕",
+      "b": "99mTc-MAA　—　肺血栓塞栓症",
+      "c": "99mTc-pertechnetate　—　耳下腺多形腺腫",
+      "d": "99mTc-PYP　—　心アミロイドーシス",
+      "e": "201TlCl　—　心サルコイドーシス"
     },
     "answer": "d",
     "multi": false,
@@ -12862,11 +12862,11 @@ window.__QUESTIONS__ = [
     "num": 81,
     "text": "腫瘍と使用する放射性医薬品の組み合わせで誤っているのはどれか。1つ選べ。",
     "choices": {
-      "a": "甲状腺癌131I-NaI",
-      "b": "悪性リンパ腫18F-FDG",
-      "c": "副甲状腺腫99mTc-MIBI",
-      "d": "褐色細胞腫131I-adosterol",
-      "e": "神経内分泌腫瘍111In-pentetreotide"
+      "a": "甲状腺癌　—　131I-NaI",
+      "b": "悪性リンパ腫　—　18F-FDG",
+      "c": "副甲状腺腫　—　99mTc-MIBI",
+      "d": "褐色細胞腫　—　131I-adosterol",
+      "e": "神経内分泌腫瘍　—　111In-pentetreotide"
     },
     "answer": "d",
     "multi": false,
@@ -13774,11 +13774,11 @@ window.__QUESTIONS__ = [
     "num": 33,
     "text": "肝腫瘤性病変と画像検査の組み合わせで，病変を認識しにくいのはどれか。1つ選べ。",
     "choices": {
-      "a": "肝血管腫T2強調像",
-      "b": "大腸癌肝転移ダイナミック造影CT門脈相",
-      "c": "胆管周囲囊胞MRCP",
-      "d": "肝悪性リンパ腫拡散強調像",
-      "e": "高分化型肝細胞癌FDG-PET"
+      "a": "肝血管腫　—　T2強調像",
+      "b": "大腸癌肝転移　—　ダイナミック造影CT門脈相",
+      "c": "胆管周囲囊胞　—　MRCP",
+      "d": "肝悪性リンパ腫　—　拡散強調像",
+      "e": "高分化型肝細胞癌　—　FDG-PET"
     },
     "answer": "e",
     "multi": false,
@@ -14062,11 +14062,11 @@ window.__QUESTIONS__ = [
     "num": 51,
     "text": "検査対象となる臓器と放射性医薬品の組み合わせとして，誤っているのはどれか。1つ選べ。",
     "choices": {
-      "a": "肺81mKr",
-      "b": "腎99mTc-MDP",
-      "c": "肝臓99mTc-GSA",
-      "d": "胆道99mTc-PMT",
-      "e": "副甲状腺99mTc-MIBI"
+      "a": "肺　—　81mKr",
+      "b": "腎　—　99mTc-MDP",
+      "c": "肝臓　—　99mTc-GSA",
+      "d": "胆道　—　99mTc-PMT",
+      "e": "副甲状腺　—　99mTc-MIBI"
     },
     "answer": "b",
     "multi": false,
@@ -14943,11 +14943,11 @@ window.__QUESTIONS__ = [
     "num": 22,
     "text": "胸部CT所見と疾患の組み合わせのうち、誤っているのはどれか。1つ選べ。",
     "choices": {
-      "a": "halo sign侵襲性肺アスペルギルス症",
-      "b": "galaxy signサルコイドーシス",
-      "c": "reversed halo sign器質化肺炎",
-      "d": "crazy-paving appearance肺胞蛋白症",
-      "e": "head cheese sign（three density pattern）肺梗塞"
+      "a": "halo sign　—　侵襲性肺アスペルギルス症",
+      "b": "galaxy sign　—　サルコイドーシス",
+      "c": "reversed halo sign　—　器質化肺炎",
+      "d": "crazy-paving appearance　—　肺胞蛋白症",
+      "e": "head cheese sign（three density pattern）　—　肺梗塞"
     },
     "answer": "e",
     "multi": false,
@@ -15551,11 +15551,11 @@ window.__QUESTIONS__ = [
     "num": 60,
     "text": "検査名と使用する放射性医薬品の組み合わせで誤っているのはどれか。1つ選べ。",
     "choices": {
-      "a": "脳血流SPECT 123I-IMP",
-      "b": "骨シンチグラフィ99mTc-MDP",
-      "c": "心筋血流SPECT 99mTc-tetrofosmin",
-      "d": "腎動態シンチグラフィ99mTc-DMSA",
-      "e": "肝受容体シンチグラフィ99mTc-GSA"
+      "a": "脳血流SPECT　—　123I-IMP",
+      "b": "骨シンチグラフィ　—　99mTc-MDP",
+      "c": "心筋血流SPECT　—　99mTc-tetrofosmin",
+      "d": "腎動態シンチグラフィ　—　99mTc-DMSA",
+      "e": "肝受容体シンチグラフィ　—　99mTc-GSA"
     },
     "answer": "d",
     "multi": false,
@@ -15631,11 +15631,11 @@ window.__QUESTIONS__ = [
     "num": 65,
     "text": "検査目的と検査法の組み合わせで誤っているのはどれか。1つ選べ。",
     "choices": {
-      "a": "高安動脈炎の診断99mTc-PYPシンチグラフィ",
-      "b": "不安定狭心症の診断アデノシン負荷201TlCl SPECT",
-      "c": "心筋脂肪酸代謝の評価123I-BMIPP SPECT",
-      "d": "心臓交感神経機能の評価123I-MIBGシンチグラフィ",
-      "e": "心筋バイアビリティの評価18F-FDG PET"
+      "a": "高安動脈炎の診断　—　99mTc-PYPシンチグラフィ",
+      "b": "不安定狭心症の診断　—　アデノシン負荷201TlCl SPECT",
+      "c": "心筋脂肪酸代謝の評価　—　123I-BMIPP SPECT",
+      "d": "心臓交感神経機能の評価　—　123I-MIBGシンチグラフィ",
+      "e": "心筋バイアビリティの評価　—　18F-FDG PET"
     },
     "answer": "a",
     "multi": false,
@@ -16287,11 +16287,11 @@ window.__QUESTIONS__ = [
     "num": 1,
     "text": "疾患と画像所見の組み合わせで誤っているのはどれか。1つ選べ。",
     "choices": {
-      "a": "骨肉腫Codman’s triangle",
-      "b": "骨軟骨腫cartilage cap",
-      "c": "脊椎分離症Scottie dog sign",
-      "d": "結核性脊椎炎ivory vertebra",
-      "e": "Langerhans細胞組織球症punched-out lesion"
+      "a": "骨肉腫　—　Codman’s triangle",
+      "b": "骨軟骨腫　—　cartilage cap",
+      "c": "脊椎分離症　—　Scottie dog sign",
+      "d": "結核性脊椎炎　—　ivory vertebra",
+      "e": "Langerhans細胞組織球症　—　punched-out lesion"
     },
     "answer": "d",
     "multi": false,
@@ -16543,11 +16543,11 @@ window.__QUESTIONS__ = [
     "num": 17,
     "text": "画像診断におけるサインと疾患の組み合わせとして誤っているのはどれか。1つ選べ。",
     "choices": {
-      "a": "galaxy signサルコイドーシス",
-      "b": "air crescent sign侵襲性肺アスペルギルス症",
-      "c": "reversed halo sign特発性器質化肺炎",
-      "d": "CT angiogram sign肺梗塞",
-      "e": "crazy-paving appearance肺水腫"
+      "a": "galaxy sign　—　サルコイドーシス",
+      "b": "air crescent sign　—　侵襲性肺アスペルギルス症",
+      "c": "reversed halo sign　—　特発性器質化肺炎",
+      "d": "CT angiogram sign　—　肺梗塞",
+      "e": "crazy-paving appearance　—　肺水腫"
     },
     "answer": "d",
     "multi": false,
@@ -18017,11 +18017,11 @@ window.__QUESTIONS__ = [
     "num": 4,
     "text": "薬物と脳症の好発部位との組み合わせで正しいのはどれか。2つ選べ。",
     "choices": {
-      "a": "5-FU淡蒼球",
-      "b": "メタノール視神経",
-      "c": "メトトレキセート視床",
-      "d": "インフリキシマブ大脳皮質",
-      "e": "メトロニダゾール小脳歯状核"
+      "a": "5-FU　—　淡蒼球",
+      "b": "メタノール　—　視神経",
+      "c": "メトトレキセート　—　視床",
+      "d": "インフリキシマブ　—　大脳皮質",
+      "e": "メトロニダゾール　—　小脳歯状核"
     },
     "answer": "b,e",
     "multi": true,
@@ -18977,7 +18977,7 @@ window.__QUESTIONS__ = [
     "num": 64,
     "text": "センチネルリンパ節シンチグラフィについて正しいのはどれか。1つ選べ。",
     "choices": {
-      "a": "99mTcO－を用いる。4",
+      "a": "99mTcO4－を用いる。",
       "b": "放射性医薬品を静脈内投与する。",
       "c": "放射性医薬品投与15分後から撮影する。",
       "d": "リンパ節転移が明らかならば本検査は行わない。",
@@ -19649,11 +19649,11 @@ window.__QUESTIONS__ = [
     "num": 1,
     "text": "脳MR spectroscopyで観察される代謝物質と反映されるものの組み合わせとして誤っているのはどれか。1つ選べ。",
     "choices": {
-      "a": "乳酸嫌気性代謝",
-      "b": "クレアチン高エネルギーリン酸化",
-      "c": "コリン含有化合物細胞増殖",
-      "d": "ミオイノシトールグリオーシス",
-      "e": "N-アセチルアスパラギン酸神経細胞"
+      "a": "乳酸　—　嫌気性代謝",
+      "b": "クレアチン　—　高エネルギーリン酸化",
+      "c": "コリン含有化合物　—　細胞増殖",
+      "d": "ミオイノシトール　—　グリオーシス",
+      "e": "N-アセチルアスパラギン酸　—　神経細胞"
     },
     "answer": "b",
     "multi": false,
@@ -19713,11 +19713,11 @@ window.__QUESTIONS__ = [
     "num": 5,
     "text": "神経皮膚症候群と病変との組み合わせで正しいのはどれか。2つ選べ。",
     "choices": {
-      "a": "結節性硬化症大脳基底核の石灰化",
-      "b": "神経線維腫症1型両側聴神経鞘腫",
-      "c": "神経線維腫症2型視神経膠腫",
-      "d": "von Hippel-Lindau病小脳血管芽腫",
-      "e": "Sturge-Weber症候群脳回に沿った石灰化"
+      "a": "結節性硬化症　—　大脳基底核の石灰化",
+      "b": "神経線維腫症1型　—　両側聴神経鞘腫",
+      "c": "神経線維腫症2型　—　視神経膠腫",
+      "d": "von Hippel-Lindau病　—　小脳血管芽腫",
+      "e": "Sturge-Weber症候群　—　脳回に沿った石灰化"
     },
     "answer": "d,e",
     "multi": true,
@@ -20577,11 +20577,11 @@ window.__QUESTIONS__ = [
     "num": 59,
     "text": "放射性医薬品と投与から1回目の撮像までの標準的な待機時間の組み合わせで誤っているのはどれか。1つ選べ。",
     "choices": {
-      "a": "18F-FDG約1時間",
-      "b": "67Ga-citrate約4時間",
-      "c": "99mTc-MDP約3時間",
-      "d": "123I-IMP約30分",
-      "e": "131I-adosterol約1週間"
+      "a": "18F-FDG　—　約1時間",
+      "b": "67Ga-citrate　—　約4時間",
+      "c": "99mTc-MDP　—　約3時間",
+      "d": "123I-IMP　—　約30分",
+      "e": "131I-adosterol　—　約1週間"
     },
     "answer": "b",
     "multi": false,

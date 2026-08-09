@@ -13126,7 +13126,7 @@
     },
     "answer": "a,e",
     "multi": true,
-    "explanation": "正解：a,e　原発性肺癌IIIA期\n\n第8版TNM分類IIIA期の定義（主なもの）:\na ○ 原発と同側別肺葉内の副腫瘍結節（T4）+ N0-1 = IIIA\nb × 胸膜結節（M1a）+ 同側肺門リンパ節転移 = IVA（M1aのためIV期）\nc × 心膜浸潤（T4）+ 同側縦隔リンパ節転移（N2）= IIIB\nd × 充実成分径1cm（T1a）+ 同側鎖骨上窩リンパ節転移（N3）= IIIC\ne ○ 肺門まで連続する無気肺（T2）+ 気管分岐下リンパ節転移（N2）= IIIA",
+    "explanation": "正解：a,e　原発性肺癌IIIA期\n\nUICC第9版に基づく（N2は単一stationのN2aと複数stationのN2bに細分された）:\na ○ 原発と同側別肺葉内の副腫瘍結節（T4）+ N0-1 = IIIA\nb × 胸膜結節（M1a）+ 同側肺門リンパ節転移 = IVA（M1aのためIV期）\nc △　心膜浸潤は T3、同側縦隔LNはN2。N2は単一stationならN2a、複数stationならN2b。IIIA or IIIB。\nd × 充実成分径1cm（T1a）+ 同側鎖骨上窩リンパ節転移（N3）= IIIB\ne ○ 肺門まで連続する無気肺（T2）+ 気管分岐下リンパ節転移（N2）= IIIA",
     "category": "呼吸器・縦隔"
   },
   {

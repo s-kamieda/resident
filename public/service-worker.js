@@ -1,4 +1,4 @@
-const CACHE_NAME = "rad-quiz-cache-20260806-fix-2023q12";
+const CACHE_NAME = "rad-quiz-cache-20260806-fix-2013q31-2019q66";
 const STATIC_ASSETS = [
   "./",
   "./専門医試験_問題集.html",

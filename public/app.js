@@ -1286,7 +1286,9 @@ async function resumeSession(saved) {
   showPage("pg-quiz");
 }
 
-async function saveSessionState() {
+// 中断エントリをメモリ上のprogressStateへ反映するだけの同期処理。
+// 解答時などprogressStateを保存する処理と組み合わせて、書き込みを1回にまとめる。
+function updateSavedSessionEntry() {
   if (!sessionState || sessionState.srsMode || sessionState.mode === "view") return;
   const key = sessionTargetKey(sessionState);
   const list = progressState.savedSessions;
@@ -1314,6 +1316,10 @@ async function saveSessionState() {
   };
   if (idx >= 0) list[idx] = entry;
   else list.push(entry);
+}
+
+async function saveSessionState() {
+  updateSavedSessionEntry();
   await saveProgressState();
 }
 
@@ -1489,6 +1495,9 @@ async function submitAnswer() {
     userAnswer: userSelection.join(","),
     updatedAt: Date.now()
   };
+  // 中断位置も同時に永続化する。リロードやタブ終了は pagehide の非同期書き込みが
+  // 完了しないことがあるため、解答のたびに保存して再開できるようにする。
+  updateSavedSessionEntry();
   await saveProgressState();
 
   if (result === false && sessionState.srsMode !== "review") {
@@ -1504,6 +1513,7 @@ async function nextQuestion() {
   await ensureMemoSaved(false);
   if (sessionState.index < sessionState.questions.length - 1) {
     sessionState.index += 1;
+    await saveSessionState();
     await renderQuestion();
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   } else if (sessionState.mode === "view") {
@@ -1518,6 +1528,7 @@ async function previousQuestion() {
   if (!sessionState || sessionState.index === 0) return;
   await ensureMemoSaved(false);
   sessionState.index -= 1;
+  await saveSessionState();
   await renderQuestion();
   window.scrollTo({ top: 0, left: 0, behavior: "auto" });
 }

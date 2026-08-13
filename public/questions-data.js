@@ -15399,7 +15399,7 @@ window.__QUESTIONS__ = [
     },
     "answer": "a,c",
     "multi": true,
-    "explanation": "a,c：An inchworm sign is a simple diagnostic criterion that characterizes only the shape of the tumor signal on DWI, and potentially serves as an imaging biomarker to predict clinical aggressiveness. • The absence of an inchworm sign on DWI is a significant indicator of progression of T1 bladder cancer.\n(https://pubmed.ncbi.nlm.nih.gov/30888482/#:~:text=Key%20points%3A%20%E2%80%A2%20An%20inchworm,biomarker%20to%20predict%20clinical%20aggressiveness.&text=The%20absence%20of%20an%20inchworm%20sign%20on%20DWI%20is%20a,progression%20of%20T1%20bladder%20cancer.)\nT1：上皮下結合組織に浸潤する腫瘍\nT2：筋層に浸潤する腫瘍\nT2以上では膀胱全摘除術が標準的治療とされ、治療方針が大きく異なる点で、T1以下か、T2以上かの判断が重要である。\n腫瘍が有茎性であればT1以下、非有茎性であればT2以上の可能性があるため、腫瘍茎の評価は有用である。\nDWIで腫瘍は高信号を示すが、腫瘍茎や腫瘍基部の肥厚した粘膜下層は低信号に描出され、T1以下とと断定できる。このような場合に、腫瘍の信号がinchworm（尺取虫）のように見えるので、inchworm signと呼ばれている。\nダイナミック・スタディでは、腫瘍より早期に粘膜下層が造影されるsubmucosal linear enhancement(SLE)が認められれば、筋層浸潤なしといえる。ただし、SLEは筋層浸潤なしでも描出されない場合があり、その場合はT2WI、DWIなどとあわせて、総合的に評価を行う。\n(画像診断vol.37 no.14 2017 p1473,1479)",
+    "explanation": "a,c：○　inchworm signは拡散強調像（DWI）で用いる所見で、腫瘍の信号と形態の両方を評価する。腫瘍本体は高信号を示す一方、腫瘍茎や肥厚した粘膜下層は低信号となるため、全体が尺取虫のような形に見える。この所見があれば筋層非浸潤（T1以下）と判断できる。\nb：×　水分子の拡散の差を反映する所見であり、血流量の違いを見るものではない。血流を反映するのは、ダイナミック造影で粘膜下層が腫瘍より早期に濃染するsubmucosal linear enhancement（SLE）である。\nd：×　評価できるのは筋層浸潤の有無（T1以下かT2以上か）であり、膀胱周囲脂肪織への浸潤（T3）の判定には用いない。\ne：×　経尿道的膀胱腫瘍切除術後は炎症や肉芽組織により信号・形態が修飾されるため、残存腫瘍の評価は困難である。\n※T2以上では膀胱全摘除術が標準治療となるため、T1以下かT2以上かの判断が重要となる。\n（画像診断vol.37 no.14 2017 p1473,1479）",
     "category": "泌尿器・生殖器"
   },
   {

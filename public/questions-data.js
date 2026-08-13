@@ -7393,7 +7393,7 @@ window.__QUESTIONS__ = [
     },
     "answer": "d,e",
     "multi": true,
-    "explanation": "a：胆嚢壁肥厚が主体の病変で、腫瘍内に小嚢胞エコー、高エコー部（壁内結石）、コメットサインを認めれば、胆嚢腺筋腫症と診断できる。(https://www.jmedj.co.jp/premium/treatment/2017/d060202/)\nb：The string of beads sign is the description typically given to the appearance of the renal artery in fibromuscular dysplasia (FMD) but may also be used to describe the appearance of splanchnic arteries in segmental arterial mediolysis (SAM). It refers to the appearance arising from the stenoses resulting from the disease alternating with aneurysmal dilatation. ( https://radiopaedia.org/articles/string-of-beads-sign-renal-artery-1)\nc：原発性硬化性胆管炎の所見。(肝胆膵のCT・MRI p168)\nd,e：超音波は感度83％、特異度95％と報告されている。その際に特にSonographic Murphy’s sign(右季肋部をプローベで圧迫したまま深呼吸させると、痛みのために息を吸うことができない)と壁内の多層のSonolucent layer in the wallの有無が重要となる。CTの役割は本来診断そのものではなく、重症度判定であるが、鎮痛剤がすでに使用されていて、Murphy’s signの有無が判定できない場合や高度の肥満により超音波では鑑別困難な場合に、CTは有効である。(肝胆膵の画像診断 -CT・MRIを中心に- p399)",
+    "explanation": "d,e：○　急性胆嚢炎の超音波診断は感度83％、特異度95％と報告される。プローベで右季肋部を圧迫したまま深呼吸させると痛みで息を吸えないSonographic Murphy's signと、壁内の多層な低エコー帯（sonolucent layer in the wall＝壁内浮腫）の有無が重要となる。\na：×　comet signは胆嚢腺筋腫症でみられる。壁内結石（Rokitansky-Aschoff洞）による多重反射で、彗星の尾のような線状高エコーとして描出される。(https://www.jmedj.co.jp/premium/treatment/2017/d060202/)\nb：×　string of beads signは線維筋性異形成（FMD）における腎動脈の数珠状の狭窄・拡張を表す所見で、胆嚢とは関係しない。(https://radiopaedia.org/articles/string-of-beads-sign-renal-artery-1)\nc：×　onion skin appearanceは原発性硬化性胆管炎でみられる胆管壁の同心円状の線維化を表す所見。(肝胆膵のCT・MRI p168)\n(肝胆膵の画像診断 -CT・MRIを中心に- p399)",
     "category": "消化器（肝・胆・膵・脾）"
   },
   {
@@ -10677,7 +10677,7 @@ window.__QUESTIONS__ = [
     },
     "answer": "d,e",
     "multi": true,
-    "explanation": "a,b：0〜2歳の乳幼児では50％の頻度で正常胸腺が上縦隔の陰影として胸部Xpで確認できる。特に、左葉よりも右葉の拡大をみることが多く、上縦隔から右肺野に突出する三角形の胸腺陰影はヨットの帆に似ていることから、sail signと呼ばれる。胸腺が肋軟骨で圧排されるために生じるwave signもよく知られている。\n(https://www.teramoto.or.jp/teramoto_hp/kousin/sinryou/gazoushindan/case/case8/index.html))\n(http://nagasawanorio.cocolog-nifty.com/blog/2013/03/x-dc23.html)\nc：The thymic notch sign represents the normal thymus in a newborn on a frontal chest radiograph. Interruption of the cardiac silhouette forms a notch, which may be seen on either side, but more frequently is seen on the left side.\n(https://radiopaedia.org/articles/thymic-notch-sign)\nd,e：The spinnaker sign (also known as the angel wing sign) is a sign of pneumomediastinum seen on neonatal chest radiographs. It refers to the thymus being outlined by air with each lobe displaced laterally and appearing like spinnaker sails.\n( https://radiopaedia.org/articles/spinnaker-sign-mediastinum)",
+    "explanation": "d,e：○　spinnaker sign（別名 angel wing sign）は新生児の縦隔気腫の所見。縦隔内の遊離ガスにより胸腺の左右両葉が持ち上げられて外側へ偏位し、ヨットのスピンネーカー帆（天使の翼）のように見える。(https://radiopaedia.org/articles/spinnaker-sign-mediastinum)\na,b：×　いずれも正常胸腺による所見。0〜2歳では50％で正常胸腺が上縦隔陰影として描出され、右葉が肺野へ三角形に突出するものをsail sign、肋軟骨に圧排されて辺縁が波状になるものをwave signという。(https://www.teramoto.or.jp/teramoto_hp/kousin/sinryou/gazoushindan/case/case8/index.html)\n(http://nagasawanorio.cocolog-nifty.com/blog/2013/03/x-dc23.html)\nc：×　thymic notch signも正常胸腺の所見で、胸腺と心陰影の境目に切れ込み（ノッチ）が生じるもの。(https://radiopaedia.org/articles/thymic-notch-sign)",
     "category": "小児"
   },
   {
@@ -11990,7 +11990,7 @@ window.__QUESTIONS__ = [
     },
     "answer": "b",
     "multi": false,
-    "explanation": "a：代謝の活発な小児の骨幹端に沈着し線状の硬化像をつくる。この線状の硬化像は鉛の沈着ではなく、骨の成長場外によるカルシウム沈着と考えられている。(骨関節のX線診断p454)\nb：最も多く見られるのは骨幹端の透亮帯であるが、2歳以下の幼児では非特異的であり、全身状態の悪化を示す骨吸収にすぎない。ほかには、骨髄より起こる局在性破壊性変化、びまん性骨吸収、骨膜反応がある。(骨関節のX線診断p191)\nThe differential diagnosis for lucent transverse metaphyseal lines or bands may be recalled using various mnemonics:\n・CAMEL\n・LINING\nMnemonics\n・CAMEL\nC: congenital infection (e.g. STORCH)\nA: anatomical variation\nM: metastatic neuroblastoma\nE: earlier systemic illness (rickets, scurvy)\nL: leukemia, lymphoma\n・LINING\nL: leukemia, lymphoma\nI: infection (e.g. STORCH)\nN: normal variation\nI: illness (systemic, such as rickets and scurvy)\nN: neuroblastoma (metastatic)\nG: growth arrest lines\n(https://radiopaedia.org/articles/lucent-transverse-metaphyseal-lines-mnemonic)\nc：\n杯状変形(cupping)は、骨幹端中央部が骨幹方向にU字型、V字型に陥凹する変形。軟骨無形性症など、軟骨内骨化が障害されるほとんどの疾患でこの変化が生じる。\n骨幹端の不整像は、骨幹端軟骨異型性症や偽性軟骨無形性症などで認められる。治癒期のくる病に似た骨幹端の異常を示す。骨幹端は不整で骨硬化部分と骨透亮像が混在している。(新骨軟部画像診断の勘ドコロp166,167)\nd：骨幹端骨折。\ne：比較的軽度の狂病所見を呈する程度。骨幹端では骨化遅延を反映し、成長版に面した部部には毛羽立ち像や杯状拡大(flaying)を認める。(臨床画像vol.32 no.12 2016 p1325)",
+    "explanation": "b：○　白血病では骨幹端の帯状透亮像（lucent metaphyseal band）が最も多くみられる所見。ただし2歳以下では非特異的で、全身状態の悪化に伴う骨吸収を反映するにすぎない。ほかに骨髄からの局在性破壊性変化、びまん性骨吸収、骨膜反応をみる。(骨関節のX線診断p191)\n※骨幹端の帯状透亮像の鑑別：白血病・リンパ腫、神経芽腫の転移、先天感染（STORCH）、くる病や壊血病などの全身疾患、成長停止線、正常変異。(https://radiopaedia.org/articles/lucent-transverse-metaphyseal-lines-mnemonic)\na：×　鉛中毒では骨幹端に線状の硬化像をつくる（透亮像ではない）。鉛そのものの沈着ではなく成長障害に伴うカルシウム沈着と考えられている。(骨関節のX線診断p454)\nc：×　軟骨無形成症では骨幹端中央部が骨幹方向へU字・V字状に陥凹する杯状変形（cupping）をみる。(新骨軟部画像診断の勘ドコロp166,167)\nd：×　被虐待児症候群では骨幹端骨折（コーナー骨折、バケツ柄状骨折）が特徴。\ne：×　低リン血症性くる病では骨化遅延を反映し、成長板に面した骨幹端に毛羽立ち像や杯状拡大をみる。(臨床画像vol.32 no.12 2016 p1325)",
     "category": "脊椎・脊髄・骨関節・軟部"
   },
   {
@@ -14951,7 +14951,7 @@ window.__QUESTIONS__ = [
     },
     "answer": "e",
     "multi": false,
-    "explanation": "e：The head cheese sign or three-density pattern refers to a juxtaposition of regions with three (or sometimes more) different densities/regions of different attenuation within the lungs:\nground-glass opacities (high attenuation)\nmosaic attenuation pattern (low attenuation)\nnormal lung tissue (normal attenuation)\nA mixed infiltrative (ground-glass opacity) and obstructive (mosaic attenuation) disease process can give rise to the head cheese sign. Less frequently, the superposition of a separate infiltrative and obstructive process causes this pattern. As the mosaic attenuation pattern is caused by airway narrowing/air trapping, these low attenuation areas may only be apparent on expiratory scans.\nThe head cheese sign is considered to be highly specific for hypersensitivity pneumonitis, although it can also be seen in other mixed infiltrative and obstructive processes (e.g. sarcoidosis and atypical infections associated with bronchiolitis (e.g. mycoplasma pneumonia)\n(https://radiopaedia.org/articles/head-cheese-sign-lungs)",
+    "explanation": "e：○（誤り＝正解）　head cheese sign（three density pattern）はスリガラス影（高吸収）、モザイク吸収域（低吸収）、正常肺の3種類の吸収域が混在する所見。浸潤性病変と閉塞性病変が併存することで生じ、過敏性肺炎に高い特異度をもつ。サルコイドーシスや細気管支炎を伴う非定型感染症でもみられるが、肺梗塞の所見ではない。(https://radiopaedia.org/articles/head-cheese-sign-lungs)\na：×　halo signは結節周囲のスリガラス影で、出血を反映し侵襲性肺アスペルギルス症でみられる。\nb：×　galaxy signは中心の集簇性結節の周囲に小結節が散在する所見で、サルコイドーシスでみられる。\nc：×　reversed halo signは中心のスリガラス影を輪状の濃い陰影が取り囲む所見で、器質化肺炎でみられる。\nd：×　crazy-paving appearanceはスリガラス影に小葉間隔壁肥厚が重なる所見で、肺胞蛋白症が代表的。",
     "category": "呼吸器・縦隔"
   },
   {
@@ -15399,7 +15399,7 @@ window.__QUESTIONS__ = [
     },
     "answer": "a,c",
     "multi": true,
-    "explanation": "a,c：○　inchworm signは拡散強調像（DWI）で用いる所見で、腫瘍の信号と形態の両方を評価する。腫瘍本体は高信号を示す一方、腫瘍茎や肥厚した粘膜下層は低信号となるため、全体が尺取虫のような形に見える。この所見があれば筋層非浸潤（T1以下）と判断できる。\nb：×　水分子の拡散の差を反映する所見であり、血流量の違いを見るものではない。血流を反映するのは、ダイナミック造影で粘膜下層が腫瘍より早期に濃染するsubmucosal linear enhancement（SLE）である。\nd：×　評価できるのは筋層浸潤の有無（T1以下かT2以上か）であり、膀胱周囲脂肪織への浸潤（T3）の判定には用いない。\ne：×　経尿道的膀胱腫瘍切除術後は炎症や肉芽組織により信号・形態が修飾されるため、残存腫瘍の評価は困難である。\n※T2以上では膀胱全摘除術が標準治療となるため、T1以下かT2以上かの判断が重要となる。\n（画像診断vol.37 no.14 2017 p1473,1479）",
+    "explanation": "a,c：○　inchworm signは拡散強調像（DWI）で用いる所見で、腫瘍の信号と形態の両方を評価する。腫瘍本体は高信号を示す一方、腫瘍茎や肥厚した粘膜下層は低信号となるため、全体が尺取虫のような形に見える。この所見があれば筋層非浸潤（T1以下）と判断できる。\nb：×　水分子の拡散の差を反映する所見であり、血流量の違いを見るものではない。血流を反映するのは、ダイナミック造影で粘膜下層が腫瘍より早期に濃染するsubmucosal linear enhancement（SLE）である。\nd：×　評価できるのは筋層浸潤の有無（T1以下かT2以上か）であり、膀胱周囲脂肪織への浸潤（T3）の判定には用いない。\ne：×　経尿道的膀胱腫瘍切除術後は炎症や肉芽組織により信号・形態が修飾されるため、残存腫瘍の評価は困難である。\n※T2以上では膀胱全摘除術が標準治療となるため、T1以下かT2以上かの判断が重要となる。\n(https://pubmed.ncbi.nlm.nih.gov/30888482/)\n（画像診断vol.37 no.14 2017 p1473,1479）",
     "category": "泌尿器・生殖器"
   },
   {
@@ -20057,7 +20057,7 @@ window.__QUESTIONS__ = [
     },
     "answer": "b",
     "multi": false,
-    "explanation": "ACSリスクの高い冠動脈プラークにはSpotty calcification, napkin ring sign, positive remodeling, 低CT値を示すものなどが挙げられます。",
+    "explanation": "b：○（誤り＝正解）　myocardial bridgeは冠動脈の一部が心筋内を走行する解剖学的変異であり、プラークの性状を示す所見ではない。\na,c,d,e：×　napkin ring sign（低吸収の中心を高吸収の輪が囲む）、spotty calcification（点状石灰化）、positive remodeling（血管の外向き拡大）、low attenuation plaque（低CT値プラーク）はいずれも急性冠症候群のリスクが高い不安定プラークの所見である。",
     "category": "心臓・大血管"
   },
   {

@@ -253,13 +253,22 @@
     <button class="modal-opt" id="modal-seq">
       <strong>順番に解く</strong><span>1問目から順番に出題</span>
     </button>
-    <button class="modal-opt" id="modal-rand">
-      <strong>ランダム</strong><span>シャッフルして出題</span>
-    </button>
     <button class="modal-opt" id="modal-rand10">
       <strong>10問チャレンジ</strong><span>ランダムに10問</span>
     </button>
+    <button class="modal-opt" id="modal-list">
+      <strong>問題一覧</strong><span>選んだ問題から続けて解く</span>
+    </button>
     <button class="modal-cancel" id="modal-cancel">キャンセル</button>
+  </div>
+</div>
+
+<div id="list-modal-bg" class="modal-bg hidden">
+  <div class="modal modal-tall">
+    <h2 id="list-modal-title">問題一覧</h2>
+    <p class="modal-copy">選んだ問題から、新しい年度へ向かって続けて解答します。</p>
+    <div class="qlist" id="qlist"></div>
+    <button class="modal-cancel" id="list-modal-cancel">キャンセル</button>
   </div>
 </div>
 

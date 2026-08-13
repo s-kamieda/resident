@@ -645,6 +645,62 @@ textarea{resize:vertical}
   min-height:44px;
 }
 .modal-actions{display:flex;gap:8px;margin-top:12px}
+/* 問題一覧モーダル：年度見出し＋問題リストを縦スクロールさせる */
+.modal-tall{display:flex;flex-direction:column;max-height:min(85vh,720px)}
+.qlist{
+  flex:1;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  border:1px solid #e3e8e6;
+  border-radius:12px;
+  margin-bottom:8px;
+}
+.qlist-year{
+  position:sticky;
+  top:0;
+  background:#eef2f1;
+  color:#4b5b57;
+  font-weight:800;
+  font-size:.82rem;
+  letter-spacing:.04em;
+  padding:7px 12px;
+  border-bottom:1px solid #e3e8e6;
+  z-index:1;
+}
+.qlist-item{
+  display:flex;
+  align-items:flex-start;
+  gap:9px;
+  width:100%;
+  text-align:left;
+  padding:10px 12px;
+  background:#fff;
+  border:0;
+  border-bottom:1px solid #f0f3f2;
+  min-height:44px;
+}
+.qlist-item:hover{background:#eefaf9}
+.qlist-num{
+  flex:none;
+  font-weight:700;
+  font-size:.78rem;
+  color:#0f9e99;
+  min-width:2.6em;
+  font-variant-numeric:tabular-nums;
+}
+.qlist-text{
+  flex:1;
+  font-size:.82rem;
+  line-height:1.45;
+  color:#2a3a37;
+  overflow:hidden;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+}
+.qlist-mark{flex:none;font-size:.78rem;line-height:1.5}
+.qlist-mark.ok{color:#0f9e99}
+.qlist-mark.ng{color:#d9534f}
 .toast-zone{
   position:fixed;
   left:50%;

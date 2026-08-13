@@ -1199,6 +1199,84 @@ function closeModeModal() {
   closeOverlay("modal-bg");
 }
 
+/* 問題一覧：新しい年度から古い年度の順に並べ、選んだ問題から
+   （年度の古い→新しい方向へ）続けて解答できるようにする */
+function openQuestionList() {
+  const pool = buildPool(modalTarget);
+  if (!pool.length) {
+    showToast("対象の問題がありません。", "warn");
+    return;
+  }
+  $("list-modal-title").textContent = `${modalTargetLabel(modalTarget)} — 問題一覧`;
+  const box = $("qlist");
+  box.innerHTML = "";
+  // pool は年度・番号の昇順。表示は年度の降順、年度内は番号の昇順にする
+  const years = [...new Set(pool.map((question) => question.year))].sort((a, b) => b - a);
+  const frag = document.createDocumentFragment();
+  years.forEach((year) => {
+    const head = document.createElement("div");
+    head.className = "qlist-year";
+    head.textContent = `${year}年`;
+    frag.appendChild(head);
+    pool.forEach((question, index) => {
+      if (question.year !== year) return;
+      frag.appendChild(buildQuestionListItem(question, index));
+    });
+  });
+  box.appendChild(frag);
+  box.scrollTop = 0;
+  closeModeModal();
+  openOverlay("list-modal-bg");
+}
+
+function modalTargetLabel(target) {
+  if (target === "all") return "全問";
+  if (target === "wrong") return "苦手問題";
+  if (target === "unseen") return "未解答問題";
+  if (typeof target === "string" && target.startsWith("cat:")) return target.slice(4);
+  return `${target}年`;
+}
+
+function buildQuestionListItem(question, index) {
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "qlist-item";
+  const record = recordForQuestion(question);
+  const mark = record ? (record.correct === true ? "○" : "×") : "";
+  const markClass = record ? (record.correct === true ? "ok" : "ng") : "";
+  btn.innerHTML =
+    `<span class="qlist-num">Q${question.num}</span>` +
+    `<span class="qlist-text">${escapeHtml(question.text)}</span>` +
+    `<span class="qlist-mark ${markClass}">${mark}</span>`;
+  btn.addEventListener("click", () => {
+    closeOverlay("list-modal-bg");
+    void startQuizAt(index);
+  });
+  return btn;
+}
+
+/* 一覧で選んだ問題を起点に、以降（新しい年度へ向かって）を順番に出題する */
+async function startQuizAt(index) {
+  const pool = buildPool(modalTarget);
+  if (!pool.length) return;
+  sessionState = {
+    sessionId: newSessionId(),
+    questions: pool,
+    index: Math.min(Math.max(index, 0), pool.length - 1),
+    mode: "seq",
+    year: typeof modalTarget === "number" ? modalTarget : null,
+    category: typeof modalTarget === "string" && modalTarget.startsWith("cat:") ? modalTarget.slice(4) : null,
+    srsMode: null,
+    submitted: {},
+    userAns: {},
+    correct: 0,
+    startMs: Date.now()
+  };
+  await saveSessionState();
+  await renderQuestion();
+  showPage("pg-quiz");
+}
+
 function buildPool(target) {
   if (target === "all") return QUESTIONS.slice();
   if (target === "wrong") {
@@ -2264,15 +2342,18 @@ function wireEvents() {
   $("modal-seq")?.addEventListener("click", () => {
     void startQuiz("seq");
   });
-  $("modal-rand")?.addEventListener("click", () => {
-    void startQuiz("rand");
-  });
   $("modal-rand10")?.addEventListener("click", () => {
     void startQuiz("rand10");
   });
+  $("modal-list")?.addEventListener("click", openQuestionList);
   $("modal-cancel")?.addEventListener("click", closeModeModal);
   $("modal-bg")?.addEventListener("click", (event) => {
     if (event.target === $("modal-bg")) closeModeModal();
+  });
+
+  $("list-modal-cancel")?.addEventListener("click", () => closeOverlay("list-modal-bg"));
+  $("list-modal-bg")?.addEventListener("click", (event) => {
+    if (event.target === $("list-modal-bg")) closeOverlay("list-modal-bg");
   });
 
   $("btn-pause")?.addEventListener("click", () => {
